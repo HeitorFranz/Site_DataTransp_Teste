@@ -1,0 +1,33 @@
+:root {
+  --brand-red: #e90705;
+  --brand-red-deep: #c80705;
+  --brand-red-soft: #fff1f0;
+
+  --brand-charcoal: #102746;
+  --brand-navy: #102746;
+  --brand-navy-deep: #081a32;
+
+  --paper: #fff;
+  --paper-tint: #f8fafc;
+  --line: #10274615;
+  --ink: #102746;
+  --ink-soft: #43556c;
+  --error: #c62828;
+
+  --grad-brand: linear-gradient(135deg, #102746 0%, #18395f 100%);
+  --grad-deep: linear-gradient(160deg, #081a32 0%, #102746 56%, #18395f 100%);
+  --brand-haze:
+    radial-gradient(60% 50% at 20% 10%, rgb(16 39 70 / 12%), transparent 70%),
+    radial-gradient(40% 40% at 85% 0%, rgb(233 7 5 / 8%), transparent 70%);
+
+  --font-heading: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+  --font-body: Inter, 'Segoe UI', sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --content-width: 1240px;
+  --radius-card: 12px;
+  --radius-panel: 20px;
+  --shadow-sm: 0 1px 2px rgb(0 11 40 / 8%);
+  --shadow-md: 0 8px 24px rgb(0 11 40 / 12%);
+  --shadow-lg: 0 24px 64px rgb(0 11 40 / 18%);
+  --focus-ring: 0 0 0 3px rgb(16 39 70 / 38%);
+}

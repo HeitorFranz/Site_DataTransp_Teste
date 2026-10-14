@@ -1,0 +1,27 @@
+---
+import Layout from '../../components/Layout.astro';
+import { integrations } from '../../data/empresa';
+---
+
+<Layout title="Integrações | Datatransp" description="Consulte as integrações relacionadas ao DataTransp ERP." currentPath="/integracoes">
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <div class="breadcrumbs"><a href="/">Início</a> / <span>Integrações</span></div>
+      <h1>Consulte as integrações relacionadas ao sistema</h1>
+      <p>Converse com a equipe Datatransp para confirmar escopo, disponibilidade, parceiros e requisitos técnicos aplicáveis.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="card-grid">
+        {integrations.map((integration) => (
+          <article class="info-card">
+            <h2>{integration.title}</h2>
+            <p>Consulte a equipe para detalhes desta integração.</p>
+            <a class="nav-link" href={`/integracoes/${integration.slug}`}>Consultar detalhes</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

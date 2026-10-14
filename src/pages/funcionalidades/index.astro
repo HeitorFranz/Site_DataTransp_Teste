@@ -1,0 +1,98 @@
+---
+import Layout from '../../components/Layout.astro';
+import { modules } from '../../data/empresa';
+const confirmedModules = modules.filter((module) => module.confirmed);
+---
+
+<Layout title="Funcionalidades | Datatransp" description="Conheça os módulos da Datatransp" currentPath="/funcionalidades">
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <div class="breadcrumbs"><a href="/">Início</a> / <span>Funcionalidades</span></div>
+      <h1>Funcionalidades pensadas para a operação real do transporte</h1>
+      <p>Consulte os módulos com informações confirmadas e fale com nossa equipe para conhecer a aplicação à sua operação.</p>
+    </div>
+  </section>
+
+  <section class="section functionality-overview">
+    <div class="container">
+      <div class="module-showcase">
+        <div>
+          <h2 class="section-title">Uma plataforma integrada para gerir a operação com mais clareza</h2>
+          <ul class="feature-list">
+            <li>Emissão e recepção de documentos fiscais e integração com SPED</li>
+            <li>Gestão financeira, faturamento e integração contábil</li>
+            <li>Controle de manutenção e pneus da frota</li>
+            <li>BI com visões prontas e personalizadas</li>
+          </ul>
+        </div>
+
+        <figure class="product-image-frame product-image-frame--gtf">
+          <img
+            src="/images/product/gtf-overview.jpg"
+            alt="Foto de um material institucional do DataTransp GTF com um caminhão e um diagrama dos módulos."
+            width="680"
+            height="1170"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>Material institucional com uma visão geral dos módulos do DataTransp GTF.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section functionality-modules">
+    <div class="container">
+      <h2 class="section-title">Explore as principais áreas do sistema</h2>
+      <div class="functionality-module-layout">
+        <figure class="product-image-frame product-image-frame--features">
+          <img
+            src="/images/product/system-features.jpg"
+            alt="Foto de um folheto Datatransp com referências visuais a telas de pneus, alertas, combustíveis e documentos eletrônicos."
+            width="1040"
+            height="620"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>Folheto institucional com imagens de referência do sistema e recursos descritos pela Datatransp.</figcaption>
+        </figure>
+
+        <div class="functionality-module-list">
+          {confirmedModules.map((module, index) => (
+            <details class="functionality-module" name="functionality-modules" open={index === 0}>
+              <summary>
+                <span class="feature-icon" aria-hidden="true">{module.title.slice(0, 1)}</span>
+                <span class="functionality-module-copy">
+                  <span class="functionality-module-title">{module.title}</span>
+                  <span class="functionality-module-summary">{module.summary}</span>
+                </span>
+                <span class="functionality-module-indicator" aria-hidden="true">+</span>
+              </summary>
+              <div class="functionality-module-details">
+                <ul class="module-list">
+                  {module.whatItDoes.map((item) => <li>{item}</li>)}
+                </ul>
+                <a class="nav-link" href={`/funcionalidades/${module.slug}`}>Conhecer módulo</a>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section functionality-integrations">
+    <div class="container">
+      <div class="integration-callout">
+        <div>
+          <h2 class="section-title">Mais agilidade para o setor e para a sua operação</h2>
+          <h3>Detalhes sob consulta</h3>
+          <p>Consulte a equipe para confirmar o escopo das integrações disponíveis para sua operação.</p>
+        </div>
+        <div>
+          <a class="nav-link" href="/integracoes">Ver integrações</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

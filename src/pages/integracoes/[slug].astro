@@ -1,0 +1,34 @@
+---
+import Layout from '../../components/Layout.astro';
+import { integrations } from '../../data/empresa';
+
+export function getStaticPaths() {
+  return integrations.map((integration) => ({ params: { slug: integration.slug } }));
+}
+
+const { slug } = Astro.params;
+const integration = integrations.find((item) => item.slug === slug);
+if (!integration) throw new Error('Integração não encontrada');
+---
+
+<Layout title={`${integration.title} | Datatransp`} description={`Consulte a equipe Datatransp sobre a integração ${integration.title}.`} currentPath={`/integracoes/${slug}`}>
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <div class="breadcrumbs"><a href="/">Início</a> / <a href="/integracoes">Integrações</a> / <span>{integration.title}</span></div>
+      <h1>{integration.title}</h1>
+      <p>Esta integração consta entre as opções relacionadas ao DataTransp ERP. Consulte nossa equipe para confirmar disponibilidade, escopo e requisitos para sua operação.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="policy-box">
+        <h2>Consulte os detalhes desta integração</h2>
+        <p>Os detalhes técnicos e os parceiros aplicáveis variam conforme a operação e não estão publicados nesta página.</p>
+        <div class="module-cta">
+          <a class="btn btn-primary" href="/contato#agendar-demonstracao">Falar com a equipe</a>
+          <a class="btn btn-secondary" href="/integracoes">Ver todas as integrações</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

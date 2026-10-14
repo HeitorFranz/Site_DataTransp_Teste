@@ -1,0 +1,134 @@
+---
+import Layout from '../components/Layout.astro';
+import { company } from '../data/empresa';
+---
+
+<Layout title="Contato | Datatransp" description="Fale com a Datatransp ou solicite uma demonstração do DataTransp ERP." currentPath="/contato">
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <div class="breadcrumbs"><a href="/">Início</a> / <span>Contato</span></div>
+      <h1>Vamos conversar sobre a sua operação</h1>
+      <p>Envie seu pedido pelo formulário ou escolha um dos nossos canais diretos.</p>
+    </div>
+  </section>
+
+  <section class="section" id="agendar-demonstracao">
+    <div class="container form-grid">
+      <section class="policy-box">
+        <h2>Solicitar uma demonstração</h2>
+        <p>Preencha os dados necessários e enviaremos seu pedido para a equipe comercial.</p>
+        <form class="contact-form" data-contact-form>
+          <input type="hidden" name="type" value="demo" />
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="demo-name">Nome</label>
+              <input id="demo-name" name="name" type="text" autocomplete="name" maxlength="120" required />
+            </div>
+            <div class="form-group">
+              <label for="demo-company">Empresa</label>
+              <input id="demo-company" name="company" type="text" autocomplete="organization" maxlength="160" required />
+            </div>
+            <div class="form-group">
+              <label for="demo-phone">Telefone ou WhatsApp</label>
+              <input id="demo-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" pattern="[+()0-9 .-]{8,24}" maxlength="24" required />
+            </div>
+            <div class="form-group">
+              <label for="demo-email">E-mail</label>
+              <input id="demo-email" name="email" type="email" autocomplete="email" maxlength="254" required />
+            </div>
+            <div class="form-group">
+              <label for="demo-date">Dia preferido (opcional)</label>
+              <input id="demo-date" name="date" type="date" />
+            </div>
+            <div class="form-group">
+              <label for="demo-period">Período preferido (opcional)</label>
+              <select id="demo-period" name="period">
+                <option value="">Sem preferência</option>
+                <option>Manhã</option>
+                <option>Tarde</option>
+              </select>
+            </div>
+            <div class="form-group form-full-width">
+              <label for="demo-interest">Assunto de interesse (opcional)</label>
+              <input id="demo-interest" name="interest" type="text" maxlength="240" />
+            </div>
+            <div class="form-group form-full-width">
+              <label for="demo-notes">Observação (opcional)</label>
+              <textarea id="demo-notes" name="notes" maxlength="2000"></textarea>
+            </div>
+          </div>
+          <div class="form-honeypot" aria-hidden="true">
+            <label for="demo-website">Deixe este campo vazio</label>
+            <input id="demo-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          <label class="consent-label">
+            <input name="consent" type="checkbox" required />
+            <span>Autorizo o uso destes dados para responder ao meu pedido, conforme a <a href="/politica-de-privacidade">Política de Privacidade</a>.</span>
+          </label>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Enviar pedido</button>
+            <a class="btn btn-secondary" href={`https://wa.me/${company.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Olá, quero agendar uma demonstração do DataTransp ERP.')}`} target="_blank" rel="noopener noreferrer">Continuar pelo WhatsApp</a>
+          </div>
+          <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="policy-box" id="ligamos-para-voce">
+        <h2>Peça uma ligação</h2>
+        <p>Informe como podemos identificar você e qual período prefere para receber o contato.</p>
+        <form class="contact-form" data-contact-form>
+          <input type="hidden" name="type" value="callback" />
+          <div class="form-group">
+            <label for="callback-name">Nome</label>
+            <input id="callback-name" name="name" type="text" autocomplete="name" maxlength="120" required />
+          </div>
+          <div class="form-group">
+            <label for="callback-phone">Telefone ou WhatsApp</label>
+            <input id="callback-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" pattern="[+()0-9 .-]{8,24}" maxlength="24" required />
+          </div>
+          <div class="form-group">
+            <label for="callback-time">Período preferido (opcional)</label>
+            <select id="callback-time" name="preferredTime">
+              <option value="">Sem preferência</option>
+              <option>Manhã</option>
+              <option>Tarde</option>
+            </select>
+          </div>
+          <div class="form-honeypot" aria-hidden="true">
+            <label for="callback-website">Deixe este campo vazio</label>
+            <input id="callback-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          <label class="consent-label">
+            <input name="consent" type="checkbox" required />
+            <span>Autorizo o uso destes dados para responder ao meu pedido, conforme a <a href="/politica-de-privacidade">Política de Privacidade</a>.</span>
+          </label>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Solicitar ligação</button>
+          </div>
+          <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </div>
+  </section>
+
+  <section class="section" id="canais-diretos">
+    <div class="container">
+      <h2 class="section-title">Escolha como falar conosco</h2>
+      <div class="contact-grid">
+        <a class="contact-card contact-card-link" href={`tel:${company.phone.replace(/[^0-9]/g, '')}`}>
+          <h3>Telefone</h3>
+          <p>{company.phone}</p>
+        </a>
+        <a class="contact-card contact-card-link" href={`https://wa.me/${company.whatsapp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer">
+          <h3>WhatsApp</h3>
+          <p>{company.whatsapp}</p>
+        </a>
+        <a class="contact-card contact-card-link" href={`mailto:${company.email}`}>
+          <h3>E-mail comercial</h3>
+          <p>{company.email}</p>
+        </a>
+      </div>
+      <p class="address-line"><strong>Sede:</strong> {company.headquarters}</p>
+    </div>
+  </section>
+</Layout>

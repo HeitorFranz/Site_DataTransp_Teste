@@ -1,0 +1,44 @@
+---
+import Layout from '../../components/Layout.astro';
+import { newsItems, activityFilters } from '../../data/empresa';
+const filters = ['Todos', ...activityFilters];
+---
+
+<Layout title="Novidades | Datatransp" description="Atualizações e novos recursos do sistema Datatransp" currentPath="/novidades">
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <div class="breadcrumbs"><a href="/">Início</a> / <span>Novidades</span></div>
+      <h1>Novidades e atualizações do Datatransp</h1>
+      <p>Novidades serão publicadas quando houver atualizações confirmadas para divulgação.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      {newsItems.length ? (
+        <>
+          <div class="news-filter" aria-label="Filtros de novidades">
+            {filters.map((filter) => (
+              <button class:list={['filter-button', { 'is-active': filter === 'Todos' }]} data-filter={filter} aria-pressed={filter === 'Todos'} type="button">
+                {filter}
+              </button>
+            ))}
+          </div>
+          <div class="news-grid">
+            {newsItems.map((item) => (
+              <article class="news-card" data-type={item.type}>
+                <div class="news-meta"><span class="pill">{item.type}</span><span>{item.date}</span></div>
+                <h3>{item.title}</h3>
+                <p>{item.summary}</p>
+                <a class="nav-link" href={`/novidades/${item.slug}`}>Ler atualização</a>
+              </article>
+            ))}
+          </div>
+        </>
+      ) : (
+        <p class="empty-state">Não há novidades confirmadas para publicação neste momento.</p>
+      )}
+    </div>
+  </section>
+
+</Layout>

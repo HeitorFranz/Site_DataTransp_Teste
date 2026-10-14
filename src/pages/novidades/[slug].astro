@@ -1,0 +1,38 @@
+---
+import Layout from '../../components/Layout.astro';
+import { newsItems } from '../../data/empresa';
+
+export function getStaticPaths() {
+  return newsItems.map((item) => ({ params: { slug: item.slug } }));
+}
+
+const { slug } = Astro.params;
+const news = newsItems.find((item) => item.slug === slug);
+if (!news) {
+  throw new Error('Notícia não encontrada');
+}
+---
+
+<Layout title={`${news.title} | Datatransp`} description={news.summary} currentPath={`/novidades/${slug}`}>
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <div class="breadcrumbs"><a href="/">Início</a> / <a href="/novidades">Novidades</a> / <span>{news.title}</span></div>
+      <h1>{news.title}</h1>
+      <div class="news-meta">
+        <span class="pill">{news.module}</span>
+        <span>{news.date}</span>
+        <span>{news.version}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section article-content">
+    <div class="article-body">
+      <p>{news.summary}</p>
+      <p>{news.content}</p>
+      <div class="module-cta">
+        <a class="btn btn-primary" href="/contato#agendar-demonstracao">Quero ver isso funcionando</a>
+      </div>
+    </div>
+  </section>
+</Layout>

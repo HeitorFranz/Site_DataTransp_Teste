@@ -1,0 +1,30 @@
+{
+  "name": "datatransp-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "typecheck": "tsc --noEmit --ignoreConfig --skipLibCheck --target ES2022 --module ESNext --moduleResolution Bundler --lib ES2022,DOM --types node api/contact.ts src/scripts/site.ts src/pages/sitemap.xml.ts src/pages/robots.txt.ts",
+    "vectorize:fama": "node scripts/vectorize-fama-logo.mjs"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "astro": "^7.3.8",
+    "nodemailer": "^10.0.16"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@neplex/vectorizer": "^0.1.0",
+    "@types/node": "^26.6.5",
+    "@types/nodemailer": "^8.0.2",
+    "typescript": "^6.0.3"
+  }
+}

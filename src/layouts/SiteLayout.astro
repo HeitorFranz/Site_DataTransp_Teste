@@ -1,0 +1,81 @@
+---
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import ContactBar from '../components/ContactBar.astro';
+import ChatWidget from '../components/ChatWidget.astro';
+import { company } from '../data/empresa';
+import '../styles/global.css';
+
+const {
+  title = `${company.name} | Soluções para transportadoras e frotas`,
+  description = company.mission,
+  currentPath = '/',
+} = Astro.props;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      name: company.name,
+      legalName: company.legalName,
+      url: Astro.site?.toString() ?? 'https://datatransp.com.br',
+      logo: `${company.siteUrl}/brand/datatransp-logo.png`,
+      taxID: company.cnpj,
+      foundingDate: company.foundation,
+      email: company.email,
+      telephone: company.phone,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: company.headquarters,
+        addressLocality: 'Chapecó',
+        addressRegion: 'SC',
+        addressCountry: 'BR',
+      },
+      sameAs: [company.facebook, company.instagram].filter(Boolean),
+    },
+    {
+      '@type': 'SoftwareApplication',
+      name: 'DataTransp ERP',
+      applicationCategory: 'BusinessApplication',
+      description: 'Sistema de gestão para transportadoras e frotistas.',
+      creator: { '@type': 'Organization', name: company.name },
+    },
+  ],
+};
+---
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#1E232A" />
+    <link rel="canonical" href={Astro.url.toString()} />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={company.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={Astro.url.toString()} />
+    <meta property="og:image" content={`${company.siteUrl}/brand/datatransp-logo.png`} />
+    <meta property="og:image:alt" content="Logotipo da Datatransp" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>{title}</title>
+    <link rel="icon" href="/brand/datatransp-icone.png" type="image/png" />
+    <link rel="alternate" type="application/rss+xml" title="Datatransp Novidades" href="/novidades/feed.xml" />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  </head>
+  <body>
+    <Header currentPath={currentPath} />
+    <main>
+      <slot />
+      <ChatWidget />
+      <ContactBar currentPath={currentPath} />
+    </main>
+    <Footer />
+    <script>
+      import '../scripts/site';
+    </script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+---
+import { company } from '../data/empresa';
+const { currentPath = '/' } = Astro.props;
+const whatsAppUrl = `https://wa.me/${company.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Olá, quero falar com a equipe Datatransp.')}`;
+---
+
+{currentPath !== '/contato' && (
+  <nav class="contact-bar" aria-label="Contato com a Datatransp">
+    <a class="contact-bar-primary" href="/contato#agendar-demonstracao">Agendar demonstração</a>
+    <a class="contact-bar-secondary" href={whatsAppUrl} target="_blank" rel="noopener noreferrer">Falar pelo WhatsApp</a>
+  </nav>
+)}

@@ -1,0 +1,97 @@
+---
+import Layout from '../../components/Layout.astro';
+import { modules, integrations } from '../../data/empresa';
+
+export function getStaticPaths() {
+  return modules.filter((module) => module.confirmed).map((module) => ({ params: { slug: module.slug } }));
+}
+
+const { slug } = Astro.params;
+const module = modules.find((item) => item.slug === slug);
+if (!module) {
+  throw new Error('Módulo não encontrado');
+}
+const relatedIntegrations = integrations.filter((item) =>
+  module.relatedIntegrations.includes(item.title),
+);
+---
+
+<Layout title={`${module.title} | Datatransp`} description={module.summary} currentPath={`/funcionalidades/${slug}`}>
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <div class="breadcrumbs"><a href="/">Início</a> / <a href="/funcionalidades">Funcionalidades</a> / <span>{module.title}</span></div>
+      <h1>{module.title}</h1>
+      <p>{module.summary}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container module-showcase module-detail-showcase">
+      <div>
+        <h2 class="section-title">{module.title} no DataTransp ERP</h2>
+        <p>{module.problem}</p>
+        <ul class="feature-list">
+          {module.whatItDoes.map((item) => <li>{item}</li>)}
+        </ul>
+        <div class="module-cta">
+          <a class="btn btn-primary" href="/contato#agendar-demonstracao">{module.cta}</a>
+        </div>
+      </div>
+
+      {module.slug === 'bi' ? (
+        <figure class="product-image-frame product-image-frame--bi">
+          <img
+            src="/images/product/business-intelligence.jpg"
+            alt="Foto de material institucional do DataTransp BI com diagramas e imagens impressas de relatórios, dashboards e pesquisa."
+            width="830"
+            height="1100"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>Material institucional do DataTransp BI com exemplos visuais impressos.</figcaption>
+        </figure>
+      ) : (
+        <figure class="module-brand-panel">
+          <img src="/brand/datatransp-logo.png" alt="" width="2169" height="725" loading="lazy" decoding="async" />
+          <figcaption>
+            <h3>{module.title}</h3>
+            <p>DataTransp ERP</p>
+          </figcaption>
+        </figure>
+      )}
+    </div>
+  </section>
+
+  {module.documents.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Documentos relacionados ao módulo</h2>
+        <div class="card-grid">
+          {module.documents.map((document) => (
+            <article class="info-card">
+              <h3>{document}</h3>
+              <p>Documento relacionado ao módulo {module.title}.</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {relatedIntegrations.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Consulte detalhes com nossa equipe</h2>
+        <div class="contact-grid">
+          {relatedIntegrations.map((integration) => (
+            <article class="info-card">
+              <h3>{integration.title}</h3>
+              <p>Consulte disponibilidade e escopo desta integração.</p>
+              <a class="nav-link" href={`/integracoes/${integration.slug}`}>Consultar detalhes</a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</Layout>

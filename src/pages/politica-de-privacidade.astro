@@ -1,0 +1,30 @@
+---
+import Layout from '../components/Layout.astro';
+import { company } from '../data/empresa';
+---
+
+<Layout title="Política de privacidade | Datatransp" description="Como a Datatransp trata os dados enviados pelos formulários deste site." currentPath="/politica-de-privacidade">
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <div class="breadcrumbs"><a href="/">Início</a> / <span>Política de privacidade</span></div>
+      <h1>Política de privacidade</h1>
+      <p>Informações sobre os dados enviados pelos canais de contato da Datatransp.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="policy-box">
+        <h2>Controladora e contato</h2>
+        <p>DATATRANSP SISTEMAS LTDA, CNPJ {company.cnpj}, com sede em {company.headquarters}. Para assuntos relacionados à privacidade, escreva para <a href={`mailto:${company.email}`}>{company.email}</a>.</p>
+        <h3>Dados e finalidade</h3>
+        <p>Se você envia um formulário, tratamos os dados informados — como nome, empresa, telefone, e-mail, preferência de contato e mensagem — para receber e responder ao pedido de demonstração ou ligação. O formulário pede autorização para tratar esses dados com essa finalidade. Não usamos o envio para incluir você em campanhas promocionais.</p>
+        <h3>Destinatários e armazenamento</h3>
+        <p>O pedido é encaminhado por e-mail ao canal comercial da Datatransp por meio do serviço de envio configurado para o site. Os dados também podem ser tratados pelos fornecedores técnicos necessários à hospedagem e entrega. Não publicamos um prazo de retenção até que ele seja definido pela empresa; os pedidos devem ser mantidos somente pelo tempo necessário ao atendimento e às obrigações aplicáveis.</p>
+        <h3>Seus direitos</h3>
+        <p>Você pode solicitar confirmação, acesso, correção ou outras providências previstas na legislação aplicável entrando em contato pelo e-mail comercial acima. A identidade poderá ser confirmada antes de responder ao pedido.</p>
+        <h3>Segurança e atualizações</h3>
+        <p>As credenciais de envio devem ser mantidas em variáveis de ambiente do provedor de hospedagem e nunca no código público. Esta página descreve o fluxo implementado no site e deverá ser revista quando os fornecedores, as finalidades ou os prazos forem formalmente definidos.</p>
+      </div>
+    </div>
+  </section>
+</Layout>

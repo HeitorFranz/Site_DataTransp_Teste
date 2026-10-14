@@ -1,0 +1,24 @@
+---
+import { chatConfig } from '../data/chat.config';
+---
+
+<aside class="chat-widget" aria-label="Ajuda Datatransp">
+  <button class="chat-launcher" type="button" aria-expanded="false" aria-controls="chatPanel">
+    Precisa de ajuda?
+  </button>
+  <section class="chat-panel" id="chatPanel" aria-label="Ajuda rápida" hidden>
+    <div class="chat-panel-header">
+      <div>
+        <strong>Ajuda Datatransp</strong>
+        <p>Escolha um assunto para continuar.</p>
+      </div>
+      <button type="button" class="chat-close" aria-label="Fechar ajuda">×</button>
+    </div>
+    <div class="chat-messages" aria-live="polite">
+      <p class="chat-message chat-message-bot">{chatConfig.greeting}</p>
+    </div>
+    <div class="chat-quick-replies">
+      {chatConfig.quickReplies.map((reply) => <button type="button" data-chat-topic={reply.topic}>{reply.label}</button>)}
+    </div>
+  </section>
+</aside>

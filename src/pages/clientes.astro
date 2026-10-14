@@ -1,0 +1,50 @@
+---
+import Layout from '../components/Layout.astro';
+import { company, testimonials } from '../data/empresa';
+---
+
+<Layout title="Clientes | Datatransp" description="Depoimentos de clientes e cobertura da Datatransp." currentPath="/clientes">
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <div class="breadcrumbs"><a href="/">Início</a> / <span>Clientes</span></div>
+      <h1>Empresas de transporte compartilham sua experiência</h1>
+      <p>{company.serviceArea} Os nomes e logotipos exibidos acompanham depoimentos autorizados.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">{company.cities} cidades em {company.states} estados e no DF</h2>
+      <div class="region-chips" aria-label="Estados e Distrito Federal atendidos">
+        {company.statesList.map((state) => <span class="badge">{state}</span>)}
+      </div>
+      <p class="section-note">A lista nominal das cidades não está publicada, pois os nomes ainda não foram confirmados para divulgação.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">O que os clientes dizem sobre o DataTransp</h2>
+      <div class="contact-grid">
+        {testimonials.map((item) => (
+          <article class="testimonial-card">
+            {item.logoAuthorized && item.logo && (
+              <div class="testimonial-logo">
+                <img src={item.logo} alt={`Logo de ${item.company}`} width="240" height="80" loading="lazy" decoding="async" />
+              </div>
+            )}
+            <blockquote>“{item.quote}”</blockquote>
+            <h3>{item.company}</h3>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="container section">
+    <div class="cta-banner">
+      <div><h2>Quer conhecer o sistema?</h2><p>Fale com nossa equipe e solicite uma demonstração.</p></div>
+      <a class="btn btn-primary" href="/contato#agendar-demonstracao">Agendar demonstração</a>
+    </div>
+  </section>
+</Layout>

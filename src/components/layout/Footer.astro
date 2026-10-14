@@ -1,0 +1,55 @@
+---
+import Brand from '../Brand.astro';
+import { company } from '../../data/empresa';
+---
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-about">
+      <Brand footer />
+      <p>
+        Software de gestão para transportadoras e frotistas, desenvolvido para conectar a
+        operação e simplificar a rotina do transporte.
+      </p>
+      <p class="footer-experience"><strong>{company.experienceYears} anos</strong> de experiência no setor</p>
+      <address class="footer-address">{company.headquarters}</address>
+      <p class="footer-company-id">CNPJ {company.cnpj}</p>
+    </div>
+
+    <nav class="footer-navigation" aria-label="Navegação do rodapé">
+      <h2>Navegação rápida</h2>
+      <ul class="footer-links">
+        <li><a href="/funcionalidades">Funcionalidades</a></li>
+        <li><a href="/empresa">Empresa</a></li>
+        <li><a href="/clientes">Clientes</a></li>
+        <li><a href="/novidades">Novidades</a></li>
+        <li><a href="/contato">Contato</a></li>
+      </ul>
+      <h3 class="footer-subheading">Informações</h3>
+      <ul class="footer-links footer-legal-links">
+        <li><a href="/politica-de-privacidade">Privacidade</a></li>
+        <li><a href="/politica-de-cookies">Cookies</a></li>
+        <li><a href="/termos-de-uso">Termos de uso</a></li>
+        <li><a href="/novidades/feed.xml">Feed RSS</a></li>
+      </ul>
+    </nav>
+
+    <div class="footer-support">
+      <h2>Atendimento &amp; suporte</h2>
+      <p class="footer-hours"><strong>Segunda a sexta</strong><span>08h às 18h</span></p>
+      <ul class="footer-links">
+        <li><a href={`tel:${company.phone.replace(/[^0-9]/g, '')}`}>{company.phone}</a></li>
+        <li><a href={`https://wa.me/${company.whatsapp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer">WhatsApp {company.whatsapp}</a></li>
+        <li><a href={`mailto:${company.email}`}>{company.email}</a></li>
+        {company.facebook && <li><a href={company.facebook} target="_blank" rel="noopener noreferrer">Facebook</a></li>}
+        {company.instagram && <li><a href={company.instagram} target="_blank" rel="noopener noreferrer">Instagram</a></li>}
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <p>© {new Date().getFullYear()} {company.legalName}. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>

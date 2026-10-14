@@ -1,0 +1,57 @@
+---
+import Layout from '../components/Layout.astro';
+import { company } from '../data/empresa';
+---
+
+<Layout title="Empresa | Datatransp" description={`${company.legalName}: história, missão, visão e informações da empresa.`} currentPath="/empresa">
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <div class="breadcrumbs"><a href="/">Início</a> / <span>Empresa</span></div>
+      <h1>Experiência em sistemas para transporte desde {company.foundation}</h1>
+      <p>{company.history}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Missão, visão e valores</h2>
+      <div class="values-grid">
+        <article class="value-card"><h3>Missão</h3><p>{company.mission}</p></article>
+        <article class="value-card"><h3>Visão</h3><p>{company.vision}</p></article>
+        <article class="value-card value-card-wide">
+          <h3>Valores</h3>
+          <ul class="list-check">{company.values.map((value) => <li>{value}</li>)}</ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Datatransp Sistemas</h2>
+      <dl class="company-facts">
+        <div><dt>Razão Social</dt><dd>{company.legalName}</dd></div>
+        <div><dt>CNPJ</dt><dd>{company.cnpj}</dd></div>
+        <div><dt>Fundação</dt><dd>{company.foundation}, em Xaxim/SC</dd></div>
+        <div><dt>Experiência</dt><dd>{company.experienceYears} anos</dd></div>
+        <div><dt>Clientes ativos</dt><dd>+{company.activeClients}</dd></div>
+        <div><dt>Equipe</dt><dd>{company.teamSize} especialistas</dd></div>
+        <div><dt>Cobertura</dt><dd>{company.serviceArea}</dd></div>
+        <div><dt>Sede atual</dt><dd>{company.headquarters}</dd></div>
+      </dl>
+      <p class="section-note">A equipe é composta por {company.teamSize} especialistas. Informações individuais não são publicadas sem confirmação e autorização.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Canais da Datatransp</h2>
+      <div class="contact-grid">
+        <a class="contact-card contact-card-link" href={`tel:${company.phone.replace(/[^0-9]/g, '')}`}><h3>Telefone</h3><p>{company.phone}</p></a>
+        <a class="contact-card contact-card-link" href={`https://wa.me/${company.whatsapp.replace(/[^0-9]/g, '')}`}><h3>WhatsApp</h3><p>{company.whatsapp}</p></a>
+        <a class="contact-card contact-card-link" href={`mailto:${company.email}`}><h3>E-mail comercial</h3><p>{company.email}</p></a>
+      </div>
+      <div class="module-cta"><a class="btn btn-primary" href="/contato#agendar-demonstracao">Agendar demonstração</a></div>
+    </div>
+  </section>
+</Layout>
