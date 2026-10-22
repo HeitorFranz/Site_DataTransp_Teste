@@ -1,7 +1,7 @@
 ---
 import { company } from '../data/empresa';
 const { currentPath = '/' } = Astro.props;
-const whatsAppUrl = `https://wa.me/${company.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Olá, quero falar com a equipe Datatransp.')}`;
+const whatsAppUrl = `https://wa.me/55${company.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Olá, quero falar com a equipe Datatransp.')}`;
 ---
 
 {currentPath !== '/contato' && (

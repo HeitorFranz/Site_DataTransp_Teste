@@ -1,159 +1,22 @@
 ---
-import Layout from '../components/Layout.astro';
-import { company, modules, testimonials, newsItems, integrations } from '../data/empresa';
-
-const confirmedModules = modules.filter((module) => module.confirmed);
-const featuredNews = newsItems.slice(0, 3);
+import Layout from '../layouts/SiteLayout.astro';
+import HomeHero from '../components/home/HomeHero.astro';
+import JoinSection from '../components/home/JoinSection.astro';
+import ClientsSection from '../components/home/ClientsSection.astro';
+import CareSection from '../components/home/CareSection.astro';
+import SolutionsSection from '../components/home/SolutionsSection.astro';
+import '../styles/home.css';
 ---
 
-<Layout currentPath="/">
-  <section class="hero">
-    <div class="container hero-panel">
-      <div class="hero-copy">
-        <h1>Gestão de transporte com a experiência de quem conhece o setor</h1>
-        <p>
-          O {company.productName} reúne módulos para apoiar a gestão de empresas de transporte e frotas.
-          Conheça as funcionalidades e converse com nossa equipe sobre sua operação.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="/contato#agendar-demonstracao">Agendar demonstração</a>
-          <a class="btn btn-secondary" href="/funcionalidades">Conhecer funcionalidades</a>
-        </div>
-        <div class="hero-meta">
-          <span class="badge">Desde {company.foundation}</span>
-          <span class="badge">{company.experienceYears} anos de experiência</span>
-        </div>
-      </div>
-      <div class="hero-visual hero-brand-visual">
-        <img src="/brand/datatransp-logo.png" alt="Datatransp — sistema de gestão para transporte" width="2169" height="725" fetchpriority="high" decoding="async" />
-        <p>Desenvolvimento de sistemas para transportadoras e frotistas.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section metrics-section" id="metricas">
-    <div class="container">
-      <h2 class="section-title">Experiência e presença no transporte</h2>
-      <div class="numbers-grid">
-        <div class="metric-card"><strong>{company.experienceYears} anos</strong><span>de experiência, desde {company.foundation}</span></div>
-        <div class="metric-card"><strong>+{company.activeClients}</strong><span>clientes ativos</span></div>
-        <div class="metric-card"><strong>{company.teamSize}</strong><span>especialistas na equipe</span></div>
-        <div class="metric-card"><strong>{company.cities}</strong><span>cidades atendidas</span></div>
-        <div class="metric-card"><strong>{company.states} + DF</strong><span>estados e Distrito Federal</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section modules-section">
-    <div class="container">
-      <h2 class="section-title">Conheça áreas atendidas pelo sistema</h2>
-      <div class="card-grid">
-        {confirmedModules.map((module) => (
-          <article class="module-card">
-            <div class="feature-icon" aria-hidden="true">{module.title.slice(0, 1)}</div>
-            <h3>{module.title}</h3>
-            <p>{module.summary}</p>
-            <ul class="module-list">
-              {module.whatItDoes.map((item) => <li>{item}</li>)}
-            </ul>
-            <a class="nav-link" href={`/funcionalidades/${module.slug}`}>Detalhes do módulo</a>
-          </article>
-        ))}
-      </div>
-      <div class="module-cta">
-        <a class="btn btn-secondary" href="/integracoes">Ver integrações disponíveis</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section coverage-section">
-    <div class="container">
-      <h2 class="section-title">Presença em diferentes regiões</h2>
-      <div class="map-card">
-        <div class="coverage-copy">
-          <p class="coverage-description">
-            Atendemos transportadoras e frotistas em diferentes regiões do país, com presença em:
-          </p>
-          <dl class="coverage-stats">
-            <div>
-              <dt>Cidades atendidas</dt>
-              <dd>{company.cities}</dd>
-            </div>
-            <div>
-              <dt>Estados e Distrito Federal</dt>
-              <dd>{company.states} + DF</dd>
-            </div>
-          </dl>
-          <a class="nav-link" href="/empresa">Conheça a Datatransp</a>
-        </div>
-        <div class="coverage-regions">
-          <h3>Estados e Distrito Federal</h3>
-          <div class="region-chips" aria-label="Estados atendidos e Distrito Federal">
-            {company.statesList.map((state) => <span class="badge">{state}</span>)}
-          </div>
-          <p>Santa Catarina, Mato Grosso, Paraná, Goiás, Piauí, Rio Grande do Sul, Minas Gerais e Distrito Federal.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section testimonials-section">
-    <div class="container">
-      <h2 class="section-title">Experiências compartilhadas por clientes</h2>
-      <div class="contact-grid">
-        {testimonials.map((item) => (
-          <article class="testimonial-card">
-            {item.logoAuthorized && item.logo && (
-              <div class="testimonial-logo">
-                <img src={item.logo} alt={`Logo de ${item.company}`} width="240" height="80" loading="lazy" decoding="async" />
-              </div>
-            )}
-            <p>“{item.quote}”</p>
-            <h3>{item.company}</h3>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="section integrations-section">
-    <div class="container">
-      <h2 class="section-title">Integrações disponíveis no ecossistema</h2>
-      <ul class="integration-list">
-        {integrations.map((integration) => (
-          <li><a href={`/integracoes/${integration.slug}`}>{integration.title}</a></li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <section class="section updates-section">
-    <div class="container">
-      <h2 class="section-title">Atualizações do sistema</h2>
-      {featuredNews.length ? (
-        <div class="news-grid">
-          {featuredNews.map((item) => (
-            <article class="news-card">
-              <div class="news-meta"><span class="pill">{item.type}</span><span>{item.date}</span></div>
-              <h3>{item.title}</h3>
-              <p>{item.summary}</p>
-              <a class="nav-link" href={`/novidades/${item.slug}`}>Ler atualização</a>
-            </article>
-          ))}
-        </div>
-      ) : (
-        <p class="empty-state">Não há atualizações publicadas no momento. Novidades serão exibidas aqui quando estiverem confirmadas.</p>
-      )}
-    </div>
-  </section>
-
-  <section class="container section cta-section">
-    <div class="cta-banner">
-      <div>
-        <h2>Converse com a equipe Datatransp</h2>
-        <p>Solicite uma demonstração do DataTransp ERP ou entre em contato pelos nossos canais.</p>
-      </div>
-      <a class="btn btn-primary" href="/contato#agendar-demonstracao">Solicitar demonstração</a>
-    </div>
-  </section>
+<Layout currentPath="/" bodyClass="page-home">
+  <HomeHero />
+  <JoinSection />
+  <ClientsSection />
+  <CareSection />
+  <SolutionsSection />
 </Layout>
+
+<script>
+  import { initHomeMotion } from '../scripts/home-motion';
+  initHomeMotion();
+</script>

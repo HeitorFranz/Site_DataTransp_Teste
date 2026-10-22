@@ -1,5 +1,5 @@
 ---
-import Layout from '../components/Layout.astro';
+import Layout from '../layouts/SiteLayout.astro';
 import { company, testimonials } from '../data/empresa';
 ---
 
@@ -14,11 +14,7 @@ import { company, testimonials } from '../data/empresa';
 
   <section class="section">
     <div class="container">
-      <h2 class="section-title">{company.cities} cidades em {company.states} estados e no DF</h2>
-      <div class="region-chips" aria-label="Estados e Distrito Federal atendidos">
-        {company.statesList.map((state) => <span class="badge">{state}</span>)}
-      </div>
-      <p class="section-note">A lista nominal das cidades não está publicada, pois os nomes ainda não foram confirmados para divulgação.</p>
+      <h2 class="section-title">Atendemos transportadoras em todo o Brasil</h2>
     </div>
   </section>
 

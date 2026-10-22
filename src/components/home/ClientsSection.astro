@@ -1,0 +1,33 @@
+---
+import ClientLogos from './ClientLogos';
+import { testimonials } from '../../data/empresa';
+
+const logos = testimonials
+  .filter((t) => t.logoAuthorized && t.logo)
+  .map((t) => ({ src: t.logo as string, alt: t.company }));
+
+// o depoimento mais longo ganha destaque
+const [featured, ...others] = [...testimonials].sort((a, b) => b.quote.length - a.quote.length);
+---
+
+<section class="dt-clients" aria-labelledby="clients-title">
+  <div class="dt-wrap">
+    <h2 id="clients-title">Transportadoras que confiam na DataTransp</h2>
+  </div>
+
+  <div class="dt-clients__logos">
+    <ClientLogos client:visible logos={logos} />
+  </div>
+
+  <div class="dt-wrap dt-clients__grid">
+    {[featured, ...others].map((t, i) => (
+      <figure class:list={['dt-quote', { 'dt-quote--featured': i === 0 }]} data-spotlight>
+        {t.logoAuthorized && t.logo && (
+          <span class="dt-quote__logo"><img src={t.logo} alt="" loading="lazy" decoding="async" /></span>
+        )}
+        <blockquote>“{t.quote}”</blockquote>
+        <figcaption>{t.company}</figcaption>
+      </figure>
+    ))}
+  </div>
+</section>

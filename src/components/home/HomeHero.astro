@@ -1,0 +1,29 @@
+---
+import { company } from '../../data/empresa';
+---
+
+<section class="dt-hero" aria-labelledby="hero-title">
+  <div class="dt-hero__stage">
+    <div class="dt-lead">
+      <h1 id="hero-title" class="dt-say" data-hero-lead>{company.experienceYears} anos de experiência em software para transportadoras</h1>
+    </div>
+
+    <div class="dt-map" data-home-map>
+      <div class="dt-map__tilt" data-tilt>
+        <canvas role="img" aria-label="Mapa do Brasil com rotas saindo de Chapecó para todas as regiões do país"></canvas>
+      </div>
+      <p class="dt-map__caption" data-hero-caption><i aria-hidden="true"></i>De Chapecó, SC, para <strong>todo o Brasil</strong></p>
+    </div>
+
+    <div class="dt-claim">
+      <span class="dt-claim__tag" data-hero-tag>DataTransp:</span>
+      <p class="dt-say dt-claim__text" data-hero-claim>Ao lado de quem move o Brasil.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initHomeMap } from '../../scripts/home-map';
+  const box = document.querySelector<HTMLElement>('[data-home-map]');
+  if (box) initHomeMap(box);
+</script>

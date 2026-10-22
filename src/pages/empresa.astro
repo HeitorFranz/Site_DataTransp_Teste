@@ -1,5 +1,5 @@
 ---
-import Layout from '../components/Layout.astro';
+import Layout from '../layouts/SiteLayout.astro';
 import { company } from '../data/empresa';
 ---
 
@@ -34,7 +34,6 @@ import { company } from '../data/empresa';
         <div><dt>CNPJ</dt><dd>{company.cnpj}</dd></div>
         <div><dt>Fundação</dt><dd>{company.foundation}, em Xaxim/SC</dd></div>
         <div><dt>Experiência</dt><dd>{company.experienceYears} anos</dd></div>
-        <div><dt>Clientes ativos</dt><dd>+{company.activeClients}</dd></div>
         <div><dt>Equipe</dt><dd>{company.teamSize} especialistas</dd></div>
         <div><dt>Cobertura</dt><dd>{company.serviceArea}</dd></div>
         <div><dt>Sede atual</dt><dd>{company.headquarters}</dd></div>
@@ -48,7 +47,7 @@ import { company } from '../data/empresa';
       <h2 class="section-title">Canais da Datatransp</h2>
       <div class="contact-grid">
         <a class="contact-card contact-card-link" href={`tel:${company.phone.replace(/[^0-9]/g, '')}`}><h3>Telefone</h3><p>{company.phone}</p></a>
-        <a class="contact-card contact-card-link" href={`https://wa.me/${company.whatsapp.replace(/[^0-9]/g, '')}`}><h3>WhatsApp</h3><p>{company.whatsapp}</p></a>
+        <a class="contact-card contact-card-link" href={`https://wa.me/55${company.whatsapp.replace(/[^0-9]/g, '')}`}><h3>WhatsApp</h3><p>{company.whatsapp}</p></a>
         <a class="contact-card contact-card-link" href={`mailto:${company.email}`}><h3>E-mail comercial</h3><p>{company.email}</p></a>
       </div>
       <div class="module-cta"><a class="btn btn-primary" href="/contato#agendar-demonstracao">Agendar demonstração</a></div>

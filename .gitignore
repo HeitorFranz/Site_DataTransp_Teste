@@ -3,3 +3,9 @@ dist/
 .astro/
 .vercel/
 .vercel
+
+# Local secrets
+.env
+.env.*
+!.env.example
+.superpowers/

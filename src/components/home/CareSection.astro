@@ -1,0 +1,35 @@
+---
+import Icon from './Icon.astro';
+import WhatsAppIcon from './WhatsAppIcon.astro';
+import { company } from '../../data/empresa';
+
+const whatsAppUrl = `https://wa.me/55${company.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Olá, quero falar com a equipe Datatransp.')}`;
+---
+
+<section class="dt-care" aria-labelledby="care-title">
+  <div class="dt-wrap dt-care__grid">
+    <div class="dt-care__photo">
+      <img src="/images/home/suporte.webp" alt="Atendente de suporte com headset, sorrindo" width="1200" height="800" loading="lazy" decoding="async" />
+      <a class="dt-care__float" href={whatsAppUrl} target="_blank" rel="noopener noreferrer">
+        <span class="dt-care__wa"><WhatsAppIcon size={22} /></span>
+        <span><strong>{company.whatsapp}</strong>Suporte pelo WhatsApp</span>
+      </a>
+    </div>
+
+    <div>
+      <h2 id="care-title">Treinamento completo e suporte de verdade</h2>
+      <p class="dt-care__text">Com a DataTransp, sua equipe recebe treinamento completo para utilizar o sistema com confiança e aproveitar melhor cada recurso. E você não fica sozinho: nosso suporte está pronto para atender às suas demandas, esclarecer dúvidas e ajudar a resolver problemas com agilidade, pelo WhatsApp ou telefone.</p>
+
+      <ol class="dt-care__steps">
+        <li><span class="dt-care__n" aria-hidden="true">1</span><div><h3>Implantação com treinamento</h3><p>Sua equipe aprende a usar cada recurso do sistema.</p></div></li>
+        <li><span class="dt-care__n" aria-hidden="true">2</span><div><h3>Suporte no dia a dia</h3><p>Dúvidas e problemas resolvidos pelo WhatsApp ou pelo telefone {company.phone}.</p></div></li>
+      </ol>
+
+      <div class="dt-actions">
+        <a class="dt-btn dt-btn--red" href="/contato#agendar-demonstracao">Agendar demonstração</a>
+        <a class="dt-btn dt-btn--light" href={whatsAppUrl} target="_blank" rel="noopener noreferrer"><WhatsAppIcon /> Chamar no WhatsApp</a>
+        <a class="dt-btn dt-btn--text" href={`tel:+55${company.phone.replace(/[^0-9]/g, '')}`}><Icon name="phone" size={18} /> {company.phone}</a>
+      </div>
+    </div>
+  </div>
+</section>

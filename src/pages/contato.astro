@@ -1,9 +1,9 @@
 ---
-import Layout from '../components/Layout.astro';
+import Layout from '../layouts/SiteLayout.astro';
 import { company } from '../data/empresa';
 ---
 
-<Layout title="Contato | Datatransp" description="Fale com a Datatransp ou solicite uma demonstração do DataTransp ERP." currentPath="/contato">
+<Layout title="Contato | Datatransp" description="Fale com a Datatransp ou solicite uma demonstração do DataTransp." currentPath="/contato">
   <section class="page-hero">
     <div class="container page-hero-inner">
       <div class="breadcrumbs"><a href="/">Início</a> / <span>Contato</span></div>
@@ -67,7 +67,7 @@ import { company } from '../data/empresa';
           </label>
           <div class="form-actions">
             <button class="btn btn-primary" type="submit">Enviar pedido</button>
-            <a class="btn btn-secondary" href={`https://wa.me/${company.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Olá, quero agendar uma demonstração do DataTransp ERP.')}`} target="_blank" rel="noopener noreferrer">Continuar pelo WhatsApp</a>
+            <a class="btn btn-secondary" href={`https://wa.me/55${company.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Olá, quero agendar uma demonstração do DataTransp.')}`} target="_blank" rel="noopener noreferrer">Continuar pelo WhatsApp</a>
           </div>
           <p class="form-status" data-form-status role="status" aria-live="polite"></p>
         </form>
@@ -119,7 +119,7 @@ import { company } from '../data/empresa';
           <h3>Telefone</h3>
           <p>{company.phone}</p>
         </a>
-        <a class="contact-card contact-card-link" href={`https://wa.me/${company.whatsapp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer">
+        <a class="contact-card contact-card-link" href={`https://wa.me/55${company.whatsapp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer">
           <h3>WhatsApp</h3>
           <p>{company.whatsapp}</p>
         </a>

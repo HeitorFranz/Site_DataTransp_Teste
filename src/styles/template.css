@@ -10,8 +10,8 @@
   --border: #10274615;
   --shadow-sm: 0 2px 4px rgba(27, 54, 93, 0.05);
   --shadow-md: 0 10px 25px -5px rgba(27, 54, 93, 0.1);
-  --font-heading: 'Plus Jakarta Sans', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Archivo', sans-serif;
+  --font-body: 'Barlow', sans-serif;
 }
 
 *,
@@ -164,20 +164,6 @@ a {
 .section-title {
   font-size: 2rem;
   margin-bottom: 0.75rem;
-}
-
-.module-card {
-  background: var(--bg-light);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.75rem;
-  transition: all 0.3s ease;
-}
-
-.module-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--orange);
-  box-shadow: var(--shadow-md);
 }
 
 /* FAQ ACCORDION */

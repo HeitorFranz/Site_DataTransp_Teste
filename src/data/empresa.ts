@@ -4,11 +4,7 @@ export const company = {
   cnpj: '07.023.901/0001-48',
   foundation: '1997',
   experienceYears: 29,
-  activeClients: 110,
   teamSize: 9,
-  states: 7,
-  cities: 42,
-  statesList: ['SC', 'MT', 'PR', 'GO', 'PI', 'RS', 'MG', 'DF'],
   headquarters: 'Rua Nereu Ramos, 75 D, Centro, Chapecó/SC',
   phone: '(49) 3329-8293',
   whatsapp: '(49) 98904-5534',
@@ -25,10 +21,10 @@ export const company = {
     'Inovação',
   ],
   history:
-    'A Datatransp foi fundada em 1997, em Xaxim/SC, e hoje tem sede em Chapecó/SC. O DataTransp ERP é um sistema integrado de gestão para o segmento de transportes. Em 2026, a empresa completa 29 anos de experiência.',
+    'A Datatransp foi fundada em 1997, em Xaxim/SC, e hoje tem sede em Chapecó/SC. O DataTransp é um sistema integrado de gestão para o segmento de transportes. Em 2026, a empresa completa 29 anos de experiência.',
   serviceArea:
-    'Atendemos transportadoras e frotistas em 42 cidades distribuídas em 7 estados e no Distrito Federal.',
-  productName: 'DataTransp ERP',
+    'Atendemos transportadoras e frotistas em todo o Brasil.',
+  productName: 'DataTransp',
   siteUrl: 'https://datatransp.com.br',
 };
 

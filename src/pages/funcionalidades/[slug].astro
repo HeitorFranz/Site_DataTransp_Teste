@@ -1,5 +1,5 @@
 ---
-import Layout from '../../components/Layout.astro';
+import Layout from '../../layouts/SiteLayout.astro';
 import { modules, integrations } from '../../data/empresa';
 
 export function getStaticPaths() {
@@ -28,7 +28,7 @@ const relatedIntegrations = integrations.filter((item) =>
   <section class="section">
     <div class="container module-showcase module-detail-showcase">
       <div>
-        <h2 class="section-title">{module.title} no DataTransp ERP</h2>
+        <h2 class="section-title">{module.title} no DataTransp</h2>
         <p>{module.problem}</p>
         <ul class="feature-list">
           {module.whatItDoes.map((item) => <li>{item}</li>)}
@@ -55,7 +55,7 @@ const relatedIntegrations = integrations.filter((item) =>
           <img src="/brand/datatransp-logo.png" alt="" width="2169" height="725" loading="lazy" decoding="async" />
           <figcaption>
             <h3>{module.title}</h3>
-            <p>DataTransp ERP</p>
+            <p>DataTransp</p>
           </figcaption>
         </figure>
       )}

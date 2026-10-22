@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
 
 export default defineConfig({
   site: 'https://datatransp.com.br',
@@ -7,4 +8,5 @@ export default defineConfig({
   vite: {
     tsconfig: 'tsconfig.json',
   },
+  integrations: [react()],
 });

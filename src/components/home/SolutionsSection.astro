@@ -1,0 +1,41 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+import { modules } from '../../data/empresa';
+
+const confirmed = modules.filter((m) => m.confirmed);
+// tamanhos no mosaico: Fiscal grande, BI e Alertas largos
+const layout: Record<string, string> = { fiscal: 'dt-module--feature', bi: 'dt-module--wide', alertas: 'dt-module--wide' };
+---
+
+<section class="dt-solutions" aria-labelledby="solutions-title">
+  <div class="dt-wrap">
+    <div class="dt-solutions__head">
+      <h2 id="solutions-title" class="dt-solutions__title">Conheça as soluções da DataTransp</h2>
+      <div>
+        <h3>Tudo o que sua transportadora precisa para evoluir, em um só lugar.</h3>
+        <p>Simplifique processos, centralize informações e tenha mais controle sobre sua transportadora. <strong>Conheça o sistema DataTransp</strong> e descubra como facilitar sua gestão e impulsionar o crescimento do seu negócio.</p>
+      </div>
+    </div>
+
+    <div class="dt-modules">
+      {confirmed.map((m) => (
+        <a class:list={['dt-module', layout[m.slug]]} href={`/funcionalidades/${m.slug}`} data-spotlight>
+          <span class="dt-module__top">
+            <span class="dt-badge dt-badge--navy"><Icon name={m.slug as IconName} /></span>
+            <span class="dt-module__name">{m.title}</span>
+          </span>
+          <span class="dt-module__text">{m.summary}</span>
+          {m.slug === 'fiscal' && (
+            <ul class="dt-module__list">{m.whatItDoes.map((item) => <li>{item}</li>)}</ul>
+          )}
+          <span class="dt-module__more">Ver detalhes</span>
+        </a>
+      ))}
+    </div>
+
+    <div class="dt-actions">
+      <a class="dt-btn dt-btn--navy" href="/funcionalidades">Ver todas as funcionalidades</a>
+      <a class="dt-btn dt-btn--red" href="/contato#agendar-demonstracao">Agendar demonstração</a>
+    </div>
+  </div>
+</section>

@@ -1,5 +1,5 @@
 ---
-import Layout from '../../components/Layout.astro';
+import Layout from '../../layouts/SiteLayout.astro';
 import { integrations } from '../../data/empresa';
 
 export function getStaticPaths() {
@@ -16,7 +16,7 @@ if (!integration) throw new Error('Integração não encontrada');
     <div class="container page-hero-inner">
       <div class="breadcrumbs"><a href="/">Início</a> / <a href="/integracoes">Integrações</a> / <span>{integration.title}</span></div>
       <h1>{integration.title}</h1>
-      <p>Esta integração consta entre as opções relacionadas ao DataTransp ERP. Consulte nossa equipe para confirmar disponibilidade, escopo e requisitos para sua operação.</p>
+      <p>Esta integração consta entre as opções relacionadas ao DataTransp. Consulte nossa equipe para confirmar disponibilidade, escopo e requisitos para sua operação.</p>
     </div>
   </section>
   <section class="section">
