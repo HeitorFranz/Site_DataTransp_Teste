@@ -27,7 +27,7 @@ h1,
 h2,
 h3,
 h4 {
-  color: var(--navy);
+  color: var(--heading);
 }
 
 .header {
@@ -68,7 +68,7 @@ h4 {
   min-height: 2.75rem;
   align-items: center;
   gap: 0.85rem;
-  color: var(--navy);
+  color: var(--heading);
   font-size: 0.84rem;
   font-weight: 700;
 }
@@ -80,8 +80,8 @@ h4 {
 
 .btn-secondary {
   background: transparent;
-  color: var(--navy);
-  border: 2px solid var(--navy);
+  color: var(--heading);
+  border: 2px solid var(--heading);
   box-shadow: none;
 }
 
@@ -120,7 +120,7 @@ h4 {
 .policy-box,
 .article-body {
   min-width: 0;
-  background: #fff;
+  background: var(--paper);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: clamp(1.25rem, 2.8vw, 1.75rem);
@@ -134,6 +134,12 @@ h4 {
 .testimonial-card h3 {
   margin: 0 0 0.65rem;
   font-size: 1.15rem;
+}
+
+.testimonial-role {
+  margin: -0.4rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
 }
 
 .news-card p,
@@ -229,7 +235,7 @@ h4 {
   align-items: center;
   gap: clamp(2rem, 6vw, 5rem);
   padding: clamp(1.5rem, 4vw, 3rem);
-  background: #fff;
+  background: var(--paper);
   border: 1px solid var(--border);
   border-radius: 12px;
 }
@@ -307,7 +313,7 @@ h4 {
 }
 
 .contact-bar .contact-bar-secondary:hover {
-  color: var(--brand-navy);
+  color: var(--heading);
   text-decoration-color: currentColor;
 }
 
@@ -341,7 +347,7 @@ h4 {
   padding: 0.3rem 0.65rem;
   border-radius: 999px;
   background: rgb(16 39 70 / 8%);
-  color: var(--navy);
+  color: var(--heading);
   font-size: 0.8rem;
   font-weight: 700;
 }
@@ -360,21 +366,21 @@ h4 {
   padding: 0.55rem 0.85rem;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: #fff;
-  color: var(--navy);
+  background: var(--paper);
+  color: var(--heading);
   font-weight: 700;
   cursor: pointer;
 }
 
 .filter-button.is-active {
   background: var(--navy);
-  border-color: var(--navy);
+  border-color: var(--heading);
   color: #fff;
 }
 
 .page-hero {
   padding: clamp(3rem, 7vw, 5rem) 0 1rem;
-  background: linear-gradient(135deg, #fff 0%, var(--paper-tint) 100%);
+  background: linear-gradient(135deg, var(--paper) 0%, var(--paper-tint) 100%);
 }
 
 .page-hero-inner {
@@ -402,7 +408,7 @@ h4 {
 
 .breadcrumbs a,
 .nav-link {
-  color: var(--navy);
+  color: var(--heading);
   font-weight: 700;
 }
 
@@ -429,7 +435,7 @@ h4 {
 .form-group label {
   display: block;
   margin-bottom: 0.35rem;
-  color: var(--navy);
+  color: var(--heading);
   font-weight: 600;
 }
 
@@ -441,7 +447,7 @@ h4 {
   padding: 0.75rem;
   border: 1px solid var(--border);
   border-radius: 6px;
-  background: #fff;
+  background: var(--paper);
   color: var(--text-main);
 }
 
@@ -574,7 +580,7 @@ h4 {
 .btn-orange,
 .btn-primary {
   background: var(--brand-red);
-  color: var(--paper);
+  color: #fff;
 }
 
 .btn-orange:hover,
@@ -593,7 +599,7 @@ h4 {
 
 .header .nav-link,
 .header .nav-socials {
-  color: var(--brand-navy);
+  color: var(--heading);
 }
 
 .header .nav-link:hover,
@@ -625,7 +631,7 @@ h4 {
 
 .btn-secondary:hover {
   background: var(--brand-charcoal);
-  color: var(--paper);
+  color: #fff;
 }
 
 .info-card,
@@ -684,7 +690,7 @@ a:focus-visible {
 }
 
 .consent-label input:focus-visible {
-  outline: 3px solid var(--brand-navy);
+  outline: 3px solid var(--heading);
   outline-offset: 3px;
 }
 
@@ -697,7 +703,7 @@ a:focus-visible {
 .form-status {
   min-height: 1.5rem;
   margin: 1rem 0 0;
-  color: var(--brand-charcoal);
+  color: var(--heading);
   font-weight: 600;
 }
 
@@ -801,7 +807,7 @@ a:focus-visible {
 }
 
 .chat-launcher:hover {
-  color: var(--brand-navy);
+  color: var(--heading);
   text-decoration-color: currentColor;
 }
 
@@ -887,7 +893,7 @@ a:focus-visible {
   border: 1px solid var(--line);
   border-radius: 0.5rem;
   background: var(--paper);
-  color: var(--brand-charcoal);
+  color: var(--heading);
   cursor: pointer;
   font: inherit;
   text-align: left;
@@ -1117,7 +1123,7 @@ body {
 .hero .btn-secondary:hover {
   border-color: #fff;
   background: #fff;
-  color: var(--brand-navy);
+  color: var(--heading);
 }
 
 .section {
@@ -1145,7 +1151,7 @@ body {
   padding: clamp(1.5rem, 4vw, 3.25rem);
   border-color: var(--line);
   border-radius: var(--radius-panel);
-  background: #fff;
+  background: var(--paper);
   box-shadow: var(--shadow-sm);
 }
 
@@ -1163,7 +1169,7 @@ body {
 .contact-card,
 .info-card,
 .value-card {
-  background: #fff;
+  background: var(--paper);
 }
 
 .cta-banner {
@@ -1201,7 +1207,7 @@ body {
 .form-group textarea {
   min-height: 48px;
   border-radius: 8px;
-  background: #fff;
+  background: var(--paper);
   transition:
     border-color 160ms var(--ease-out),
     box-shadow 160ms var(--ease-out);
@@ -1244,7 +1250,7 @@ body {
 
 .chat-launcher {
   padding-inline: 0.5rem;
-  color: var(--brand-navy);
+  color: var(--heading);
 }
 
 .chat-launcher:hover {
@@ -1483,7 +1489,7 @@ body {
 }
 
 .functionality-module-title {
-  color: var(--brand-navy);
+  color: var(--heading);
   font-size: 1.15rem;
   font-weight: 800;
 }
@@ -1501,7 +1507,7 @@ body {
   place-items: center;
   border: 1px solid var(--line);
   border-radius: 50%;
-  color: var(--brand-navy);
+  color: var(--heading);
   font-size: 1.4rem;
   line-height: 1;
   transition: transform 220ms var(--ease-out), color 220ms var(--ease-out);
@@ -1587,7 +1593,7 @@ body {
 .integration-callout .nav-link:hover {
   border-color: #fff;
   background: #fff;
-  color: var(--brand-navy);
+  color: var(--heading);
 }
 
 .module-showcase > .module-brand-panel {
@@ -1848,7 +1854,7 @@ button:disabled {
 
 ::selection {
   background: rgb(16 39 70 / 16%);
-  color: var(--brand-navy);
+  color: var(--heading);
 }
 
 @supports (animation-timeline: view()) and (animation-range: entry 0% entry 100%) {
@@ -1901,5 +1907,68 @@ button:disabled {
   .chat-widget {
     align-items: center;
     margin-bottom: 1rem;
+  }
+}
+
+/* ---------- tema escuro: segue a preferência do aparelho ---------- */
+:root {
+  --heading: var(--brand-navy);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper: #0b1a33;
+    --paper-tint: #07142b;
+    --ink: #e6edf7;
+    --ink-soft: #a9b8cf;
+    --line: rgb(255 255 255 / 12%);
+    --heading: #f2f6fc;
+    --brand-red-soft: #3a0d12;
+    --shadow-sm: 0 2px 8px rgb(0 0 0 / 30%);
+    --shadow-md: 0 12px 32px rgb(0 0 0 / 40%);
+    --focus-ring: 0 0 0 3px rgb(255 120 118 / 45%);
+  }
+
+  .header,
+  .header.is-scrolled {
+    background: rgb(11 26 51 / 94%);
+  }
+}
+
+/* ---------- menu: animado no computador, sanduíche no celular ---------- */
+.nav-desktop,
+.nav-desktop-cta {
+  display: none;
+}
+
+@media (min-width: 1001px) {
+  .nav-mobile {
+    display: none;
+  }
+
+  .nav-desktop {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .nav-desktop-cta {
+    display: inline-flex;
+    flex: none;
+  }
+}
+
+/* telas médias (notebook pequeno, tablet deitado): menu e botão mais compactos */
+@media (min-width: 1001px) and (max-width: 1200px) {
+  .nav-desktop .mnm__trigger,
+  .nav-desktop .mnm__list > .mnm__item > .mnm__link {
+    padding-inline: 9px;
+  }
+
+  .nav-desktop-cta {
+    padding-inline: 14px;
+    font-size: 14px;
   }
 }

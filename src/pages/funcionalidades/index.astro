@@ -1,96 +1,73 @@
 ---
 import Layout from '../../layouts/SiteLayout.astro';
+import Icon, { type IconName } from '../../components/home/Icon.astro';
+import ModuloIlustracao from '../../components/modulos/ModuloIlustracao.astro';
 import { modules } from '../../data/empresa';
+import { explicacoes } from '../../data/modulos-detalhes';
+import '../../styles/modulo.css';
+
 const confirmedModules = modules.filter((module) => module.confirmed);
 ---
 
-<Layout title="Funcionalidades | Datatransp" description="Conheça os módulos da Datatransp" currentPath="/funcionalidades">
-  <section class="page-hero">
-    <div class="container page-hero-inner">
-      <div class="breadcrumbs"><a href="/">Início</a> / <span>Funcionalidades</span></div>
-      <h1>Funcionalidades pensadas para a operação real do transporte</h1>
-      <p>Consulte os módulos com informações confirmadas e fale com nossa equipe para conhecer a aplicação à sua operação.</p>
+<Layout title="Funcionalidades | Datatransp" description="Conheça os módulos do DataTransp: fiscal, financeiro, manutenção, pneus, combustíveis e Arla, alertas e BI." currentPath="/funcionalidades" bodyClass="page-modulo">
+  <nav class="md-switch" aria-label="Módulos do DataTransp">
+    <div class="container md-switch__inner">
+      {confirmedModules.map((m) => (
+        <a href={`#${m.slug}`}><Icon name={m.slug as IconName} size={17} />{m.title}</a>
+      ))}
+    </div>
+  </nav>
+
+  <section class="md-hero">
+    <div class="container md-hero__grid">
+      <div>
+        <div class="breadcrumbs"><a href="/">Início</a> / <span>Funcionalidades</span></div>
+        <h1>Funcionalidades</h1>
+        <p class="md-lead">Os módulos do DataTransp cobrem a rotina da transportadora: documentos fiscais, financeiro, frota e indicadores. Veja o que cada um faz, em poucas palavras.</p>
+        <div class="md-actions">
+          <a class="btn btn-primary" href="/contato#agendar-demonstracao">Agendar demonstração</a>
+          <a class="md-wa-link" href="/integracoes">Ver integrações</a>
+        </div>
+      </div>
+      <figure class="md-photo md-photo--hero">
+        <img src="/images/product/gtf-overview.jpg" alt="Material institucional do DataTransp GTF com um caminhão e um diagrama dos módulos." width="680" height="1170" loading="eager" decoding="async" />
+        <figcaption>Material institucional com a visão geral dos módulos.</figcaption>
+      </figure>
     </div>
   </section>
 
-  <section class="section functionality-overview">
-    <div class="container">
-      <div class="module-showcase">
+  {confirmedModules.map((m, idx) => (
+    <section id={m.slug} class:list={['md-section', 'md-feature', { 'md-section--soft': idx % 2 === 0, 'md-feature--flip': idx % 2 === 1 }]}>
+      <div class="container md-does-grid">
         <div>
-          <h2 class="section-title">Uma plataforma integrada para gerir a operação com mais clareza</h2>
-          <ul class="feature-list">
-            <li>Emissão e recepção de documentos fiscais e integração com SPED</li>
-            <li>Gestão financeira, faturamento e integração contábil</li>
-            <li>Controle de manutenção e pneus da frota</li>
-            <li>BI com visões prontas e personalizadas</li>
+          <p class="md-cat"><span class="md-cat__icon"><Icon name={m.slug as IconName} size={20} /></span>{m.category}</p>
+          <h2>{m.title}</h2>
+          <p class="md-feature__lead">{m.summary}</p>
+          <ul class="md-does">
+            {m.whatItDoes.map((item, i) => (
+              <li>
+                <span class="md-does__n">{String(i + 1).padStart(2, '0')}</span>
+                <div><h3>{item}</h3>{explicacoes[m.slug]?.[i] && <p>{explicacoes[m.slug][i]}</p>}</div>
+              </li>
+            ))}
           </ul>
+          <a class="md-more" href={`/funcionalidades/${m.slug}`}>Conhecer o módulo {m.title}</a>
         </div>
-
-        <figure class="product-image-frame product-image-frame--gtf">
-          <img
-            src="/images/product/gtf-overview.jpg"
-            alt="Foto de um material institucional do DataTransp GTF com um caminhão e um diagrama dos módulos."
-            width="680"
-            height="1170"
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption>Material institucional com uma visão geral dos módulos do DataTransp GTF.</figcaption>
-        </figure>
+        <ModuloIlustracao slug={m.slug} title={m.title} />
       </div>
-    </div>
-  </section>
+    </section>
+  ))}
 
-  <section class="section functionality-modules">
+  <section class="md-section">
     <div class="container">
-      <h2 class="section-title">Explore as principais áreas do sistema</h2>
-      <div class="functionality-module-layout">
-        <figure class="product-image-frame product-image-frame--features">
-          <img
-            src="/images/product/system-features.jpg"
-            alt="Foto de um folheto Datatransp com referências visuais a telas de pneus, alertas, combustíveis e documentos eletrônicos."
-            width="1040"
-            height="620"
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption>Folheto institucional com imagens de referência do sistema e recursos descritos pela Datatransp.</figcaption>
-        </figure>
-
-        <div class="functionality-module-list">
-          {confirmedModules.map((module, index) => (
-            <details class="functionality-module" name="functionality-modules" open={index === 0}>
-              <summary>
-                <span class="feature-icon" aria-hidden="true">{module.title.slice(0, 1)}</span>
-                <span class="functionality-module-copy">
-                  <span class="functionality-module-title">{module.title}</span>
-                  <span class="functionality-module-summary">{module.summary}</span>
-                </span>
-                <span class="functionality-module-indicator" aria-hidden="true">+</span>
-              </summary>
-              <div class="functionality-module-details">
-                <ul class="module-list">
-                  {module.whatItDoes.map((item) => <li>{item}</li>)}
-                </ul>
-                <a class="nav-link" href={`/funcionalidades/${module.slug}`}>Conhecer módulo</a>
-              </div>
-            </details>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section functionality-integrations">
-    <div class="container">
-      <div class="integration-callout">
+      <div class="md-help">
+        <img src="/images/home/atendente-avatar.webp" alt="" width="160" height="160" loading="lazy" decoding="async" />
         <div>
-          <h2 class="section-title">Mais agilidade para o setor e para a sua operação</h2>
-          <h3>Detalhes sob consulta</h3>
-          <p>Consulte a equipe para confirmar o escopo das integrações disponíveis para sua operação.</p>
+          <h2>Quer ver os módulos funcionando?</h2>
+          <p>Nossa equipe mostra o DataTransp com a rotina da sua transportadora e tira suas dúvidas.</p>
         </div>
-        <div>
-          <a class="nav-link" href="/integracoes">Ver integrações</a>
+        <div class="md-help__actions">
+          <a class="btn btn-primary" href="/contato#agendar-demonstracao">Agendar demonstração</a>
         </div>
       </div>
     </div>

@@ -1,0 +1,42 @@
+/* Conteúdo dos painéis do menu principal (SiteNav). */
+.sn .mnm__trigger.is-current { color: var(--brand-red, #e90705); }
+
+.sn-icon { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.sn-arrow { flex: none; transition: transform .2s; }
+
+/* painel de funcionalidades: grupos de módulos + cartão de atendimento + rodapé */
+.sn-panel--modules { display: grid; grid-template-columns: 500px 250px; grid-template-areas: "groups human" "all all"; gap: 6px 14px; }
+.sn-groups { grid-area: groups; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 8px; align-content: start; }
+.sn-group { display: grid; align-content: start; gap: 2px; }
+.sn-group__label { margin: 6px 12px 4px; font-size: 12.5px; font-weight: 600; color: var(--ink-soft, #55667d); }
+
+.sn .sn-row { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: center; padding: 8px 12px; }
+.sn-row__icon { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; background: color-mix(in srgb, var(--heading, #102746) 7%, transparent); color: var(--heading, #102746); transition: background-color .15s, color .15s; }
+.sn-row__body { display: grid; gap: 1px; min-width: 0; }
+.sn-row__body strong { font: 700 14.5px/1.25 var(--font-heading, sans-serif); color: var(--heading, #102746); }
+.sn-row__body small { font-size: 13px; line-height: 1.35; color: var(--ink-soft, #55667d); white-space: nowrap; }
+.sn .sn-row[data-active] .sn-row__body strong { color: var(--brand-red, #e90705); }
+.sn .sn-row:hover .sn-row__icon { background: var(--brand-red, #e90705); color: #fff; }
+
+/* cartão humano: foto da equipe de atendimento e contato direto */
+.sn-human { grid-area: human; display: grid; align-content: start; gap: 8px; padding: 18px; border-radius: 12px; background: color-mix(in srgb, var(--heading, #102746) 5%, transparent); }
+.sn-human img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 3px var(--paper, #fff); }
+.sn-human__title { margin: 4px 0 0; font: 700 16px/1.25 var(--font-heading, sans-serif); color: var(--heading, #102746); }
+.sn-human__text { margin: 0 0 6px; font-size: 13.5px; line-height: 1.45; color: var(--ink-soft, #55667d); }
+.sn .sn-human__cta { display: flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 14px; border-radius: 8px; background: var(--brand-red, #e90705); color: #fff; font-weight: 600; font-size: 14px; }
+.sn .sn-human__cta:hover { background: #c80705; }
+.sn .sn-human__wa { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 8px; padding: 8px; font-weight: 600; font-size: 14px; color: #15803d; }
+
+/* rodapé do painel */
+.sn .sn-all { grid-area: all; flex-direction: row; align-items: center; justify-content: space-between; margin-top: 4px; padding: 12px; border-top: 1px solid var(--line, #dce3ec); border-radius: 0 0 10px 10px; font-weight: 600; font-size: 14.5px; color: var(--heading, #102746); }
+.sn .sn-all:hover .sn-arrow { transform: translateX(3px); }
+
+/* painel da empresa */
+.sn-panel--company { width: 320px; display: grid; gap: 6px; }
+.sn-hours { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; padding: 12px; border-top: 1px solid var(--line, #dce3ec); }
+.sn-hours p { margin: 0; font-size: 13px; line-height: 1.4; color: var(--ink-soft, #55667d); }
+.sn-hours strong { display: block; color: var(--heading, #102746); font-size: 13px; }
+
+@media (prefers-color-scheme: dark) {
+  .sn .sn-human__wa { color: #4ade80; }
+}

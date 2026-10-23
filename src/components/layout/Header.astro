@@ -1,13 +1,22 @@
 ---
 import Brand from '../Brand.astro';
-import { company, navigation } from '../../data/empresa';
+import SiteNav from './SiteNav';
+import { company, modules, navigation } from '../../data/empresa';
 const { currentPath = '/' } = Astro.props;
+const modulos = modules.filter((m) => m.confirmed).map(({ slug, title, summary }) => ({ slug, title, summary }));
 ---
 
 <header class="header" id="header">
   <div class="container nav-container">
     <Brand />
 
+    <!-- computador: menu animado com painéis -->
+    <div class="nav-desktop">
+      <SiteNav client:load currentPath={currentPath} modules={modulos} facebook={company.facebook || undefined} whatsapp={company.whatsapp} phone={company.phone} />
+    </div>
+    <a href="/contato#agendar-demonstracao" class="btn btn-orange nav-btn nav-desktop-cta">Agendar demonstração</a>
+
+    <!-- celular e tablet: menu sanduíche -->
     <button
       class="menu-toggle"
       id="menuToggle"
@@ -21,7 +30,7 @@ const { currentPath = '/' } = Astro.props;
       <span></span>
     </button>
 
-    <nav aria-label="Navegação principal">
+    <nav class="nav-mobile" aria-label="Navegação principal">
       <ul class="nav-menu" id="navMenu">
         {navigation.map((item) => (
           <li>

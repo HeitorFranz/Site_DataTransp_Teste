@@ -1,0 +1,45 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+
+// caminho de uma carga dentro do DataTransp; cada etapa usa um módulo que já existe
+const steps: { icon: IconName; title: string; text: string; module: string; href: string }[] = [
+  { icon: 'fiscal', title: 'NF-e recebida', text: 'A nota entra no sistema por importação automática.', module: 'Fiscal', href: '/funcionalidades/fiscal' },
+  { icon: 'fiscal', title: 'CT-e emitido', text: 'Emissão do conhecimento de transporte no módulo fiscal.', module: 'Fiscal', href: '/funcionalidades/fiscal' },
+  { icon: 'fiscal', title: 'MDF-e emitido', text: 'O manifesto da viagem no mesmo fluxo.', module: 'Fiscal', href: '/funcionalidades/fiscal' },
+  { icon: 'combustiveis', title: 'Viagem e frota', text: 'Abastecimento, pneus e manutenção registrados.', module: 'Frota', href: '/funcionalidades/combustiveis' },
+  { icon: 'financeiro', title: 'Faturamento', text: 'Financeiro integrado à contabilidade.', module: 'Financeiro', href: '/funcionalidades/financeiro' },
+  { icon: 'bi', title: 'Resultado no BI', text: 'Visões prontas para acompanhar o negócio.', module: 'BI', href: '/funcionalidades/bi' },
+];
+---
+
+<section class="dt-flow" aria-labelledby="flow-title">
+  <div class="dt-wrap">
+    <div class="dt-flow__head">
+      <h2 id="flow-title">Da nota fiscal ao resultado, tudo no mesmo sistema</h2>
+    </div>
+
+    <ol class="dt-flow__steps" data-flow>
+      {steps.map((s) => (
+        <li class="dt-flow__step">
+          <span class="dt-flow__dot"><Icon name={s.icon} size={20} /></span>
+          <h3>{s.title}</h3>
+          <p>{s.text}</p>
+          <a href={s.href}>{s.module}</a>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<script>
+  // as etapas acendem uma a uma quando a seção entra na tela (uma vez só)
+  const flow = document.querySelector<HTMLElement>('[data-flow]');
+  if (flow && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    flow.classList.add('is-waiting');
+    new IntersectionObserver((entries, obs) => {
+      if (!entries[0].isIntersecting) return;
+      obs.disconnect();
+      flow.classList.replace('is-waiting', 'is-playing');
+    }, { threshold: 0.35 }).observe(flow);
+  }
+</script>

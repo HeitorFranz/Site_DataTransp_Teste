@@ -1,0 +1,127 @@
+/* Mini telas animadas dos módulos (ModuloIlustracao). Estado final = sem animação. */
+.ilu {
+  --ilu-bg: var(--paper, #fff);
+  --ilu-soft: color-mix(in srgb, var(--heading, #102746) 6%, var(--paper, #fff));
+  --ilu-line: var(--line, #dce3ec);
+  --ilu-text: var(--heading, #102746);
+  --ilu-muted: var(--ink-soft, #55667d);
+  --ilu-red: var(--brand-red, #e90705);
+  --ilu-green: #15803d;
+  margin: 0; border: 1px solid var(--ilu-line); border-radius: 14px; background: var(--ilu-bg); overflow: hidden;
+  box-shadow: 0 1px 2px #10274612, 0 20px 44px #10274618;
+}
+@media (prefers-color-scheme: dark) {
+  .ilu { --ilu-green: #4ade80; box-shadow: 0 20px 44px #00000066; }
+}
+.ilu__bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--ilu-line); background: var(--ilu-soft); }
+.ilu__bar span { font: 700 14px var(--font-heading, sans-serif); color: var(--ilu-text); }
+.ilu__bar small { font-size: 12px; color: var(--ilu-muted); }
+.ilu__body { padding: 20px; min-height: 230px; display: grid; align-content: center; }
+
+.ilu-label { font-size: 13.5px; font-weight: 600; color: var(--ilu-text); }
+.ilu-chip { justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 600; color: var(--ilu-green); background: color-mix(in srgb, var(--ilu-green) 12%, transparent); }
+.ilu-skel { display: block; height: 8px; border-radius: 4px; background: var(--ilu-line); width: 100%; }
+.ilu-skel--s { width: 60%; }
+.ilu-bar { display: block; height: 10px; border-radius: 5px; background: var(--ilu-soft); overflow: hidden; }
+.ilu-bar b { display: block; height: 100%; width: 72%; border-radius: inherit; background: var(--ilu-red); transform-origin: left; }
+.ilu-bar--2 b { width: 54%; background: var(--ilu-text); }
+
+/* fiscal: documentos passando e ficando prontos */
+.ilu-fiscal, .ilu-fin { display: grid; gap: 12px; }
+.ilu-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; }
+.ilu-fin .ilu-row { grid-template-columns: 130px 1fr; }
+.ilu-doc { min-width: 64px; padding: 6px 10px; border-radius: 8px; text-align: center; font: 700 13px var(--font-heading, sans-serif); color: var(--ilu-text); background: var(--ilu-soft); border: 1px solid var(--ilu-line); }
+.ilu-line { height: 2px; background: var(--ilu-line); position: relative; overflow: hidden; }
+.ilu-line::after { content: ""; position: absolute; inset: 0; background: var(--ilu-red); transform-origin: left; }
+.ilu-ok { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 700; color: #fff; background: var(--ilu-green); }
+.ilu-late { margin-top: 4px; }
+
+/* manutenção: linha do tempo */
+.ilu-timeline { list-style: none; margin: 0; padding: 0 0 0 4px; display: grid; gap: 18px; position: relative; }
+.ilu-timeline::before { content: ""; position: absolute; left: 10px; top: 8px; bottom: 8px; width: 2px; background: var(--ilu-line); }
+.ilu-timeline li { position: relative; display: flex; align-items: center; gap: 14px; font-weight: 600; font-size: 14.5px; color: var(--ilu-text); }
+.ilu-dot { position: relative; z-index: 1; width: 14px; height: 14px; border-radius: 50%; background: var(--ilu-red); box-shadow: 0 0 0 4px var(--ilu-bg); }
+
+/* pneus: caminhão visto de cima */
+.ilu-pneus { display: grid; grid-template-columns: 110px 1fr; gap: 20px; align-items: center; }
+.ilu-truck { width: 100%; height: auto; }
+.ilu-cab { fill: var(--ilu-red); }
+.ilu-body { fill: var(--ilu-soft); stroke: var(--ilu-line); stroke-width: 2; }
+.ilu-tire { fill: var(--ilu-text); }
+.ilu-tirecard { display: grid; gap: 10px; padding: 14px; border-radius: 10px; border: 1px solid var(--ilu-line); }
+
+/* combustíveis: tanques enchendo */
+.ilu-fuel { display: grid; grid-template-columns: auto auto 1fr; gap: 18px; align-items: end; }
+.ilu-gauge { display: grid; gap: 8px; justify-items: center; }
+.ilu-tank { position: relative; width: 44px; height: 120px; border-radius: 10px; border: 2px solid var(--ilu-line); overflow: hidden; background: var(--ilu-soft); }
+.ilu-tank b { position: absolute; left: 0; right: 0; bottom: 0; height: 68%; background: var(--ilu-red); transform-origin: bottom; }
+.ilu-gauge:nth-child(2) .ilu-tank b { height: 52%; background: #2563eb; }
+.ilu-stock { display: grid; gap: 8px; align-self: center; }
+
+/* alertas: avisos chegando na tela principal */
+.ilu-alerts { position: relative; display: grid; gap: 10px; }
+.ilu-screen { display: grid; gap: 8px; padding: 12px; border-radius: 10px; background: var(--ilu-soft); }
+.ilu-toast { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--ilu-line); border-left: 3px solid var(--ilu-red); background: var(--ilu-bg); font-size: 13.5px; font-weight: 600; color: var(--ilu-text); box-shadow: 0 8px 20px #10274614; }
+.ilu-bell { width: 22px; height: 22px; flex: none; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 13px; color: #fff; background: var(--ilu-red); }
+
+/* BI: barras e linha */
+.ilu-bi { display: grid; gap: 14px; }
+.ilu-bars { display: flex; align-items: end; gap: 10px; height: 120px; padding-bottom: 2px; border-bottom: 2px solid var(--ilu-line); }
+.ilu-bars span { flex: 1; height: var(--h); border-radius: 4px 4px 0 0; background: var(--ilu-text); transform-origin: bottom; }
+.ilu-bars span:nth-child(even) { background: var(--ilu-red); }
+.ilu-linechart { display: block; width: 100%; height: auto; }
+.ilu-linechart path { fill: none; stroke: var(--ilu-red); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; }
+.ilu-tabs { display: flex; gap: 8px; }
+
+/* ---------- animações: só quando a ilustração está pronta para animar ---------- */
+.ilu.is-ready .ilu-row, .ilu.is-ready .ilu-late, .ilu.is-ready .ilu-timeline li, .ilu.is-ready .ilu-toast { opacity: 0; transform: translateY(8px); }
+.ilu.is-ready .ilu-line::after, .ilu.is-ready .ilu-bar b { transform: scaleX(0); }
+.ilu.is-ready .ilu-tank b, .ilu.is-ready .ilu-bars span { transform: scaleY(0); }
+.ilu.is-ready .ilu-linechart path { stroke-dashoffset: 1; }
+
+.ilu.is-on .ilu-row, .ilu.is-on .ilu-late, .ilu.is-on .ilu-timeline li, .ilu.is-on .ilu-toast { animation: ilu-in .5s calc(var(--i) * .35s) cubic-bezier(.2, .8, .2, 1) both; }
+.ilu.is-on .ilu-line::after { animation: ilu-x .6s calc(var(--i) * .35s + .15s) ease-out both; }
+.ilu.is-on .ilu-ok { animation: ilu-pop .35s calc(var(--i) * .35s + .55s) both; }
+.ilu.is-on .ilu-bar b { animation: ilu-x 1s .3s cubic-bezier(.2, .8, .2, 1) both; }
+.ilu.is-on .ilu-fin .ilu-row .ilu-bar b { animation-delay: calc(var(--i) * .35s + .2s); }
+.ilu.is-on .ilu-tank b { animation: ilu-y 1.2s calc(var(--i) * .3s) cubic-bezier(.2, .8, .2, 1) both; }
+.ilu.is-on .ilu-bars span { animation: ilu-y .7s calc(var(--i) * .12s) cubic-bezier(.2, .8, .2, 1) both; }
+.ilu.is-on .ilu-linechart path { animation: ilu-draw 1.4s .6s ease-out both; }
+.ilu.is-on .ilu-tire { animation: ilu-blink 3.2s calc(var(--i) * .4s) ease-in-out infinite; }
+.ilu.is-on .ilu-dot { animation: ilu-pop .35s calc(var(--i) * .35s + .2s) both; }
+
+@keyframes ilu-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes ilu-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes ilu-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes ilu-pop { 0% { transform: scale(0); } 70% { transform: scale(1.15); } 100% { transform: scale(1); } }
+@keyframes ilu-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes ilu-blink { 0%, 20%, 100% { fill: var(--ilu-text); } 8% { fill: var(--ilu-red); } }
+
+@media (max-width: 480px) {
+  .ilu-fuel { grid-template-columns: auto auto; }
+  .ilu-stock { grid-column: 1 / -1; }
+  .ilu-fin .ilu-row { grid-template-columns: 110px 1fr; }
+}
+
+/* integrações: DataTransp ⇄ outro lado, com pacotes de informação indo e voltando */
+.ilu-link { display: grid; grid-template-columns: 1fr minmax(80px, 1.2fr) 1fr; align-items: center; gap: 10px; }
+.ilu-node { display: grid; justify-items: center; gap: 8px; padding: 18px 10px; border-radius: 12px; border: 1px solid var(--ilu-line); background: var(--ilu-soft); text-align: center; }
+.ilu-node img { width: 100%; max-width: 120px; height: auto; padding: 4px 6px; border-radius: 6px; background: #fff; }
+.ilu-node span, .ilu-node b { font: 700 14px/1.25 var(--font-heading, sans-serif); color: var(--ilu-text); }
+.ilu-wire { position: relative; height: 40px; }
+.ilu-wire__line { position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: var(--ilu-line); }
+.ilu-wire i { position: absolute; top: calc(50% - 9px); left: 0; right: 0; height: 10px; opacity: 0; }
+.ilu-wire i::after { content: ""; position: absolute; left: 0; top: 0; width: 10px; height: 10px; border-radius: 3px; background: var(--ilu-red); }
+.ilu-wire i.ilu-back { top: calc(50% + 3px); }
+.ilu-wire i.ilu-back::after { background: var(--ilu-text); }
+.ilu-link + .ilu-chip { margin-top: 16px; justify-self: center; }
+.ilu.is-on .ilu-wire i { animation: ilu-go 2.4s calc(var(--i) * .8s) linear infinite; }
+.ilu.is-on .ilu-wire i.ilu-back { animation-name: ilu-back; animation-delay: calc(var(--i) * 1.2s + .4s); }
+/* só transform e opacidade: a animação não mexe no layout da página */
+@keyframes ilu-go { 0% { transform: translateX(0); opacity: 0; } 10%, 90% { opacity: 1; } 100% { transform: translateX(calc(100% - 10px)); opacity: 0; } }
+@keyframes ilu-back { 0% { transform: translateX(calc(100% - 10px)); opacity: 0; } 10%, 90% { opacity: 1; } 100% { transform: translateX(0); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .ilu-wire i { opacity: 1; animation: none !important; }
+  .ilu-wire i:nth-of-type(2) { transform: translateX(40%); }
+  .ilu-wire i:nth-of-type(3) { transform: translateX(80%); }
+}

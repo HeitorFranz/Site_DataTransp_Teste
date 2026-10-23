@@ -1,0 +1,110 @@
+/* Menu de navegação animado (MotionNavigationMenu). Cores seguem o tema do site. */
+.mnm {
+  --mnm-text: var(--heading, #102746);
+  --mnm-soft: var(--ink-soft, #43556c);
+  --mnm-panel: var(--paper, #fff);
+  --mnm-hover: color-mix(in srgb, var(--heading, #102746) 7%, transparent);
+  --mnm-line: var(--line, #e3e8ef);
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.mnm__list-wrap { position: relative; }
+
+.mnm__list {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mnm__item { position: relative; }
+
+.mnm__highlight {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  border-radius: 9px;
+  background: var(--mnm-hover);
+  pointer-events: none;
+}
+
+.mnm__trigger,
+.mnm__list .mnm__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--mnm-text);
+  font: 600 15px var(--font-body, sans-serif);
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.mnm__list .mnm__link[data-active] {
+  color: var(--brand-red, #e90705);
+}
+
+.mnm__trigger[data-state='open'] { color: var(--brand-red, #e90705); }
+.mnm__trigger:focus-visible,
+.mnm__link:focus-visible { outline: 3px solid #ffb4b3; outline-offset: 2px; }
+.mnm__chevron { flex: none; }
+
+/* painel */
+.mnm__viewport-pos {
+  position: absolute;
+  top: 100%;
+  z-index: 50;
+  translate: -50% 0;
+  display: flex;
+  justify-content: center;
+}
+
+.mnm__viewport {
+  position: relative;
+  margin-top: 12px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--mnm-panel);
+  box-shadow: 0 24px 60px #10274633, 0 0 0 1px var(--mnm-line);
+}
+
+.mnm__viewport-inner { position: relative; }
+.mnm__highlight--panel { border-radius: 12px; }
+
+.mnm__content { position: relative; z-index: 1; padding: 10px; width: max-content; }
+
+.mnm__measure {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  visibility: hidden;
+  pointer-events: none;
+  width: max-content;
+}
+
+/* links dentro do painel */
+.mnm__content .mnm__link {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  color: var(--mnm-text);
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .mnm__viewport { box-shadow: 0 24px 60px #00000080, 0 0 0 1px var(--mnm-line); }
+}

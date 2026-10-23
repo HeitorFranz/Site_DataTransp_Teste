@@ -40,7 +40,7 @@ h2,
 h3,
 h4 {
   font-family: var(--font-heading);
-  color: var(--navy);
+  color: var(--heading);
   line-height: 1.2;
   text-wrap: balance;
 }
@@ -116,7 +116,7 @@ a {
 
 .nav-link {
   font-weight: 600;
-  color: var(--navy);
+  color: var(--heading);
   transition: color 0.2s;
 }
 
@@ -136,7 +136,7 @@ a {
 .menu-toggle span {
   width: 25px;
   height: 3px;
-  background-color: var(--navy);
+  background-color: var(--heading);
   border-radius: 2px;
 }
 
@@ -150,7 +150,7 @@ a {
   display: inline-block;
   padding: 0.35rem 0.85rem;
   background-color: rgba(27, 54, 93, 0.08);
-  color: var(--navy);
+  color: var(--heading);
   font-weight: 700;
   font-size: 0.85rem;
   border-radius: 999px;
@@ -184,7 +184,7 @@ a {
   display: block;
   font-weight: 600;
   font-size: 0.875rem;
-  color: var(--navy);
+  color: var(--heading);
   margin-bottom: 0.35rem;
 }
 

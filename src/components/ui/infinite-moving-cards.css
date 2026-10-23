@@ -1,0 +1,161 @@
+/* Faixa infinita de depoimentos (InfiniteMovingCards). Claro por padrão, escuro conforme o aparelho. */
+.imc {
+  --imc-card: #ffffff;
+  --imc-card-glow: 14%;
+  --imc-text: #2b3d56;
+  --imc-title: #102746;
+  --imc-soft: #6a7b93;
+  --imc-line: #e3e8ef;
+  --imc-shadow: 0 14px 34px #10274614;
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  .imc {
+    --imc-card: #0d1f3d;
+    --imc-card-glow: 28%;
+    --imc-text: #e3eaf5;
+    --imc-title: #ffffff;
+    --imc-soft: #a9b8cf;
+    --imc-line: #ffffff1a;
+    --imc-shadow: 0 14px 34px #00000059;
+  }
+}
+
+.imc__track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
+  padding: 18px 0 28px;
+  list-style: none;
+}
+
+.imc__track--run {
+  animation: imc-scroll var(--imc-duration, 60s) var(--imc-direction, forwards) linear infinite;
+}
+
+.imc--pause .imc__track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes imc-scroll {
+  to { transform: translateX(calc(-50% - 10px)); }
+}
+
+.imc__card {
+  position: relative;
+  flex: none;
+  width: min(400px, 84vw);
+  border-radius: 18px;
+  padding: 1px;
+  /* borda fina com brilho na cor da marca */
+  background: linear-gradient(160deg, color-mix(in srgb, var(--brand) 85%, #fff) 0%, var(--imc-line) 40%, var(--imc-line) 100%);
+  box-shadow: var(--imc-shadow);
+  transition: transform .3s cubic-bezier(.2, .8, .2, 1), box-shadow .3s;
+}
+
+.imc__card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 44px color-mix(in srgb, var(--brand) 35%, transparent);
+}
+
+.imc__card figure {
+  height: 100%;
+  margin: 0;
+  border-radius: 17px;
+  padding: 24px 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background:
+    radial-gradient(120% 70% at 0% 0%, color-mix(in srgb, var(--brand) var(--imc-card-glow), transparent) 0%, transparent 60%),
+    var(--imc-card);
+}
+
+.imc__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.imc__logos {
+  display: flex;
+  gap: 8px;
+}
+
+.imc__logo {
+  height: 58px;
+  width: 150px;
+  border-radius: 12px;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  padding: 8px 12px;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand) 45%, transparent);
+}
+
+.imc__logo--half {
+  width: 112px;
+  padding: 6px 8px;
+}
+
+.imc__logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.imc__logo--initials {
+  width: 58px;
+  background: var(--brand);
+  color: #fff;
+  font: 800 20px var(--font-heading);
+}
+
+.imc__stars {
+  color: #f5b301;
+  letter-spacing: 2px;
+  font-size: 15px;
+  flex: none;
+}
+
+.imc__quote {
+  margin: 0;
+  flex: 1;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--imc-text);
+}
+
+.imc__who {
+  padding-top: 14px;
+  border-top: 1px solid var(--imc-line);
+  display: grid;
+  gap: 2px;
+}
+
+.imc__who strong {
+  color: var(--imc-title);
+  font-size: 15.5px;
+}
+
+.imc__who span {
+  color: var(--imc-soft);
+  font-size: 14px;
+}
+
+@media (max-width: 640px) {
+  .imc__card figure { padding: 20px; }
+  .imc__logo { width: 124px; height: 52px; }
+  .imc__logo--half { width: 92px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .imc { overflow-x: auto; mask-image: none; }
+  .imc__track--run { animation: none; }
+}

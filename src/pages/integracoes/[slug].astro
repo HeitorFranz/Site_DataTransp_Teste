@@ -1,6 +1,11 @@
 ---
 import Layout from '../../layouts/SiteLayout.astro';
-import { integrations } from '../../data/empresa';
+import Icon, { type IconName } from '../../components/home/Icon.astro';
+import WhatsAppIcon from '../../components/home/WhatsAppIcon.astro';
+import IntegracaoIlustracao from '../../components/modulos/IntegracaoIlustracao.astro';
+import { company, integrations, modules } from '../../data/empresa';
+import { integracoesDetalhes } from '../../data/integracoes-detalhes';
+import '../../styles/modulo.css';
 
 export function getStaticPaths() {
   return integrations.map((integration) => ({ params: { slug: integration.slug } }));
@@ -9,26 +14,100 @@ export function getStaticPaths() {
 const { slug } = Astro.params;
 const integration = integrations.find((item) => item.slug === slug);
 if (!integration) throw new Error('Integração não encontrada');
+const info = integracoesDetalhes[integration.slug];
+const modulo = modules.find((m) => m.slug === info?.modulo && m.confirmed);
+const outras = integrations.filter((i) => i.slug !== slug);
+const whatsAppUrl = `https://wa.me/55${company.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(`Olá, quero saber sobre a integração ${integration.title} do DataTransp.`)}`;
 ---
 
-<Layout title={`${integration.title} | Datatransp`} description={`Consulte a equipe Datatransp sobre a integração ${integration.title}.`} currentPath={`/integracoes/${slug}`}>
-  <section class="page-hero">
-    <div class="container page-hero-inner">
-      <div class="breadcrumbs"><a href="/">Início</a> / <a href="/integracoes">Integrações</a> / <span>{integration.title}</span></div>
-      <h1>{integration.title}</h1>
-      <p>Esta integração consta entre as opções relacionadas ao DataTransp. Consulte nossa equipe para confirmar disponibilidade, escopo e requisitos para sua operação.</p>
+<Layout title={`${integration.title} | Datatransp`} description={info?.oQueE ?? `Integração ${integration.title} do DataTransp.`} currentPath={`/integracoes/${slug}`} bodyClass="page-modulo">
+  <nav class="md-switch" aria-label="Integrações do DataTransp">
+    <div class="container md-switch__inner">
+      {integrations.map((i) => (
+        <a href={`/integracoes/${i.slug}`} aria-current={i.slug === slug ? 'page' : undefined}>{i.title}</a>
+      ))}
+    </div>
+  </nav>
+
+  <section class="md-hero">
+    <div class="container md-hero__grid">
+      <div>
+        <div class="breadcrumbs"><a href="/">Início</a> / <a href="/integracoes">Integrações</a> / <span>{integration.title}</span></div>
+        <p class="md-cat"><span class="md-cat__icon"><Icon name={(info?.icone ?? 'fiscal') as IconName} size={20} /></span>Integração</p>
+        <h1>{integration.title}</h1>
+        {info && <p class="md-lead">{info.oQueE}</p>}
+        <div class="md-actions">
+          <a class="btn btn-primary" href="/contato#agendar-demonstracao">Falar com a equipe</a>
+          <a class="md-wa" href={whatsAppUrl} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={18} /> Falar no WhatsApp</a>
+        </div>
+      </div>
+      {info && <IntegracaoIlustracao title={integration.title} parceiro={info.parceiro} />}
     </div>
   </section>
-  <section class="section">
+
+  {info && (
+    <section class="md-section">
+      <div class="container md-does-grid">
+        <div>
+          <h2>Para que serve</h2>
+          <ul class="md-does">
+            {info.paraQue.map((item, i) => (
+              <li><span class="md-does__n">{String(i + 1).padStart(2, '0')}</span><div><h3>{item}</h3></div></li>
+            ))}
+          </ul>
+        </div>
+        <aside class="md-sheet" aria-label={`Ficha da integração ${integration.title}`}>
+          <p class="md-sheet__title">Ficha da integração</p>
+          <dl>
+            <div><dt>Integração</dt><dd>{integration.title}</dd></div>
+            <div><dt>Conecta com</dt><dd>{info.parceiro}</dd></div>
+            {modulo && <div><dt>Assunto</dt><dd><a href={`/funcionalidades/${modulo.slug}`}>Módulo {modulo.title}</a></dd></div>}
+            <div><dt>Escopo e requisitos</dt><dd>Variam conforme a operação. Nossa equipe confirma o que se aplica à sua empresa.</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+  )}
+
+  <section class="md-section md-section--soft">
     <div class="container">
-      <div class="policy-box">
-        <h2>Consulte os detalhes desta integração</h2>
-        <p>Os detalhes técnicos e os parceiros aplicáveis variam conforme a operação e não estão publicados nesta página.</p>
-        <div class="module-cta">
+      <div class="md-others__head">
+        <h2>Outras integrações</h2>
+        <a href="/integracoes">Ver todas</a>
+      </div>
+      <ul class="md-integ">
+        {outras.map((i) => (
+          <li>
+            <a href={`/integracoes/${i.slug}`}>
+              <strong>{i.title}</strong>
+              <span>{integracoesDetalhes[i.slug]?.oQueE}</span>
+              <em>Entender esta integração</em>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="md-section">
+    <div class="container">
+      <div class="md-help">
+        <img src="/images/home/atendente-avatar.webp" alt="" width="160" height="160" loading="lazy" decoding="async" />
+        <div>
+          <h2>Quer saber se a integração {integration.title} atende sua operação?</h2>
+          <p>Fale com a nossa equipe: explicamos escopo, parceiros e requisitos para a sua empresa.</p>
+        </div>
+        <div class="md-help__actions">
           <a class="btn btn-primary" href="/contato#agendar-demonstracao">Falar com a equipe</a>
-          <a class="btn btn-secondary" href="/integracoes">Ver todas as integrações</a>
+          <a class="md-wa" href={whatsAppUrl} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={18} /> {company.whatsapp}</a>
         </div>
       </div>
     </div>
   </section>
 </Layout>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('.md-switch__inner');
+  const atual = bar?.querySelector<HTMLElement>('[aria-current="page"]');
+  if (bar && atual) bar.scrollLeft = atual.offsetLeft - (bar.clientWidth - atual.offsetWidth) / 2;
+</script>

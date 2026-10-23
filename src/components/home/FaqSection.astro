@@ -1,0 +1,59 @@
+---
+import { company, modules, integrations } from '../../data/empresa';
+
+// respostas montadas só com informações que já estão no site; revise antes de publicar
+const nomesModulos = modules.filter((m) => m.confirmed).map((m) => m.title);
+const lista = (itens: string[]) => itens.slice(0, -1).join(', ') + ' e ' + itens.at(-1);
+
+const faq = [
+  {
+    q: 'Quais módulos o DataTransp tem?',
+    a: `${lista(nomesModulos)}. Todos no mesmo sistema, com os dados ligados entre si.`,
+  },
+  {
+    q: 'Como funciona o treinamento?',
+    a: 'Na implantação, sua equipe recebe treinamento completo e aprende a usar cada recurso do sistema.',
+  },
+  {
+    q: 'Como falo com o suporte?',
+    a: `Pelo WhatsApp ${company.whatsapp} ou pelo telefone ${company.phone}, de segunda a sexta, das 08h às 18h.`,
+  },
+  {
+    q: 'O sistema se integra com outros serviços?',
+    a: `Sim. Entre as integrações estão ${lista(integrations.slice(0, 6).map((i) => i.title))}.`,
+  },
+  {
+    q: 'A DataTransp atende minha região?',
+    a: `Sim. A DataTransp fica em Chapecó/SC, está no mercado desde ${company.foundation} e atende transportadoras em todo o Brasil.`,
+  },
+  {
+    q: 'Como vejo o sistema funcionando?',
+    a: 'Agende uma demonstração: nossa equipe apresenta o DataTransp e tira suas dúvidas.',
+  },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+
+<section class="dt-faq" aria-labelledby="faq-title">
+  <div class="dt-wrap dt-faq__grid">
+    <div class="dt-faq__intro">
+      <h2 id="faq-title">Perguntas frequentes</h2>
+      <p>Não achou sua dúvida? Fale com a gente.</p>
+      <a class="dt-btn dt-btn--red" href="/contato#agendar-demonstracao">Agendar demonstração</a>
+    </div>
+    <div class="dt-faq__list">
+      {faq.map((f, i) => (
+        <details open={i === 0}>
+          <summary>{f.q}</summary>
+          <p>{f.a}{f.q.startsWith('O sistema se integra') && <> <a href="/integracoes">Ver integrações</a></>}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+</section>

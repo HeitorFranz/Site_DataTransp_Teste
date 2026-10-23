@@ -3,39 +3,72 @@ import Icon, { type IconName } from './Icon.astro';
 import { modules } from '../../data/empresa';
 
 const confirmed = modules.filter((m) => m.confirmed);
-// tamanhos no mosaico: Fiscal grande, BI e Alertas largos
-const layout: Record<string, string> = { fiscal: 'dt-module--feature', bi: 'dt-module--wide', alertas: 'dt-module--wide' };
 ---
 
 <section class="dt-solutions" aria-labelledby="solutions-title">
   <div class="dt-wrap">
     <div class="dt-solutions__head">
       <h2 id="solutions-title" class="dt-solutions__title">Conheça as soluções da DataTransp</h2>
-      <div>
-        <h3>Tudo o que sua transportadora precisa para evoluir, em um só lugar.</h3>
-        <p>Simplifique processos, centralize informações e tenha mais controle sobre sua transportadora. <strong>Conheça o sistema DataTransp</strong> e descubra como facilitar sua gestão e impulsionar o crescimento do seu negócio.</p>
-      </div>
+      <p>Tudo o que sua transportadora precisa para evoluir, em um só lugar.</p>
     </div>
 
-    <div class="dt-modules">
-      {confirmed.map((m) => (
-        <a class:list={['dt-module', layout[m.slug]]} href={`/funcionalidades/${m.slug}`} data-spotlight>
-          <span class="dt-module__top">
-            <span class="dt-badge dt-badge--navy"><Icon name={m.slug as IconName} /></span>
-            <span class="dt-module__name">{m.title}</span>
-          </span>
-          <span class="dt-module__text">{m.summary}</span>
-          {m.slug === 'fiscal' && (
-            <ul class="dt-module__list">{m.whatItDoes.map((item) => <li>{item}</li>)}</ul>
-          )}
-          <span class="dt-module__more">Ver detalhes</span>
-        </a>
+    <!-- módulos em abas: um painel por vez, como uma tela do sistema -->
+    <div class="dt-tabs" data-tabs>
+      <div class="dt-tabs__list" role="tablist" aria-label="Módulos do DataTransp">
+        {confirmed.map((m, i) => (
+          <button type="button" role="tab" class="dt-tabs__tab" id={`tab-${m.slug}`} aria-controls={`painel-${m.slug}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>
+            <Icon name={m.slug as IconName} size={18} />
+            {m.title}
+          </button>
+        ))}
+      </div>
+
+      {confirmed.map((m, i) => (
+        <div class="dt-tabs__panel" role="tabpanel" id={`painel-${m.slug}`} aria-labelledby={`tab-${m.slug}`} hidden={i !== 0}>
+          <div class="dt-tabs__info">
+            <p class="dt-tabs__cat">{m.category}</p>
+            <h3>{m.title}</h3>
+            <p>{m.problem}</p>
+            <div class="dt-tabs__actions">
+              <a class="dt-btn dt-btn--navy" href={`/funcionalidades/${m.slug}`}>Ver módulo {m.title}</a>
+              <a class="dt-btn dt-btn--line" href="/contato#agendar-demonstracao">Agendar demonstração</a>
+            </div>
+          </div>
+          <ul class="dt-tabs__list-check">
+            {m.whatItDoes.map((item) => (
+              <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>{item}</li>
+            ))}
+          </ul>
+        </div>
       ))}
     </div>
 
-    <div class="dt-actions">
-      <a class="dt-btn dt-btn--navy" href="/funcionalidades">Ver todas as funcionalidades</a>
-      <a class="dt-btn dt-btn--red" href="/contato#agendar-demonstracao">Agendar demonstração</a>
-    </div>
+    <p class="dt-solutions__all"><a href="/funcionalidades">Ver todas as funcionalidades e integrações</a></p>
   </div>
 </section>
+
+<script>
+  // abas acessíveis: clique, setas esquerda/direita, Home e End
+  const box = document.querySelector<HTMLElement>('[data-tabs]');
+  if (box) {
+    const tabs = Array.from(box.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    const select = (tab: HTMLButtonElement, focus = false) => {
+      for (const t of tabs) {
+        const on = t === tab;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')!)!.hidden = !on;
+      }
+      if (focus) tab.focus();
+    };
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(tab));
+      tab.addEventListener('keydown', (e) => {
+        const to = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+        if (to === undefined) return;
+        e.preventDefault();
+        select(tabs[(to + tabs.length) % tabs.length], true);
+      });
+    });
+  }
+</script>

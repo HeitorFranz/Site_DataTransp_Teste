@@ -1,0 +1,113 @@
+---
+// Mini tela animada de cada módulo. É ilustração (não é print do sistema) e não mostra valores:
+// só os nomes que já estão no cadastro do módulo. A animação roda uma vez ao aparecer na tela.
+import '../../styles/ilustracao.css';
+
+interface Props { slug: string; title: string }
+const { slug, title } = Astro.props;
+---
+
+<figure class="ilu" data-ilu aria-label={`Ilustração do módulo ${title}`} role="img">
+  <div class="ilu__bar"><span>{title}</span><small>Ilustração</small></div>
+  <div class="ilu__body" aria-hidden="true">
+    {slug === 'fiscal' && (
+      <div class="ilu-fiscal">
+        {['NF-e', 'CT-e', 'MDF-e', 'NFS-e'].map((d, i) => (
+          <div class="ilu-row" style={`--i:${i}`}>
+            <span class="ilu-doc">{d}</span>
+            <span class="ilu-line" />
+            <span class="ilu-ok">✓</span>
+          </div>
+        ))}
+        <div class="ilu-chip ilu-late" style="--i:4">Enviado ao SPED</div>
+      </div>
+    )}
+
+    {slug === 'financeiro' && (
+      <div class="ilu-fin">
+        {['Gestão financeira', 'Faturamento'].map((d, i) => (
+          <div class="ilu-row" style={`--i:${i}`}>
+            <span class="ilu-label">{d}</span>
+            <span class="ilu-bar"><b /></span>
+          </div>
+        ))}
+        <div class="ilu-chip ilu-late" style="--i:2">Enviado à contabilidade</div>
+      </div>
+    )}
+
+    {(slug === 'manutencao') && (
+      <ol class="ilu-timeline">
+        {['Manutenção registrada', 'Histórico do veículo', 'Toda a frota no sistema'].map((d, i) => (
+          <li style={`--i:${i}`}><span class="ilu-dot" />{d}</li>
+        ))}
+      </ol>
+    )}
+
+    {slug === 'pneus' && (
+      <div class="ilu-pneus">
+        <svg class="ilu-truck" viewBox="0 0 120 260">
+          <rect x="34" y="6" width="52" height="58" rx="8" class="ilu-cab" />
+          <rect x="30" y="74" width="60" height="180" rx="6" class="ilu-body" />
+          {[[18, 30], [92, 30], [18, 150], [92, 150], [18, 186], [92, 186], [18, 222], [92, 222]].map(([x, y], i) => (
+            <rect x={x} y={y} width="10" height="26" rx="3" class="ilu-tire" style={`--i:${i}`} />
+          ))}
+        </svg>
+        <div class="ilu-tirecard">
+          <span class="ilu-label">Pneu selecionado</span>
+          <span class="ilu-skel" /><span class="ilu-skel ilu-skel--s" />
+          <span class="ilu-chip">Histórico</span>
+        </div>
+      </div>
+    )}
+
+    {slug === 'combustiveis' && (
+      <div class="ilu-fuel">
+        {['Diesel', 'Arla'].map((d, i) => (
+          <div class="ilu-gauge" style={`--i:${i}`}>
+            <span class="ilu-tank"><b /></span>
+            <span class="ilu-label">{d}</span>
+          </div>
+        ))}
+        <div class="ilu-stock">
+          <span class="ilu-label">Estoque da bomba própria</span>
+          <span class="ilu-bar"><b /></span>
+          <span class="ilu-label">Consumo médio e total</span>
+          <span class="ilu-bar ilu-bar--2"><b /></span>
+        </div>
+      </div>
+    )}
+
+    {slug === 'alertas' && (
+      <div class="ilu-alerts">
+        <div class="ilu-screen"><span class="ilu-skel" /><span class="ilu-skel ilu-skel--s" /><span class="ilu-skel" /></div>
+        {['Manutenção perto do vencimento', 'Documento vence em breve', 'Ocorrência na operação'].map((d, i) => (
+          <div class="ilu-toast" style={`--i:${i}`}><span class="ilu-bell">!</span>{d}</div>
+        ))}
+      </div>
+    )}
+
+    {slug === 'bi' && (
+      <div class="ilu-bi">
+        <div class="ilu-bars">
+          {[46, 70, 58, 88, 64, 96].map((h, i) => <span style={`--h:${h}%;--i:${i}`} />)}
+        </div>
+        <svg class="ilu-linechart" viewBox="0 0 300 40"><path d="M3 34 L60 25 L120 29 L180 15 L240 18 L297 5" pathLength="1" /></svg>
+        <div class="ilu-tabs"><span class="ilu-chip">Visões prontas</span><span class="ilu-chip">Nova visão</span></div>
+      </div>
+    )}
+  </div>
+</figure>
+
+<script>
+  // liga a animação quando a ilustração aparece; com "reduzir movimento" ela já fica no estado final
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLElement>('[data-ilu]').forEach((el) => {
+    if (reduce) { el.classList.add('is-on'); return; }
+    el.classList.add('is-ready');
+    new IntersectionObserver(([e], obs) => {
+      if (!e.isIntersecting) return;
+      obs.disconnect();
+      el.classList.add('is-on');
+    }, { threshold: 0.35 }).observe(el);
+  });
+</script>

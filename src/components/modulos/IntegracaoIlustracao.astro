@@ -1,0 +1,40 @@
+---
+// Ilustração da troca de informações entre o DataTransp e o outro lado da integração.
+// Mostra só o sentido da conexão, sem dados nem telas reais.
+import '../../styles/ilustracao.css';
+
+interface Props { title: string; parceiro: string }
+const { title, parceiro } = Astro.props;
+---
+
+<figure class="ilu" data-ilu aria-label={`Ilustração da integração ${title}: DataTransp e ${parceiro}`} role="img">
+  <div class="ilu__bar"><span>{title}</span><small>Ilustração</small></div>
+  <div class="ilu__body" aria-hidden="true">
+    <div class="ilu-link">
+      <div class="ilu-node ilu-node--dt">
+        <img src="/brand/datatransp-logo-400.webp" alt="" width="400" height="134" />
+        <span>DataTransp</span>
+      </div>
+      <div class="ilu-wire">
+        <span class="ilu-wire__line" />
+        <i style="--i:0" /><i style="--i:1" /><i style="--i:2" />
+        <i class="ilu-back" style="--i:0" /><i class="ilu-back" style="--i:1" />
+      </div>
+      <div class="ilu-node"><b>{parceiro}</b></div>
+    </div>
+    <p class="ilu-chip ilu-late" style="--i:2">Informação trocada pela integração</p>
+  </div>
+</figure>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLElement>('[data-ilu]').forEach((el) => {
+    if (reduce) { el.classList.add('is-on'); return; }
+    el.classList.add('is-ready');
+    new IntersectionObserver(([e], obs) => {
+      if (!e.isIntersecting) return;
+      obs.disconnect();
+      el.classList.add('is-on');
+    }, { threshold: 0.35 }).observe(el);
+  });
+</script>

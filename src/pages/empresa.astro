@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/SiteLayout.astro';
 import { company } from '../data/empresa';
+import '../styles/modulo.css';
+
+const hoje = Number(company.foundation) + company.experienceYears;
 ---
 
 <Layout title="Empresa | Datatransp" description={`${company.legalName}: história, missão, visão e informações da empresa.`} currentPath="/empresa">
@@ -9,6 +12,18 @@ import { company } from '../data/empresa';
       <div class="breadcrumbs"><a href="/">Início</a> / <span>Empresa</span></div>
       <h1>Experiência em sistemas para transporte desde {company.foundation}</h1>
       <p>{company.history}</p>
+    </div>
+  </section>
+
+  <!-- trajetória: só os marcos confirmados (fundação em Xaxim, sede atual em Chapecó) -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Nossa trajetória</h2>
+      <ol class="md-trail" data-trail>
+        <li><span class="md-trail__year">{company.foundation}</span><strong>Fundação em Xaxim/SC</strong><p>A DataTransp começa a desenvolver sistemas para transportadoras.</p></li>
+        <li><span class="md-trail__year">{company.experienceYears} anos</span><strong>Experiência no transporte</strong><p>Software, implantação com treinamento e suporte para a rotina da transportadora.</p></li>
+        <li><span class="md-trail__year">{hoje}</span><strong>Sede em Chapecó/SC</strong><p>{company.serviceArea}</p></li>
+      </ol>
     </div>
   </section>
 
@@ -34,11 +49,9 @@ import { company } from '../data/empresa';
         <div><dt>CNPJ</dt><dd>{company.cnpj}</dd></div>
         <div><dt>Fundação</dt><dd>{company.foundation}, em Xaxim/SC</dd></div>
         <div><dt>Experiência</dt><dd>{company.experienceYears} anos</dd></div>
-        <div><dt>Equipe</dt><dd>{company.teamSize} especialistas</dd></div>
         <div><dt>Cobertura</dt><dd>{company.serviceArea}</dd></div>
         <div><dt>Sede atual</dt><dd>{company.headquarters}</dd></div>
       </dl>
-      <p class="section-note">A equipe é composta por {company.teamSize} especialistas. Informações individuais não são publicadas sem confirmação e autorização.</p>
     </div>
   </section>
 
@@ -54,3 +67,12 @@ import { company } from '../data/empresa';
     </div>
   </section>
 </Layout>
+
+<script>
+  // a linha da trajetória se preenche quando aparece na tela
+  const trail = document.querySelector<HTMLElement>('[data-trail]');
+  if (trail && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    trail.classList.add('is-ready');
+    new IntersectionObserver(([e], obs) => { if (e.isIntersecting) { obs.disconnect(); trail.classList.add('is-on'); } }, { threshold: 0.4 }).observe(trail);
+  }
+</script>

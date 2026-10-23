@@ -12,6 +12,7 @@ Marketing site for DataTransp (transport companies and fleet operators). Astro 7
 ## Layout
 
 - `src/data/empresa.ts` — single source for company info, navigation, modules, integrations, testimonials and news (`newsItems`). Pages under `src/pages/funcionalidades/`, `integracoes/` and `novidades/` generate their `[slug]` routes from these arrays, so new content goes here, not in page files.
+- `src/data/depoimentos.ts` — customer testimonials (home and /clientes), from the Oct 2026 satisfaction survey. Respect each client's consent: show name/role only for those who allowed it, logo only if authorized. Logos live in `public/clientes/` as WebP.
 - `src/pages/novidades/feed.xml.js`, `sitemap.xml.ts`, `robots.txt.ts` — generated from the same data.
 - `src/styles/tokens.css` — brand colors (red `--brand-red`, navy `--brand-navy`) and design tokens. Use the tokens; don't hard-code colors.
 - `src/layouts/SiteLayout.astro` wraps every page (pass `bodyClass` for page-specific styling); `src/components/layout/` holds Header and Footer.

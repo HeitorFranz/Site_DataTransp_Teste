@@ -1,33 +1,32 @@
 ---
-import ClientLogos from './ClientLogos';
-import { testimonials } from '../../data/empresa';
+import sharp from 'sharp';
+import { depoimentos } from '../../data/depoimentos';
 
-const logos = testimonials
-  .filter((t) => t.logoAuthorized && t.logo)
-  .map((t) => ({ src: t.logo as string, alt: t.company }));
-
-// o depoimento mais longo ganha destaque
-const [featured, ...others] = [...testimonials].sort((a, b) => b.quote.length - a.quote.length);
+// logos autorizados, na ordem dos depoimentos, com o tamanho real lido no build
+const logos = await Promise.all(
+  depoimentos
+    .flatMap((d) => [d.logo, d.logoExtra].filter((src): src is string => !!src).map((src) => ({ src, empresa: d.empresa })))
+    .map(async (l) => {
+      const { width = 0, height = 0 } = await sharp(`public${l.src}`).metadata();
+      return { ...l, width, height };
+    }),
+);
 ---
 
 <section class="dt-clients" aria-labelledby="clients-title">
-  <div class="dt-wrap">
+  <div class="dt-wrap dt-clients__head">
     <h2 id="clients-title">Transportadoras que confiam na DataTransp</h2>
+    <a class="dt-clients__link" href="/clientes">Ver depoimentos dos clientes</a>
   </div>
 
-  <div class="dt-clients__logos">
-    <ClientLogos client:visible logos={logos} />
-  </div>
-
-  <div class="dt-wrap dt-clients__grid">
-    {[featured, ...others].map((t, i) => (
-      <figure class:list={['dt-quote', { 'dt-quote--featured': i === 0 }]} data-spotlight>
-        {t.logoAuthorized && t.logo && (
-          <span class="dt-quote__logo"><img src={t.logo} alt="" loading="lazy" decoding="async" /></span>
-        )}
-        <blockquote>“{t.quote}”</blockquote>
-        <figcaption>{t.company}</figcaption>
-      </figure>
+  <!-- faixa infinita: a lista aparece duas vezes para o loop não ter emenda; a cópia fica oculta para leitores de tela -->
+  <div class="dt-marquee">
+    {[0, 1].map((copy) => (
+      <ul class="dt-marquee__track" aria-label={copy ? undefined : 'Clientes DataTransp'} aria-hidden={copy ? 'true' : undefined}>
+        {logos.map((l) => (
+          <li><img src={l.src} alt={copy ? '' : l.empresa} width={l.width} height={l.height} loading="lazy" decoding="async" /></li>
+        ))}
+      </ul>
     ))}
   </div>
 </section>

@@ -1,19 +1,32 @@
 ---
 import Layout from '../../layouts/SiteLayout.astro';
-import { newsItems, activityFilters } from '../../data/empresa';
+import Icon from '../../components/home/Icon.astro';
+import WhatsAppIcon from '../../components/home/WhatsAppIcon.astro';
+import { company, newsItems, activityFilters } from '../../data/empresa';
+import '../../styles/modulo.css';
+
 const filters = ['Todos', ...activityFilters];
+const whatsAppUrl = `https://wa.me/55${company.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Olá, quero saber das novidades do DataTransp.')}`;
+
+// o que cada tipo de publicação vai trazer (mesmos tipos usados nos filtros)
+const tipos: Record<string, { icon: 'clock' | 'bi' | 'fiscal' | 'alertas'; texto: string }> = {
+  'Atualização': { icon: 'clock', texto: 'Melhorias em recursos que já existem no sistema.' },
+  'Novo recurso': { icon: 'bi', texto: 'Funções novas que chegam ao DataTransp.' },
+  'Adequação fiscal': { icon: 'fiscal', texto: 'Ajustes para acompanhar mudanças na legislação do transporte.' },
+  'Em breve': { icon: 'alertas', texto: 'O que está sendo preparado para as próximas versões.' },
+};
 ---
 
-<Layout title="Novidades | Datatransp" description="Atualizações e novos recursos do sistema Datatransp" currentPath="/novidades">
-  <section class="page-hero">
-    <div class="container page-hero-inner">
+<Layout title="Novidades | Datatransp" description="Atualizações, novos recursos e adequações fiscais do sistema Datatransp" currentPath="/novidades" bodyClass="page-modulo">
+  <section class="md-hero">
+    <div class="container">
       <div class="breadcrumbs"><a href="/">Início</a> / <span>Novidades</span></div>
-      <h1>Novidades e atualizações do Datatransp</h1>
-      <p>Novidades serão publicadas quando houver atualizações confirmadas para divulgação.</p>
+      <h1>Novidades do DataTransp</h1>
+      <p class="md-lead">Aqui ficam as atualizações do sistema, os novos recursos e as adequações fiscais, assim que forem confirmadas para divulgação.</p>
     </div>
   </section>
 
-  <section class="section">
+  <section class="md-section">
     <div class="container">
       {newsItems.length ? (
         <>
@@ -36,9 +49,24 @@ const filters = ['Todos', ...activityFilters];
           </div>
         </>
       ) : (
-        <p class="empty-state">Não há novidades confirmadas para publicação neste momento.</p>
+        <>
+          <h2>O que você vai encontrar aqui</h2>
+          <ul class="md-news-types">
+            {activityFilters.map((t) => (
+              <li>
+                <span class="md-others__icon"><Icon name={tipos[t]?.icon ?? 'clock'} size={20} /></span>
+                <div><strong>{t}</strong><p>{tipos[t]?.texto}</p></div>
+              </li>
+            ))}
+          </ul>
+          <p class="md-news-empty">Ainda não há publicações. Enquanto isso, conheça o sistema ou fale com a gente.</p>
+          <div class="md-actions">
+            <a class="btn btn-primary" href="/funcionalidades">Ver funcionalidades</a>
+            <a class="md-wa" href={whatsAppUrl} target="_blank" rel="noopener noreferrer"><WhatsAppIcon size={18} /> Falar no WhatsApp</a>
+            <a class="md-wa-link" href="/novidades/feed.xml">Assinar o feed (RSS)</a>
+          </div>
+        </>
       )}
     </div>
   </section>
-
 </Layout>

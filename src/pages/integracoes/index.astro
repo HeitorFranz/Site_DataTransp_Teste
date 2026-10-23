@@ -1,27 +1,52 @@
 ---
 import Layout from '../../layouts/SiteLayout.astro';
-import { integrations } from '../../data/empresa';
+import Icon, { type IconName } from '../../components/home/Icon.astro';
+import IntegracaoIlustracao from '../../components/modulos/IntegracaoIlustracao.astro';
+import { integrations, modules } from '../../data/empresa';
+import { integracoesDetalhes } from '../../data/integracoes-detalhes';
+import '../../styles/modulo.css';
+
+// integrações agrupadas pelo módulo do mesmo assunto
+const grupos = modules
+  .filter((m) => m.confirmed)
+  .map((m) => ({ modulo: m, itens: integrations.filter((i) => integracoesDetalhes[i.slug]?.modulo === m.slug) }))
+  .filter((g) => g.itens.length > 0);
 ---
 
-<Layout title="Integrações | Datatransp" description="Consulte as integrações relacionadas ao DataTransp." currentPath="/integracoes">
-  <section class="page-hero">
-    <div class="container page-hero-inner">
-      <div class="breadcrumbs"><a href="/">Início</a> / <span>Integrações</span></div>
-      <h1>Consulte as integrações relacionadas ao sistema</h1>
-      <p>Converse com a equipe Datatransp para confirmar escopo, disponibilidade, parceiros e requisitos técnicos aplicáveis.</p>
-    </div>
-  </section>
-  <section class="section">
-    <div class="container">
-      <div class="card-grid">
-        {integrations.map((integration) => (
-          <article class="info-card">
-            <h2>{integration.title}</h2>
-            <p>Consulte a equipe para detalhes desta integração.</p>
-            <a class="nav-link" href={`/integracoes/${integration.slug}`}>Consultar detalhes</a>
-          </article>
-        ))}
+<Layout title="Integrações | Datatransp" description="Integrações do DataTransp com bancos, contabilidade, SPED, EDI, seguradoras, CIOT e abastecimentos." currentPath="/integracoes" bodyClass="page-modulo">
+  <section class="md-hero">
+    <div class="container md-hero__grid">
+      <div>
+        <div class="breadcrumbs"><a href="/">Início</a> / <span>Integrações</span></div>
+        <h1>Integrações</h1>
+        <p class="md-lead">O DataTransp conversa com bancos, contabilidade, clientes, seguradoras e órgãos do transporte. Veja o que cada integração faz e fale com a equipe para confirmar o escopo na sua operação.</p>
+        <div class="md-actions">
+          <a class="btn btn-primary" href="/contato#agendar-demonstracao">Falar com a equipe</a>
+        </div>
       </div>
+      <IntegracaoIlustracao title="Integrações" parceiro="Bancos, contabilidade e parceiros" />
     </div>
   </section>
+
+  {grupos.map((g, idx) => (
+    <section class:list={['md-section', { 'md-section--soft': idx % 2 === 0 }]}>
+      <div class="container">
+        <div class="md-others__head">
+          <h2><span class="md-inline-icon"><Icon name={g.modulo.slug as IconName} size={22} /></span>{g.modulo.title}</h2>
+          <a href={`/funcionalidades/${g.modulo.slug}`}>Ver o módulo {g.modulo.title}</a>
+        </div>
+        <ul class="md-integ">
+          {g.itens.map((i) => (
+            <li>
+              <a href={`/integracoes/${i.slug}`}>
+                <strong>{i.title}</strong>
+                <span>{integracoesDetalhes[i.slug].oQueE}</span>
+                <em>Entender esta integração</em>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
 </Layout>

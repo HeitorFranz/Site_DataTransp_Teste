@@ -11,6 +11,16 @@ export function initHomeMap(box: HTMLElement) {
   if (!cv || !tilt || !ctx) return;
 
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // cores vêm do CSS (tema claro ou escuro) e são relidas quando o aparelho troca de tema
+  let colors = { dot: '169,196,238', edge: '', lane: '', dest: '#fff' };
+  const readColors = () => {
+    const cs = getComputedStyle(box);
+    const v = (name: string, fallback: string) => cs.getPropertyValue(name).trim() || fallback;
+    colors = { dot: v('--map-dot', '169,196,238').replace(/\s+/g, ''), edge: v('--map-edge', 'rgba(143,178,230,.55)'), lane: v('--map-lane', 'rgba(242,245,250,.55)'), dest: v('--map-dest', '#fff') };
+  };
+  readColors();
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { readColors(); if (reduce) requestAnimationFrame(draw); });
   const [hqX, hqY] = sede;
 
   const inside = (x: number, y: number) => {
@@ -56,7 +66,7 @@ export function initHomeMap(box: HTMLElement) {
     const r = box.getBoundingClientRect();
     const mx = e.clientX - r.left, my = e.clientY - r.top;
     mouse = [mx, my];
-    if (!reduce) tilt.style.transform = `rotateX(${(my / r.height - 0.5) * -10}deg) rotateY(${(mx / r.width - 0.5) * 12}deg)`;
+    if (!reduce) tilt.style.transform = `rotateX(${(my / r.height - 0.5) * -5}deg) rotateY(${(mx / r.width - 0.5) * 6}deg)`;
   });
   box.addEventListener('pointerleave', () => { mouse = null; tilt.style.transform = ''; });
 
@@ -73,13 +83,13 @@ export function initHomeMap(box: HTMLElement) {
     for (const p of dots) {
       if (p.d > intro) continue;
       const born = Math.min(1, (intro - p.d) / 8);
-      let r = S * 0.33 * born, a = 0.32 + 0.18 * p.seed, col = '169,196,238';
+      let r = S * 0.33 * born, a = 0.32 + 0.18 * p.seed, col = colors.dot;
       const dr = Math.abs(p.d - ripple);
       if (t > 2.2 && dr < 5) { const k = 1 - dr / 5; a += 0.55 * k; r += S * 0.22 * k; }
       const [px, py] = P(p.x, p.y);
       if (mouse) {
         const dm = Math.hypot(px - mouse[0], py - mouse[1]);
-        if (dm < 70) { const k = 1 - dm / 70; r += S * 0.4 * k; a += 0.6 * k; if (k > 0.5) col = '255,120,118'; }
+        if (dm < 70) { const k = 1 - dm / 70; r += S * 0.4 * k; a += 0.6 * k; if (k > 0.5) col = '233,7,5'; }
       }
       ctx.fillStyle = `rgba(${col},${Math.min(1, a) * born})`;
       ctx.beginPath(); ctx.arc(px, py, r, 0, 7); ctx.fill();
@@ -87,7 +97,7 @@ export function initHomeMap(box: HTMLElement) {
 
     if (t > 0.6 || reduce) {
       ctx.globalAlpha = reduce ? 1 : Math.min(1, (t - 0.6) * 1.5);
-      ctx.strokeStyle = 'rgba(143,178,230,.55)'; ctx.lineWidth = 1;
+      ctx.strokeStyle = colors.edge; ctx.lineWidth = 1;
       ctx.beginPath();
       BR.forEach(([x, y], i) => { const [a, b] = P(x, y); i ? ctx.lineTo(a, b) : ctx.moveTo(a, b); });
       ctx.closePath(); ctx.stroke(); ctx.globalAlpha = 1;
@@ -97,25 +107,25 @@ export function initHomeMap(box: HTMLElement) {
       const start = 1.2 + i * 0.08;
       const grow = reduce ? 1 : Math.min(1, Math.max(0, (t - start) / 1.1));
       if (grow <= 0) return;
-      ctx.setLineDash([S * 1.1, S * 0.9]); ctx.lineWidth = 1.2; ctx.strokeStyle = 'rgba(242,245,250,.55)';
+      ctx.setLineDash([S * 1.1, S * 0.9]); ctx.lineWidth = 1.2; ctx.strokeStyle = colors.lane;
       ctx.beginPath();
       for (let s = 0; s <= grow + 1e-6; s += 0.02) { const [x, y] = bez(r, Math.min(s, grow)); const [a, b] = P(x, y); s ? ctx.lineTo(a, b) : ctx.moveTo(a, b); }
       ctx.stroke(); ctx.setLineDash([]);
       if (grow < 1) return;
       const [ex, ey] = P(r.x, r.y);
-      ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(ex, ey, S * 0.55, 0, 7); ctx.fill();
+      ctx.fillStyle = colors.dest; ctx.beginPath(); ctx.arc(ex, ey, S * 0.55, 0, 7); ctx.fill();
       if (reduce) return;
       const q = (t * 0.28 + r.off) % 1;
       for (let k = 0; k < 10; k++) {
         const tt = q - k * 0.012; if (tt < 0) continue;
         const [x, y] = bez(r, tt); const [a, b] = P(x, y);
-        ctx.fillStyle = `rgba(255,${80 + k * 12},${78 + k * 12},${1 - k / 10})`;
+        ctx.fillStyle = `rgba(233,7,5,${(1 - k / 10) * 0.9})`;
         ctx.beginPath(); ctx.arc(a, b, S * (0.75 - k * 0.05), 0, 7); ctx.fill();
       }
       if (q > 0.96) {
         const k = (q - 0.96) / 0.04;
-        ctx.strokeStyle = `rgba(255,255,255,${1 - k})`; ctx.lineWidth = 1.5;
-        ctx.beginPath(); ctx.arc(ex, ey, S * (0.6 + k * 2.6), 0, 7); ctx.stroke();
+        ctx.strokeStyle = colors.dest; ctx.globalAlpha = 1 - k; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.arc(ex, ey, S * (0.6 + k * 2.6), 0, 7); ctx.stroke(); ctx.globalAlpha = 1;
       }
     });
 

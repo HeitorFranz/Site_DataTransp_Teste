@@ -163,36 +163,7 @@ export const integrations = [
   { slug: 'ciot', title: 'CIOT' },
 ];
 
-export const testimonials = [
-  {
-    slug: 'mac-express',
-    quote: 'O DataTransp é um sistema muito utilizado pela nossa empresa e bem fácil de operar, super indico para quem nos pergunta sobre esse sistema.',
-    company: 'Mac Express Transporte de Cargas',
-    logo: '/clientes/mac-express.png',
-    logoAuthorized: true,
-  },
-  {
-    slug: 'transportes-froner',
-    quote: 'Nós utilizamos o DataTransp e atualmente ele supre as nossas necessidades. É um sistema prático, seguro e que facilita muito o dia a dia da transportadora. Otimizou nossa gestão e nos deu muito mais controle. Recomendo.',
-    company: 'Transportes Froner',
-    logo: null,
-    logoAuthorized: false,
-  },
-  {
-    slug: 'transportes-tombini',
-    quote: 'O Datatransp é uma ferramenta de gestão muito importante. Chegamos a começar uma conversão para outro sistema, mas achamos que talvez tudo que precisássemos nós já tínhamos e o sistema nos fornece um resultado muito correto em números. Hoje os sistemas têm muito gráfico, muita firula, mas não entregam um resultado com precisão.',
-    company: 'Transportes Tombini',
-    logo: '/clientes/transportes-tombini.png',
-    logoAuthorized: true,
-  },
-  {
-    slug: 'fama-transportes',
-    quote: 'O sistema facilita muito a análise de dados, integração com a contabilidade, e registros históricos de toda a frota, não necessitando de várias planilhas por fora.',
-    company: 'Fama Transportes',
-    logo: '/clientes/fama-transportes.svg',
-    logoAuthorized: true,
-  },
-];
+
 
 export const newsItems: Array<{
   slug: string;

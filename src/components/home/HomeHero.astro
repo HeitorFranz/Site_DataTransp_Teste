@@ -1,23 +1,32 @@
 ---
 import { company } from '../../data/empresa';
+
+const anoAtual = Number(company.foundation) + company.experienceYears;
 ---
 
 <section class="dt-hero" aria-labelledby="hero-title">
   <div class="dt-hero__stage">
-    <div class="dt-lead">
-      <h1 id="hero-title" class="dt-say" data-hero-lead>{company.experienceYears} anos de experiência em software para transportadoras</h1>
+    <div class="dt-hero__copy">
+      <span class="dt-claim__tag" data-hero-tag><i aria-hidden="true"></i>DataTransp</span>
+      <p class="dt-say dt-claim__text" data-hero-claim>Ao lado de quem <span class="dt-claim__accent">move o Brasil.</span></p>
+
+      <!-- experiência: o número e a frase lado a lado, com a linha do tempo da empresa -->
+      <h1 id="hero-title" class="dt-lead">
+        <span class="dt-lead__big" data-hero-big><span data-hero-num>{company.experienceYears}</span> anos</span>
+        <span class="dt-lead__rest" data-hero-lead>de experiência em software para transportadoras</span>
+      </h1>
+      <div class="dt-years" aria-hidden="true">
+        <span>{company.foundation}</span>
+        <i class="dt-years__bar"><b data-hero-bar></b></i>
+        <span>{anoAtual}</span>
+      </div>
     </div>
 
     <div class="dt-map" data-home-map>
       <div class="dt-map__tilt" data-tilt>
         <canvas role="img" aria-label="Mapa do Brasil com rotas saindo de Chapecó para todas as regiões do país"></canvas>
       </div>
-      <p class="dt-map__caption" data-hero-caption><i aria-hidden="true"></i>De Chapecó, SC, para <strong>todo o Brasil</strong></p>
-    </div>
-
-    <div class="dt-claim">
-      <span class="dt-claim__tag" data-hero-tag>DataTransp:</span>
-      <p class="dt-say dt-claim__text" data-hero-claim>Ao lado de quem move o Brasil.</p>
+      <p class="dt-map__caption" data-hero-caption><i aria-hidden="true"></i>De Chapecó para <strong>todo o Brasil</strong></p>
     </div>
   </div>
 </section>

@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/SiteLayout.astro';
-import { company, testimonials } from '../data/empresa';
+import { company } from '../data/empresa';
+import { depoimentos } from '../data/depoimentos';
 ---
 
 <Layout title="Clientes | Datatransp" description="Depoimentos de clientes e cobertura da Datatransp." currentPath="/clientes">
@@ -22,15 +23,16 @@ import { company, testimonials } from '../data/empresa';
     <div class="container">
       <h2 class="section-title">O que os clientes dizem sobre o DataTransp</h2>
       <div class="contact-grid">
-        {testimonials.map((item) => (
+        {depoimentos.map((item) => (
           <article class="testimonial-card">
-            {item.logoAuthorized && item.logo && (
+            {item.logo && (
               <div class="testimonial-logo">
-                <img src={item.logo} alt={`Logo de ${item.company}`} width="240" height="80" loading="lazy" decoding="async" />
+                <img src={item.logo} alt={`Logo de ${item.empresa}`} width="240" height="80" loading="lazy" decoding="async" />
               </div>
             )}
-            <blockquote>“{item.quote}”</blockquote>
-            <h3>{item.company}</h3>
+            <blockquote>“{item.texto}”</blockquote>
+            <h3>{item.nome ? `${item.nome} · ${item.empresa}` : item.empresa}</h3>
+            {item.cargo && <p class="testimonial-role">{item.cargo}</p>}
           </article>
         ))}
       </div>
