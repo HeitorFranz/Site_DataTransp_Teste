@@ -328,9 +328,7 @@
   .dt-flow__steps.is-playing::after, .dt-flow__steps.is-playing .dt-flow__dot { animation: none; }
 }
 
-/* fim da página: os botões de demonstração e WhatsApp já aparecem nas seções acima;
-   fica só o botão da ajuda rápida, com cara de botão */
-.page-home .contact-bar { display: none; }
+/* fim da página: botão da ajuda rápida com cara de botão */
 .page-home .chat-widget { padding-top: 8px; }
 .page-home .chat-launcher { padding: 0 16px; border-radius: 8px; color: var(--title); text-decoration: none; box-shadow: inset 0 0 0 1.5px var(--line); background: var(--card); }
 .page-home .chat-launcher:hover { box-shadow: inset 0 0 0 1.5px var(--title); color: var(--title); }

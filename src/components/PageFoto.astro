@@ -1,0 +1,69 @@
+---
+// Foto de banco gratuito (Pexels) com texto ao lado e crédito do fotógrafo.
+// A foto entra com uma "cortina" quando aparece na tela; sem JS ou com movimento reduzido, já aparece pronta.
+interface Props {
+  foto: string; // nome base em /images/fotos, sem tamanho nem extensão
+  alt: string;
+  autor: string;
+  link: string;
+  titulo: string;
+  invertido?: boolean;
+}
+const { foto, alt, autor, link, titulo, invertido = false } = Astro.props;
+---
+
+<section class:list={['pf', { 'pf--inv': invertido }]}>
+  <div class="container pf__grid">
+    <figure class="pf__fig">
+      <div class="pf__media"><img
+        src={`/images/fotos/${foto}-800.webp`}
+        srcset={`/images/fotos/${foto}-800.webp 800w, /images/fotos/${foto}-1400.webp 1400w`}
+        sizes="(max-width: 800px) 100vw, 50vw"
+        alt={alt}
+        width="800"
+        height="600"
+        loading="lazy"
+        decoding="async"
+      /></div>
+      <figcaption>Foto: <a href={link} target="_blank" rel="noopener noreferrer">{autor} / Pexels</a></figcaption>
+    </figure>
+    <div class="pf__text">
+      <h2>{titulo}</h2>
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .pf { padding: 3.5rem 0; }
+  .pf__grid { display: grid; gap: 2rem; align-items: center; grid-template-columns: 1fr 1fr; }
+  .pf--inv .pf__fig { order: 2; }
+  .pf__fig { margin: 0; }
+  .pf__fig img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 14px; }
+  .pf__fig figcaption { margin-top: .5rem; font-size: .8rem; color: var(--ink-soft); }
+  .pf__fig figcaption a { color: inherit; }
+  .pf__text h2 { margin: 0 0 1rem; color: var(--ink); }
+  .pf__text :global(p) { color: var(--ink-soft); margin: 0 0 .75rem; max-width: 52ch; }
+  @media (max-width: 800px) {
+    .pf__grid { grid-template-columns: 1fr; }
+    .pf--inv .pf__fig { order: 0; }
+  }
+  /* a cortina é uma faixa por cima da foto: a imagem fica sempre "visível" para o lazy-load do navegador */
+  .pf__media { position: relative; overflow: hidden; border-radius: 14px; }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.pf-js) .pf__media::after {
+      content: ''; position: absolute; inset: 0; background: var(--brand-navy);
+      transform-origin: right; transition: transform .9s cubic-bezier(.2, .7, .2, 1);
+    }
+    :global(.pf-js) .pf--inv .pf__media::after { transform-origin: left; }
+    :global(.pf-js) .pf.is-on .pf__media::after { transform: scaleX(0); }
+  }
+</style>
+
+<script>
+  document.documentElement.classList.add('pf-js');
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-on'); io.unobserve(e.target); }
+  }, { rootMargin: '0px 0px -15% 0px' });
+  document.querySelectorAll('.pf').forEach((el) => io.observe(el));
+</script>

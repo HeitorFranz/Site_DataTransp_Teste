@@ -2,6 +2,7 @@
 import Layout from '../layouts/SiteLayout.astro';
 import { company } from '../data/empresa';
 import '../styles/modulo.css';
+import PageFoto from '../components/PageFoto.astro';
 
 const hoje = Number(company.foundation) + company.experienceYears;
 ---
@@ -14,6 +15,11 @@ const hoje = Number(company.foundation) + company.experienceYears;
       <p>{company.history}</p>
     </div>
   </section>
+
+  <PageFoto foto="rodovia" alt="Caminhão trafegando em rodovia brasileira em dia de céu aberto" autor="Messala Ciulla" link="https://www.pexels.com/pt-br/foto/caminhao-na-estrada-no-brasil-34365732/" titulo="Feito para quem vive a estrada">
+    <p>A DataTransp começou em Xaxim, no oeste de Santa Catarina, no meio de transportadoras. O sistema nasceu dessa rotina: nota fiscal, frete, frota e conta para pagar no fim do mês.</p>
+    <p>Hoje a sede fica em Chapecó, e o atendimento chega a transportadoras e frotistas de todo o Brasil, pelo WhatsApp e pelo telefone.</p>
+  </PageFoto>
 
   <!-- trajetória: só os marcos confirmados (fundação em Xaxim, sede atual em Chapecó) -->
   <section class="section">

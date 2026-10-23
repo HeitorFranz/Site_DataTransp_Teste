@@ -4,6 +4,7 @@ import Icon, { type IconName } from '../../components/home/Icon.astro';
 import WhatsAppIcon from '../../components/home/WhatsAppIcon.astro';
 import { company, modules, integrations } from '../../data/empresa';
 import ModuloIlustracao from '../../components/modulos/ModuloIlustracao.astro';
+import FolhetoBI from '../../components/modulos/FolhetoBI.astro';
 import { explicacoes } from '../../data/modulos-detalhes';
 import { integracoesDetalhes } from '../../data/integracoes-detalhes';
 import '../../styles/modulo.css';
@@ -90,10 +91,7 @@ const whatsAppUrl = `https://wa.me/55${company.whatsapp.replace(/\D/g, '')}?text
       </div>
 
       {module.slug === 'bi' && (
-        <figure class="md-photo">
-          <img src="/images/product/business-intelligence.jpg" alt="Material institucional do DataTransp BI com diagramas e relatórios impressos." width="830" height="1100" loading="lazy" decoding="async" />
-          <figcaption>Material institucional do DataTransp BI.</figcaption>
-        </figure>
+        <FolhetoBI />
       )}
     </div>
   </section>

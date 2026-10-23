@@ -7,8 +7,8 @@ interface Props { slug: string; title: string }
 const { slug, title } = Astro.props;
 ---
 
-<figure class="ilu" data-ilu aria-label={`Ilustração do módulo ${title}`} role="img">
-  <div class="ilu__bar"><span>{title}</span><small>Ilustração</small></div>
+<figure class="ilu" data-ilu aria-label={`Como funciona o módulo ${title}`} role="img">
+  <div class="ilu__bar"><span>{title}</span></div>
   <div class="ilu__body" aria-hidden="true">
     {slug === 'fiscal' && (
       <div class="ilu-fiscal">

@@ -1,0 +1,89 @@
+---
+// Versão digital do folheto impresso "DataTransp GTF" (antes era uma foto do papel).
+// Textos tirados do próprio folheto da empresa.
+import Icon, { type IconName } from '../home/Icon.astro';
+
+const grupos: { titulo: string; icone: IconName; itens: string[] }[] = [
+  { titulo: 'Comercial', icone: 'fiscal', itens: ['Tabela de frete', 'Pedido de frete e ordem de carregamento', 'Emissão de CT-e', 'Contrato de frete de terceiros', 'Emissão de CRT e MIC', 'Averbação eletrônica on-line'] },
+  { titulo: 'Célula fiscal', icone: 'shield', itens: ['CT-e', 'MDF-e', 'NF-e', 'NFS-e'] },
+  { titulo: 'Frota', icone: 'manutencao', itens: ['Manutenção preventiva com alertas', 'Consumo médio de combustível', 'Controle de pneus', 'Acerto de viagens com motoristas', 'Estoque de combustível, peças e pneus', 'Controle de documentos'] },
+  { titulo: 'Financeiro', icone: 'financeiro', itens: ['Contas a receber e a pagar', 'Faturas', 'Conta caixa e correntes', 'Integração com bancos, boletos e remessa'] },
+  { titulo: 'Integrações', icone: 'combustiveis', itens: ['Importação de abastecidas', 'Importação e exportação EDI com embarcador', 'Importação de XML de NF-e de entrada', 'SPED Fiscal', 'Automação de bombas de abastecimento'] },
+  { titulo: 'Relatórios gerenciais', icone: 'bi', itens: ['Resultado por veículo, período e ranking', 'Resultado de viagens', 'Consumo de combustível com metas', 'Plano de contas gerencial'] },
+];
+---
+
+<figure class="fg" aria-label="Folheto do DataTransp GTF: visão geral dos módulos">
+  <div class="fg__top">
+    <p class="fg__claim">O controle total<br />da sua empresa.</p>
+    <div class="fg__brand">
+      <img src="/brand/datatransp-logo-400.webp" alt="DataTransp" width="400" height="134" loading="eager" decoding="async" />
+      <small>Dirija seu negócio</small>
+    </div>
+  </div>
+
+  <div class="fg__hub" aria-hidden="true">
+    <svg viewBox="0 0 240 120" class="fg__lines">
+      {[[30, 20], [120, 10], [210, 20], [30, 100], [120, 110], [210, 100]].map(([x, y]) => (
+        <line x1="120" y1="60" x2={x} y2={y} />
+      ))}
+    </svg>
+    <span class="fg__core">DataTransp<b>GTF</b></span>
+  </div>
+
+  <ul class="fg__list">
+    {grupos.map((g, i) => (
+      <li style={`--i:${i}`}>
+        <h3><span class="fg__ic"><Icon name={g.icone} size={16} /></span>{g.titulo}</h3>
+        <ul>{g.itens.map((t) => <li>{t}</li>)}</ul>
+      </li>
+    ))}
+  </ul>
+  <figcaption class="fg__cap">Folheto do DataTransp GTF, em versão digital.</figcaption>
+</figure>
+
+<style>
+  .fg {
+    margin: 0; width: 100%; max-width: 380px; justify-self: center;
+    background: #fff; color: #102746; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 20px 44px #10274626; font-size: 13px; line-height: 1.35;
+  }
+  .fg__top {
+    position: relative; padding: 22px 20px 18px;
+    background: linear-gradient(135deg, #102746 0%, #1d3f6e 100%); color: #fff;
+  }
+  .fg__top::after {
+    content: ''; position: absolute; right: 0; bottom: 0; width: 46%; height: 10px; background: #e90705;
+  }
+  .fg__claim { margin: 0 0 14px; font: 800 22px/1.1 var(--font-display, 'Archivo', sans-serif); }
+  .fg__brand { display: inline-grid; gap: 4px; background: #fff; padding: 8px 12px; border-radius: 10px; }
+  .fg__brand img { width: 130px; height: auto; display: block; }
+  .fg__brand small { color: #102746; font-style: italic; font-size: 11px; }
+
+  .fg__hub { position: relative; height: 96px; margin: 8px 20px 0; }
+  .fg__lines { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .fg__lines line { stroke: #9fb3cf; stroke-width: 1.5; stroke-dasharray: 3 4; }
+  .fg__core {
+    position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+    display: grid; place-items: center; width: 84px; height: 84px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #2f5f9e, #102746); color: #fff;
+    font: 700 10px/1 var(--font-display, 'Archivo', sans-serif); text-transform: uppercase; letter-spacing: .04em;
+    box-shadow: 0 0 0 5px #e7eef8;
+  }
+  .fg__core b { font-size: 22px; letter-spacing: 0; margin-top: -10px; }
+
+  .fg__list { list-style: none; margin: 0; padding: 12px 16px 6px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px; }
+  .fg__list h3 { display: flex; align-items: center; gap: 6px; margin: 0 0 4px; font: 800 12px/1.2 var(--font-display, 'Archivo', sans-serif); text-transform: uppercase; color: #102746; }
+  .fg__ic { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #102746; color: #fff; flex: none; }
+  .fg__list ul { list-style: none; margin: 0; padding: 0; color: #43556c; font-size: 11.5px; }
+  .fg__list ul li { padding-left: 9px; position: relative; }
+  .fg__list ul li::before { content: ''; position: absolute; left: 0; top: .55em; width: 4px; height: 4px; border-radius: 50%; background: #e90705; }
+  .fg__cap { padding: 6px 16px 14px; font-size: 11px; color: #55667d; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fg__lines line { animation: fg-flow 2.4s linear infinite; }
+    .fg__list > li { animation: fg-in .5s ease both; animation-delay: calc(.15s + var(--i) * 90ms); }
+  }
+  @keyframes fg-flow { to { stroke-dashoffset: -14; } }
+  @keyframes fg-in { from { opacity: 0; transform: translateY(8px); } }
+</style>

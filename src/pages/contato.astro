@@ -9,6 +9,16 @@ import { company } from '../data/empresa';
       <div class="breadcrumbs"><a href="/">Início</a> / <span>Contato</span></div>
       <h1>Vamos conversar sobre a sua operação</h1>
       <p>Envie seu pedido pelo formulário ou escolha um dos nossos canais diretos.</p>
+      <div class="ct-now">
+        <img src="/images/home/atendente-avatar.webp" alt="" width="56" height="56" loading="eager" />
+        <div>
+          <p class="ct-now__status" data-open-status>
+            <span class="ct-now__dot" aria-hidden="true"></span>
+            <span data-open-text>Atendimento de segunda a sexta, das 8h às 18h</span>
+          </p>
+          <p class="ct-now__who">Quem responde é da nossa equipe, aqui em Chapecó.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -132,3 +142,36 @@ import { company } from '../data/empresa';
     </div>
   </section>
 </Layout>
+
+<style>
+  .ct-now { display: flex; align-items: center; gap: .875rem; margin-top: 1.5rem; }
+  .ct-now img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid rgb(255 255 255 / .6); }
+  .ct-now p { margin: 0; }
+  .ct-now__status { display: flex; align-items: center; gap: .5rem; font-weight: 700; }
+  .ct-now__who { opacity: .85; font-size: .95rem; }
+  .ct-now__dot { width: 10px; height: 10px; border-radius: 50%; background: #9aa8bb; flex: none; }
+  .ct-now[data-state='open'] .ct-now__dot { background: #22c55e; }
+  @media (prefers-reduced-motion: no-preference) {
+    .ct-now[data-state='open'] .ct-now__dot { animation: ct-beat 2s ease-in-out infinite; }
+  }
+  @keyframes ct-beat { 50% { box-shadow: 0 0 0 6px rgb(34 197 94 / .25); } }
+</style>
+
+<script>
+  // horário de Brasília: seg a sex, 08h às 18h
+  const box = document.querySelector<HTMLElement>('.ct-now');
+  const text = document.querySelector<HTMLElement>('[data-open-text]');
+  if (box && text) {
+    const parts = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Sao_Paulo', weekday: 'short', hour: 'numeric', hourCycle: 'h23' }).formatToParts(new Date());
+    const day = parts.find((p) => p.type === 'weekday')?.value ?? '';
+    const hour = Number(parts.find((p) => p.type === 'hour')?.value ?? 0);
+    const weekday = !['Sat', 'Sun'].includes(day);
+    const open = weekday && hour >= 8 && hour < 18;
+    box.dataset.state = open ? 'open' : 'closed';
+    text.textContent = open
+      ? 'Aberto agora: chama no WhatsApp ou liga'
+      : weekday && hour < 8
+        ? 'Fechado agora. Abrimos hoje às 8h'
+        : 'Fechado agora. Deixe seu pedido e retornamos no próximo dia útil';
+  }
+</script>

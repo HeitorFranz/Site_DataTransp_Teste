@@ -1,0 +1,60 @@
+---
+// Versão digital do folheto impresso "DataTransp BI" (antes era uma foto do papel).
+// Textos resumidos do próprio folheto da empresa.
+const blocos = [
+  { titulo: 'Relatórios', texto: 'Crie relatórios para qualquer finalidade e disponibilize para quem precisar, personalizados para cada setor.' },
+  { titulo: 'Pesquisa e análise', texto: 'Os próprios usuários montam suas pesquisas e análises, com autonomia e segurança.' },
+  { titulo: 'Gestão de desempenho', texto: 'Painéis e indicadores da frota e do financeiro numa só tela.' },
+  { titulo: 'Gestão de eventos', texto: 'Avisos automáticos por e-mail quando algo importante acontece: faturamento do dia, veículo que entrou em manutenção, viagem encerrada.' },
+  { titulo: 'Entradas de dados', texto: 'Cadastre metas e controles de orçamento e reúna informações de outros sistemas.' },
+];
+---
+
+<figure class="fb" aria-label="Folheto do DataTransp BI, em versão digital">
+  <div class="fb__top">
+    <span class="fb__tag">DataTransp <b>BI</b></span>
+    <p>Transforma os dados guardados no DataTransp em informação para decidir. Junta também dados de outros sistemas numa só base.</p>
+    <svg class="fb__net" viewBox="0 0 120 80" aria-hidden="true">
+      {[[20, 14], [60, 6], [100, 14], [20, 66], [60, 74], [100, 66]].map(([x, y]) => (
+        <g><line x1="60" y1="40" x2={x} y2={y} /><circle cx={x} cy={y} r="7" /></g>
+      ))}
+      <circle class="fb__hubdot" cx="60" cy="40" r="13" />
+    </svg>
+  </div>
+  <ul class="fb__list">
+    {blocos.map((b, i) => (
+      <li style={`--i:${i}`}><h3>{b.titulo}</h3><p>{b.texto}</p></li>
+    ))}
+  </ul>
+  <div class="fb__foot">
+    <img src="/brand/datatransp-logo-400.webp" alt="DataTransp" width="400" height="134" loading="lazy" decoding="async" />
+    <small>Dirija seu negócio</small>
+  </div>
+  <figcaption class="fb__cap">Folheto do DataTransp BI, em versão digital.</figcaption>
+</figure>
+
+<style>
+  .fb { margin: 32px 0 0; max-width: 420px; background: #fff; color: #102746; border-radius: 16px; overflow: hidden; box-shadow: 0 16px 36px #1027461f; font-size: 13px; line-height: 1.4; }
+  .fb__top { display: grid; grid-template-columns: 1fr 110px; gap: 4px 12px; align-items: center; padding: 18px 18px 16px; background: linear-gradient(160deg, #eef4fb, #d9e6f5); }
+  .fb__tag { grid-column: 1 / -1; justify-self: start; padding: 6px 12px; border-radius: 6px; background: #102746; color: #fff; font: 800 15px/1 var(--font-display, 'Archivo', sans-serif); text-transform: uppercase; }
+  .fb__tag b { color: #ff6b68; }
+  .fb__top p { margin: 6px 0 0; color: #33465f; }
+  .fb__net { width: 110px; height: auto; }
+  .fb__net line { stroke: #7f9cc4; stroke-width: 1.5; }
+  .fb__net circle { fill: #2f5f9e; }
+  .fb__net .fb__hubdot { fill: #e90705; }
+  .fb__list { list-style: none; margin: 0; padding: 14px 18px 4px; display: grid; gap: 10px; }
+  .fb__list h3 { display: inline-block; margin: 0 0 3px; padding: 3px 8px; border-radius: 4px; background: #1d3f6e; color: #fff; font: 700 11.5px/1.2 var(--font-display, 'Archivo', sans-serif); }
+  .fb__list p { margin: 0; color: #43556c; }
+  .fb__foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; padding: 12px 18px; background: #102746; }
+  .fb__foot img { width: 120px; height: auto; background: #fff; padding: 4px 6px; border-radius: 6px; }
+  .fb__foot small { color: #fff; font-style: italic; }
+  .fb__cap { padding: 8px 18px 12px; font-size: 11px; color: #55667d; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fb__net .fb__hubdot { animation: fb-pulse 2.4s ease-in-out infinite; transform-origin: 60px 40px; }
+    .fb__list li { animation: fb-in .5s ease both; animation-delay: calc(var(--i) * 90ms); }
+  }
+  @keyframes fb-pulse { 50% { transform: scale(1.15); } }
+  @keyframes fb-in { from { opacity: 0; transform: translateX(-8px); } }
+</style>

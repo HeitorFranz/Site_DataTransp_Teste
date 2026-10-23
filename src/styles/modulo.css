@@ -9,9 +9,6 @@
 
 .page-modulo .dt-icon { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
 
-/* o cartão de atendimento no fim da página já tem os botões de demonstração e WhatsApp */
-.page-modulo .contact-bar { display: none; }
-
 /* troca rápida entre módulos */
 .md-switch { border-bottom: 1px solid var(--line); background: var(--paper); }
 .md-switch__inner { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding-block: 8px; }

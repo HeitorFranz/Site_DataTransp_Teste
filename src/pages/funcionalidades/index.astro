@@ -2,9 +2,11 @@
 import Layout from '../../layouts/SiteLayout.astro';
 import Icon, { type IconName } from '../../components/home/Icon.astro';
 import ModuloIlustracao from '../../components/modulos/ModuloIlustracao.astro';
+import FolhetoGTF from '../../components/modulos/FolhetoGTF.astro';
 import { modules } from '../../data/empresa';
 import { explicacoes } from '../../data/modulos-detalhes';
 import '../../styles/modulo.css';
+import PageFoto from '../../components/PageFoto.astro';
 
 const confirmedModules = modules.filter((module) => module.confirmed);
 ---
@@ -29,12 +31,14 @@ const confirmedModules = modules.filter((module) => module.confirmed);
           <a class="md-wa-link" href="/integracoes">Ver integrações</a>
         </div>
       </div>
-      <figure class="md-photo md-photo--hero">
-        <img src="/images/product/gtf-overview.jpg" alt="Material institucional do DataTransp GTF com um caminhão e um diagrama dos módulos." width="680" height="1170" loading="eager" decoding="async" />
-        <figcaption>Material institucional com a visão geral dos módulos.</figcaption>
-      </figure>
+      <FolhetoGTF />
     </div>
   </section>
+
+  <PageFoto foto="oficina" alt="Mecânico trabalhando em um motor numa oficina organizada" autor="Artem Podrez" link="https://www.pexels.com/pt-br/foto/homem-pessoa-carro-veiculo-8985703/" titulo="Do escritório à oficina">
+    <p>O mesmo sistema que emite o CT-e guarda o histórico de manutenção, a vida de cada pneu e o consumo de combustível. O escritório e o pátio olham para a mesma informação.</p>
+    <p>Abaixo, cada módulo com uma explicação curta e uma animação de como funciona.</p>
+  </PageFoto>
 
   {confirmedModules.map((m, idx) => (
     <section id={m.slug} class:list={['md-section', 'md-feature', { 'md-section--soft': idx % 2 === 0, 'md-feature--flip': idx % 2 === 1 }]}>

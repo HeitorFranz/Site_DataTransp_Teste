@@ -1,0 +1,52 @@
+/* Rodapé do site: azul-marinho nos dois temas, três colunas curtas e uma barra final. */
+.sf {
+  --sf-bg: #081a33;
+  --sf-line: #ffffff1a;
+  --sf-text: #b7c4d8;
+  --sf-title: #ffffff;
+  margin-top: 0;
+  padding: 56px 0 0;
+  background: var(--sf-bg);
+  color: var(--sf-text);
+  border-top: 3px solid var(--brand-red, #e90705);
+}
+
+.sf a { color: var(--sf-text); text-decoration: none; transition: color .15s; }
+.sf a:hover { color: #fff; }
+.sf a:focus-visible { outline: 3px solid #ffb4b3; outline-offset: 3px; border-radius: 4px; }
+
+/* marca + chamada */
+.sf-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 28px; padding-bottom: 40px; border-bottom: 1px solid var(--sf-line); }
+.sf-brand .brand-logo img { width: 170px; }
+.sf-brand p { margin: 16px 0 0; font-size: 16px; color: #dbe4f2; }
+.sf-brand address { margin-top: 4px; font-style: normal; font-size: 14.5px; }
+.sf-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.sf .sf-cta .btn { color: #fff; }
+.sf .sf-wa { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 600; color: #4ade80; }
+.sf .sf-wa:hover { color: #86efac; }
+
+/* colunas */
+.sf-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; padding: 40px 0; }
+.sf-cols h2 { margin: 0 0 14px; font: 700 15px var(--font-heading, sans-serif); color: var(--sf-title); }
+.sf-cols ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.sf-cols li { font-size: 15px; line-height: 1.4; }
+.sf-hours { color: #dbe4f2; }
+
+/* barra final */
+.sf-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 20px 0 24px; border-top: 1px solid var(--sf-line); font-size: 13.5px; }
+.sf-bottom p { margin: 0; }
+.sf-bottom p span { margin-left: 14px; padding-left: 14px; border-left: 1px solid var(--sf-line); }
+.sf-bottom ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+
+@media (max-width: 760px) {
+  .sf { padding-top: 40px; }
+  .sf-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; }
+  .sf-cols > :last-child { grid-column: 1 / -1; }
+  .sf-cta { width: 100%; }
+  .sf-cta .btn { flex: 1 1 100%; text-align: center; }
+  .sf-bottom p span { display: block; margin: 4px 0 0; padding: 0; border: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sf a { transition: none; }
+}
