@@ -91,7 +91,7 @@ export const brasilOutline: ReadonlyArray<readonly [number, number]> = [
   [10.2, 12.4],
 ];
 
-// Sede da Datatransp (Chapecó/SC) e destinos das rotas desenhadas a partir dela.
+// Sede da DataTransp (Chapecó/SC) e destinos das rotas desenhadas a partir dela.
 export const sede = [54.3, 82.5] as const;
 export const destinos: ReadonlyArray<readonly [number, number]> = [
   [35.5, 21.6], [64.7, 17.4], [90.1, 23.1], [96, 34], [88, 47],

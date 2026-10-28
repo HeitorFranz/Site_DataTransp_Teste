@@ -2,45 +2,116 @@
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import DataBot from '../components/DataBot.astro';
-import { company } from '../data/empresa';
+import { company, modules } from '../data/empresa';
 import '../styles/global.css';
 
+interface Props {
+  title?: string;
+  description?: string;
+  currentPath?: string;
+  bodyClass?: string;
+  /** página sem valor de busca (ex.: lista vazia): fica fora do índice */
+  noindex?: boolean;
+  /** trilha para o BreadcrumbList; a página atual é o último item */
+  breadcrumbs?: { name: string; path: string }[];
+  /** tipo do WebPage no schema */
+  pageType?: 'WebPage' | 'AboutPage' | 'ContactPage' | 'CollectionPage';
+}
+
 const {
-  title = `${company.name} | Soluções para transportadoras e frotas`,
-  description = company.mission,
+  title = `Sistema para transportadoras e gestão de frotas | ${company.name}`,
+  description = 'Sistema de gestão para transportadoras e frotistas desde 1997, em Chapecó/SC: CT-e, MDF-e, NF-e, financeiro, manutenção, pneus, combustível e BI. Agende uma demonstração.',
   currentPath = '/',
   bodyClass,
+  noindex = false,
+  breadcrumbs = [],
+  pageType = 'WebPage',
 } = Astro.props;
 
+// schema: entidades com @id fixo, ligadas entre si; WebPage e BreadcrumbList mudam por página
+const base = company.siteUrl;
+const pageUrl = new URL(currentPath, base).toString();
+const so = (n: string) => n.replace(/\D/g, '');
 const structuredData = {
   '@context': 'https://schema.org',
   '@graph': [
     {
       '@type': 'Organization',
+      '@id': `${base}/#organization`,
       name: company.name,
+      alternateName: ['Datatransp', 'DataTransp Sistemas'],
       legalName: company.legalName,
-      url: Astro.site?.toString() ?? 'https://datatransp.com.br',
-      logo: `${company.siteUrl}/brand/datatransp-logo.png`,
+      url: `${base}/`,
+      logo: `${base}/brand/datatransp-logo.png`,
       taxID: company.cnpj,
       foundingDate: company.foundation,
       email: company.email,
-      telephone: company.phone,
+      telephone: `+55-${so(company.phone).slice(0, 2)}-${so(company.phone).slice(2)}`,
       address: {
         '@type': 'PostalAddress',
-        streetAddress: company.headquarters,
+        streetAddress: 'Rua Nereu Ramos, 75 D, Centro',
         addressLocality: 'Chapecó',
         addressRegion: 'SC',
         addressCountry: 'BR',
       },
+      contactPoint: [
+        {
+          '@type': 'ContactPoint',
+          contactType: 'sales',
+          telephone: `+55-${so(company.whatsapp).slice(0, 2)}-${so(company.whatsapp).slice(2)}`,
+          areaServed: 'BR',
+          availableLanguage: 'pt-BR',
+          hoursAvailable: {
+            '@type': 'OpeningHoursSpecification',
+            dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+            opens: '08:00',
+            closes: '18:00',
+          },
+        },
+      ],
       sameAs: [company.facebook, company.instagram].filter(Boolean),
     },
     {
-      '@type': 'SoftwareApplication',
-      name: 'DataTransp',
-      applicationCategory: 'BusinessApplication',
-      description: 'Sistema de gestão para transportadoras e frotistas.',
-      creator: { '@type': 'Organization', name: company.name },
+      '@type': 'WebSite',
+      '@id': `${base}/#website`,
+      url: `${base}/`,
+      name: company.name,
+      inLanguage: 'pt-BR',
+      publisher: { '@id': `${base}/#organization` },
     },
+    {
+      '@type': 'SoftwareApplication',
+      '@id': `${base}/#software`,
+      name: 'DataTransp',
+      url: `${base}/funcionalidades`,
+      applicationCategory: 'BusinessApplication',
+      description: 'Sistema de gestão para transportadoras e frotistas: documentos fiscais, financeiro, frota e indicadores.',
+      featureList: modules.filter((m) => m.confirmed).map((m) => m.title),
+      provider: { '@id': `${base}/#organization` },
+    },
+    {
+      '@type': pageType,
+      '@id': `${pageUrl}#webpage`,
+      url: pageUrl,
+      name: title,
+      description,
+      inLanguage: 'pt-BR',
+      isPartOf: { '@id': `${base}/#website` },
+      about: { '@id': `${base}/#software` },
+      ...(breadcrumbs.length ? { breadcrumb: { '@id': `${pageUrl}#breadcrumb` } } : {}),
+    },
+    ...(breadcrumbs.length
+      ? [{
+          '@type': 'BreadcrumbList',
+          '@id': `${pageUrl}#breadcrumb`,
+          itemListElement: [{ name: 'Início', path: '/' }, ...breadcrumbs].map((b, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: b.name,
+            item: new URL(b.path, base).toString(),
+          })),
+        }]
+      : []),
   ],
 };
 ---
@@ -52,14 +123,14 @@ const structuredData = {
     <meta name="description" content={description} />
     <meta name="theme-color" content="#102746" />
     <link rel="canonical" href={Astro.url.toString()} />
-    <meta name="robots" content="index,follow" />
+    <meta name="robots" content={noindex ? 'noindex,follow' : 'index,follow'} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={company.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={Astro.url.toString()} />
     <meta property="og:image" content={`${company.siteUrl}/brand/datatransp-logo.png`} />
-    <meta property="og:image:alt" content="Logotipo da Datatransp" />
+    <meta property="og:image:alt" content="Logotipo da DataTransp" />
     <meta name="twitter:card" content="summary_large_image" />
     <title>{title}</title>
     <link rel="icon" href="/brand/favicon-32.png" type="image/png" sizes="32x32" />
@@ -70,7 +141,7 @@ const structuredData = {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..900&family=Barlow:wght@400;500;600;700&display=swap" />
-    <link rel="alternate" type="application/rss+xml" title="Datatransp Novidades" href="/novidades/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="DataTransp Novidades" href="/novidades/feed.xml" />
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body class={bodyClass}>

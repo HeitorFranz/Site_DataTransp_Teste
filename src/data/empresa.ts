@@ -1,9 +1,10 @@
 export const company = {
-  name: 'Datatransp',
+  name: 'DataTransp',
   legalName: 'DATATRANSP SISTEMAS LTDA',
   cnpj: '07.023.901/0001-48',
   foundation: '1997',
-  experienceYears: 29,
+  // anos de experiência calculados no build, a partir da fundação (1997)
+  experienceYears: new Date().getFullYear() - 1997,
   teamSize: 9,
   headquarters: 'Rua Nereu Ramos, 75 D, Centro, Chapecó/SC',
   phone: '(49) 3329-8293',
@@ -21,7 +22,7 @@ export const company = {
     'Inovação',
   ],
   history:
-    'A Datatransp foi fundada em 1997, em Xaxim/SC, e hoje tem sede em Chapecó/SC. O DataTransp é um sistema integrado de gestão para o segmento de transportes. Em 2026, a empresa completa 29 anos de experiência.',
+    `A DataTransp foi fundada em 1997, em Xaxim/SC, e hoje tem sede em Chapecó/SC. O DataTransp é um sistema integrado de gestão para transportadoras e frotistas. Em ${new Date().getFullYear()}, a empresa completa ${new Date().getFullYear() - 1997} anos de experiência.`,
   serviceArea:
     'Atendemos transportadoras e frotistas em todo o Brasil.',
   productName: 'DataTransp',
@@ -142,7 +143,7 @@ export const modules = [
     whatItDoes: [
       'Visões prontas do sistema',
       'Criação de novas visões',
-      'Uso também por empresas que não usam o sistema Datatransp',
+      'Uso também por empresas que não usam o sistema DataTransp',
     ],
     documents: [],
     relatedIntegrations: [],
@@ -179,6 +180,6 @@ export const newsItems: Array<{
 export const activityFilters = ['Atualização', 'Novo recurso', 'Adequação fiscal', 'Em breve'];
 
 export const meta = {
-  rssTitle: 'Datatransp Novidades',
-  rssDescription: 'Atualizações, novos recursos e adequações fiscais do sistema Datatransp.',
+  rssTitle: 'DataTransp Novidades',
+  rssDescription: 'Atualizações, novos recursos e adequações fiscais do sistema DataTransp.',
 };

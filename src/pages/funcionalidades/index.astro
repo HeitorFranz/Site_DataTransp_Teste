@@ -11,7 +11,7 @@ import PageFoto from '../../components/PageFoto.astro';
 const confirmedModules = modules.filter((module) => module.confirmed);
 ---
 
-<Layout title="Funcionalidades | Datatransp" description="Conheça os módulos do DataTransp: fiscal, financeiro, manutenção, pneus, combustíveis e Arla, alertas e BI." currentPath="/funcionalidades" bodyClass="page-modulo">
+<Layout title="Funcionalidades do sistema para transportadoras | DataTransp" breadcrumbs={[{ name: 'Funcionalidades', path: '/funcionalidades' }]} description="Conheça os módulos do DataTransp: fiscal, financeiro, manutenção, pneus, combustíveis e Arla, alertas e BI." currentPath="/funcionalidades" bodyClass="page-modulo">
   <nav class="md-switch md-switch--spy" aria-label="Módulos do DataTransp">
     <div class="container md-switch__inner">
       {confirmedModules.map((m) => (
@@ -25,7 +25,7 @@ const confirmedModules = modules.filter((module) => module.confirmed);
     <div class="container md-hero__grid">
       <div>
         <div class="breadcrumbs"><a href="/">Início</a> / <span>Funcionalidades</span></div>
-        <h1>Funcionalidades</h1>
+        <h1>Funcionalidades do DataTransp</h1>
         <p class="md-lead">Os módulos do DataTransp cobrem a rotina da transportadora: documentos fiscais, financeiro, frota e indicadores. Veja o que cada um faz, em poucas palavras.</p>
         <div class="md-actions">
           <a class="btn btn-primary" href="/contato#agendar-demonstracao">Agendar demonstração</a>

@@ -7,6 +7,7 @@ import ModuloIlustracao from '../../components/modulos/ModuloIlustracao.astro';
 import FolhetoBI from '../../components/modulos/FolhetoBI.astro';
 import PageFoto from '../../components/PageFoto.astro';
 import { explicacoes } from '../../data/modulos-detalhes';
+import { seoModulos } from '../../data/seo';
 import { integracoesDetalhes } from '../../data/integracoes-detalhes';
 import '../../styles/modulo.css';
 
@@ -55,9 +56,10 @@ const fotos: Record<string, { foto: string; alt: string; autor: string; link: st
   },
 };
 const foto = fotos[module.slug];
+const seo = seoModulos[module.slug];
 ---
 
-<Layout title={`${module.title} | Datatransp`} description={module.summary} currentPath={`/funcionalidades/${slug}`} bodyClass="page-modulo">
+<Layout title={seo?.title ?? `${module.title} | DataTransp`} description={seo?.description ?? module.summary} currentPath={`/funcionalidades/${slug}`} bodyClass="page-modulo" breadcrumbs={[{ name: 'Funcionalidades', path: '/funcionalidades' }, { name: module.title, path: `/funcionalidades/${slug}` }]}>
   <!-- troca rápida entre módulos, como as abas de um sistema -->
   <nav class="md-switch" aria-label="Módulos do DataTransp">
     <div class="container md-switch__inner">
@@ -74,7 +76,7 @@ const foto = fotos[module.slug];
       <div>
         <div class="breadcrumbs"><a href="/">Início</a> / <a href="/funcionalidades">Funcionalidades</a> / <span>{module.title}</span></div>
         <p class="md-cat"><span class="md-cat__icon"><Icon name={module.slug as IconName} size={20} /></span>{module.category}</p>
-        <h1>{module.title}</h1>
+        <h1>{seo?.h1 ?? module.title}</h1>
         <p class="md-lead">{module.summary}</p>
         <div class="md-actions">
           <a class="btn btn-primary" href="/contato#agendar-demonstracao">{module.cta}</a>
@@ -136,7 +138,7 @@ const foto = fotos[module.slug];
     <section class="md-section">
       <div class="container">
         <div class="md-others__head">
-          <h2>Integrações ligadas a {module.title}</h2>
+          <h2>Integrações ligadas ao módulo {module.title}</h2>
           <a href="/integracoes">Ver todas as integrações</a>
         </div>
         <ul class="md-integ">
@@ -178,7 +180,7 @@ const foto = fotos[module.slug];
       <div class="md-help">
         <img src="/images/home/atendente-avatar.webp" alt="" width="160" height="160" loading="lazy" decoding="async" />
         <div>
-          <h2>Quer ver o {module.title} funcionando?</h2>
+          <h2>Quer ver o módulo {module.title} funcionando?</h2>
           <p>Nossa equipe mostra o módulo com a rotina da sua transportadora e tira suas dúvidas.</p>
         </div>
         <div class="md-help__actions">

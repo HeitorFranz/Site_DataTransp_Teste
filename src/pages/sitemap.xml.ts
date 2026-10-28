@@ -8,7 +8,6 @@ const publicPages = [
   '/clientes',
   '/funcionalidades',
   '/integracoes',
-  '/novidades',
   '/contato',
   '/politica-de-privacidade',
   '/politica-de-cookies',
@@ -28,6 +27,8 @@ function xmlEscape(value: string): string {
 export async function GET(): Promise<Response> {
   const paths = [
     ...publicPages,
+    // /novidades fica fora do índice enquanto não houver publicação (noindex na página)
+    ...(newsItems.length ? ['/novidades'] : []),
     ...modules.filter((module) => module.confirmed).map((module) => `/funcionalidades/${module.slug}`),
     ...integrations.map((integration) => `/integracoes/${integration.slug}`),
     ...newsItems.map((item) => `/novidades/${item.slug}`),

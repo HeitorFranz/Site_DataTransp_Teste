@@ -20,7 +20,7 @@ const outras = integrations.filter((i) => i.slug !== slug);
 const whatsAppUrl = `https://wa.me/55${company.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(`Olá, quero saber sobre a integração ${integration.title} do DataTransp.`)}`;
 ---
 
-<Layout title={`${integration.title} | Datatransp`} description={info?.oQueE ?? `Integração ${integration.title} do DataTransp.`} currentPath={`/integracoes/${slug}`} bodyClass="page-modulo">
+<Layout title={`Integração ${integration.title} para transportadoras | DataTransp`} description={info?.oQueE ?? `Integração ${integration.title} do DataTransp.`} currentPath={`/integracoes/${slug}`} bodyClass="page-modulo" breadcrumbs={[{ name: 'Integrações', path: '/integracoes' }, { name: integration.title, path: `/integracoes/${slug}` }]}>
   <nav class="md-switch" aria-label="Integrações do DataTransp">
     <div class="container md-switch__inner">
       {integrations.map((i) => (
@@ -34,7 +34,7 @@ const whatsAppUrl = `https://wa.me/55${company.whatsapp.replace(/\D/g, '')}?text
       <div>
         <div class="breadcrumbs"><a href="/">Início</a> / <a href="/integracoes">Integrações</a> / <span>{integration.title}</span></div>
         <p class="md-cat"><span class="md-cat__icon"><Icon name={(info?.icone ?? 'fiscal') as IconName} size={20} /></span>Integração</p>
-        <h1>{integration.title}</h1>
+        <h1>Integração {integration.title}</h1>
         {info && <p class="md-lead">{info.oQueE}</p>}
         <div class="md-actions">
           <a class="btn btn-primary" href="/contato#agendar-demonstracao">Falar com a equipe</a>

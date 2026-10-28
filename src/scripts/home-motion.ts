@@ -46,6 +46,7 @@ export function initHomeMotion() {
         .from('[data-hero-bar]', { scaleX: 0, duration: 1.6, ease: 'power3.out' }, '<')
         .from(s1.words, { yPercent: 110, stagger: 0.04, duration: 0.8 }, '<.1')
         .from('.dt-years span', { autoAlpha: 0, duration: 0.5, stagger: 0.2 }, '<')
+        .from('[data-hero-cta]', { autoAlpha: 0, y: 10, duration: 0.6 }, '-=.9')
         .from('[data-hero-caption]', { autoAlpha: 0, y: 10, duration: 0.6 }, '-=.6');
 
       // ao rolar: o mapa se afasta e os títulos sobem em velocidades diferentes

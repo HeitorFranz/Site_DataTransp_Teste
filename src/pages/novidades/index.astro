@@ -17,7 +17,7 @@ const tipos: Record<string, { icon: 'clock' | 'bi' | 'fiscal' | 'alertas'; texto
 };
 ---
 
-<Layout title="Novidades | Datatransp" description="Atualizações, novos recursos e adequações fiscais do sistema Datatransp" currentPath="/novidades" bodyClass="page-modulo">
+<Layout title="Novidades do sistema | DataTransp" description="Atualizações, novos recursos e adequações fiscais do sistema DataTransp para transportadoras." currentPath="/novidades" bodyClass="page-modulo" pageType="CollectionPage" noindex={newsItems.length === 0} breadcrumbs={[{ name: 'Novidades', path: '/novidades' }]}>
   <section class="md-hero">
     <div class="container">
       <div class="breadcrumbs"><a href="/">Início</a> / <span>Novidades</span></div>

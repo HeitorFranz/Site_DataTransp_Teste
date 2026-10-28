@@ -20,14 +20,14 @@ const waHref = `https://wa.me/55${company.whatsapp.replace(/\D/g, '')}`;
   <a class="databot__fab" href={waHref} data-fab aria-label="Conversar com o DATA, da DataTransp" aria-expanded="false" aria-controls="databot-panel" role="button">
     <span class="databot__fab-ring" aria-hidden="true"></span>
     <DataAvatar size={52} />
-    <span class="databot__badge" data-badge aria-hidden="true">1</span>
+    <span class="databot__badge" aria-hidden="true"></span>
   </a>
 
   <section class="databot__panel" id="databot-panel" role="dialog" aria-modal="false" aria-labelledby="databot-title" hidden data-panel>
     <header class="databot__head">
       <span class="databot__head-av"><DataAvatar size={42} /><i class="databot__online" aria-hidden="true"></i></span>
       <div class="databot__head-txt">
-        <h2 id="databot-title">DATA</h2>
+        <p class="databot__name" id="databot-title">DATA</p>
         <p data-status>Atendimento DataTransp · on-line</p>
       </div>
       <a class="databot__head-wa" href={waHref} target="_blank" rel="noopener noreferrer" aria-label="Falar com uma pessoa no WhatsApp" title="Falar com uma pessoa">
@@ -82,6 +82,8 @@ const waHref = `https://wa.me/55${company.whatsapp.replace(/\D/g, '')}`;
     position: absolute; top: -2px; right: -2px; display: grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px;
     border-radius: 999px; background: var(--db-red); color: #fff; font-size: 12px; font-weight: 800; border: 2px solid #fff;
   }
+  /* o "1" vem do CSS: assim não entra no nome acessível do botão */
+  .databot__badge::after { content: '1'; }
   .databot[data-seen] .databot__badge { display: none; }
   .databot[data-open] .databot__fab, .databot[data-open] .databot__teaser { display: none; }
   .databot :focus-visible { outline: 3px solid #ff6b68; outline-offset: 2px; }
@@ -118,7 +120,7 @@ const waHref = `https://wa.me/55${company.whatsapp.replace(/\D/g, '')}`;
   .databot__head-av { position: relative; flex: none; }
   .databot__online { position: absolute; right: 0; bottom: 1px; width: 12px; height: 12px; border-radius: 50%; background: #22c55e; border: 2px solid var(--db-navy); }
   .databot__head-txt { min-width: 0; }
-  .databot__head h2 { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: .08em; color: #fff; line-height: 1.1; }
+  .databot__head .databot__name { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: .08em; color: #fff; line-height: 1.1; }
   .databot__head p { margin: 2px 0 0; font-size: 12.5px; color: #c9d6ea; }
   .databot__head-wa, .databot__close {
     display: grid; place-items: center; width: 38px; height: 38px; flex: none; border: 0; border-radius: 50%;

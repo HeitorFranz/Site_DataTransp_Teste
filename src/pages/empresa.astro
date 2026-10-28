@@ -4,10 +4,9 @@ import { company } from '../data/empresa';
 import '../styles/modulo.css';
 import PageFoto from '../components/PageFoto.astro';
 
-const hoje = Number(company.foundation) + company.experienceYears;
 ---
 
-<Layout title="Empresa | Datatransp" description={`${company.legalName}: história, missão, visão e informações da empresa.`} currentPath="/empresa">
+<Layout title="Sobre a DataTransp: software para transporte desde 1997" description="A DataTransp desenvolve sistemas para transportadoras e frotistas desde 1997. Fundada em Xaxim/SC, com sede em Chapecó/SC e atendimento em todo o Brasil." currentPath="/empresa" pageType="AboutPage" breadcrumbs={[{ name: 'Empresa', path: '/empresa' }]}>
   <section class="page-hero">
     <div class="container page-hero-inner">
       <div class="breadcrumbs"><a href="/">Início</a> / <span>Empresa</span></div>
@@ -28,7 +27,7 @@ const hoje = Number(company.foundation) + company.experienceYears;
       <ol class="md-trail" data-trail>
         <li><span class="md-trail__year">{company.foundation}</span><strong>Fundação em Xaxim/SC</strong><p>A DataTransp começa a desenvolver sistemas para transportadoras.</p></li>
         <li><span class="md-trail__year">{company.experienceYears} anos</span><strong>Experiência no transporte</strong><p>Software, implantação com treinamento e suporte para a rotina da transportadora.</p></li>
-        <li><span class="md-trail__year">{hoje}</span><strong>Sede em Chapecó/SC</strong><p>{company.serviceArea}</p></li>
+        <li><span class="md-trail__year">Hoje</span><strong>Sede em Chapecó/SC</strong><p>{company.serviceArea}</p></li>
       </ol>
     </div>
   </section>
@@ -49,7 +48,7 @@ const hoje = Number(company.foundation) + company.experienceYears;
 
   <section class="section">
     <div class="container">
-      <h2 class="section-title">Datatransp Sistemas</h2>
+      <h2 class="section-title">DataTransp Sistemas</h2>
       <dl class="company-facts">
         <div><dt>Razão Social</dt><dd>{company.legalName}</dd></div>
         <div><dt>CNPJ</dt><dd>{company.cnpj}</dd></div>
@@ -63,7 +62,7 @@ const hoje = Number(company.foundation) + company.experienceYears;
 
   <section class="section">
     <div class="container">
-      <h2 class="section-title">Canais da Datatransp</h2>
+      <h2 class="section-title">Canais da DataTransp</h2>
       <div class="contact-grid">
         <a class="contact-card contact-card-link" href={`tel:${company.phone.replace(/[^0-9]/g, '')}`}><h3>Telefone</h3><p>{company.phone}</p></a>
         <a class="contact-card contact-card-link" href={`https://wa.me/55${company.whatsapp.replace(/[^0-9]/g, '')}`}><h3>WhatsApp</h3><p>{company.whatsapp}</p></a>

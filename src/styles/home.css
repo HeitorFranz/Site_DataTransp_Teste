@@ -133,6 +133,7 @@
 /* a contagem 0 → 29 não muda a largura do bloco */
 .dt-lead__big [data-hero-num] { display: inline-block; min-width: 2ch; text-align: right; }
 /* linha do tempo da empresa: enche junto com a contagem dos anos */
+.dt-hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 .dt-years { display: flex; align-items: center; gap: 12px; margin-top: 22px; max-width: 420px; font: 700 14px var(--font-body); color: var(--caption); font-variant-numeric: tabular-nums; }
 .dt-years__bar { position: relative; flex: 1; height: 4px; border-radius: 2px; background: var(--tag-line); overflow: hidden; }
 .dt-years__bar b { position: absolute; inset: 0; border-radius: inherit; background: var(--red); transform-origin: left; }
@@ -389,7 +390,7 @@
   .dt-care__media { padding: 0; }
   .dt-care__media > img { aspect-ratio: 4 / 3; }
   .dt-chat { position: static; width: auto; margin: -40px 12px 0; position: relative; }
-  .dt-actions .dt-btn, .dt-care__actions .dt-btn, .dt-tabs__actions .dt-btn { flex: 1 1 100%; }
+  .dt-actions .dt-btn, .dt-care__actions .dt-btn, .dt-tabs__actions .dt-btn, .dt-hero__cta .dt-btn { flex: 1 1 100%; }
   .dt-solutions__all { text-align: left; }
 }
 

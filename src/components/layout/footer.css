@@ -27,7 +27,8 @@
 
 /* colunas */
 .sf-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; padding: 40px 0; }
-.sf-cols h2 { margin: 0 0 14px; font: 700 15px var(--font-heading, sans-serif); color: var(--sf-title); }
+/* títulos de coluna em <p>: o rodapé não entra na hierarquia de títulos da página */
+.sf-cols__title { margin: 0 0 14px; font: 700 15px var(--font-heading, sans-serif); color: var(--sf-title); }
 .sf-cols ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
 .sf-cols li { font-size: 15px; line-height: 1.4; }
 .sf-hours { color: #dbe4f2; }
