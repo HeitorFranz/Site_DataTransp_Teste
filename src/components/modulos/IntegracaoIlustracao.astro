@@ -5,6 +5,8 @@ import '../../styles/ilustracao.css';
 
 interface Props { title: string; parceiro: string }
 const { title, parceiro } = Astro.props;
+// ids dos caminhos precisam ser únicos se houver mais de uma ilustração na página
+const uid = Math.random().toString(36).slice(2, 8);
 ---
 
 <figure class="ilu" data-ilu aria-label={`Integração ${title}: DataTransp e ${parceiro}`} role="img">
@@ -15,11 +17,26 @@ const { title, parceiro } = Astro.props;
         <img src="/brand/datatransp-logo-400.webp" alt="" width="400" height="134" />
         <span>DataTransp</span>
       </div>
-      <div class="ilu-wire">
-        <span class="ilu-wire__line" />
-        <i style="--i:0" /><i style="--i:1" /><i style="--i:2" />
-        <i class="ilu-back" style="--i:0" /><i class="ilu-back" style="--i:1" />
-      </div>
+      <svg class="ilu-arc" viewBox="0 0 160 48">
+        <path id={`ida-${uid}`} class="ilu-arc__line" d="M6 20 C 50 -6, 110 -6, 154 20" />
+        <path id={`volta-${uid}`} class="ilu-arc__line" d="M154 30 C 110 56, 50 56, 6 30" />
+        <path class="ilu-arc__head" d="M154 20 l-7 -1 l4 6 z" />
+        <path class="ilu-arc__head" d="M6 30 l7 1 l-4 -6 z" />
+        {[0, 0.8].map((d) => (
+          <rect class="ilu-pkt ilu-pkt--ida" x="-5" y="-4" width="10" height="8" rx="2" opacity="0">
+            <animateMotion dur="1.8s" begin="indefinite" fill="freeze" rotate="auto" data-delay={d} keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines=".65 0 .35 1">
+              <mpath href={`#ida-${uid}`} />
+            </animateMotion>
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="1.8s" begin="indefinite" fill="freeze" data-delay={d} />
+          </rect>
+        ))}
+        <rect class="ilu-pkt ilu-pkt--volta" x="-5" y="-4" width="10" height="8" rx="2" opacity="0">
+          <animateMotion dur="1.8s" begin="indefinite" fill="freeze" rotate="auto" data-delay="1.5" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines=".65 0 .35 1">
+            <mpath href={`#volta-${uid}`} />
+          </animateMotion>
+          <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="1.8s" begin="indefinite" fill="freeze" data-delay="1.5" />
+        </rect>
+      </svg>
       <div class="ilu-node"><b>{parceiro}</b></div>
     </div>
     <p class="ilu-chip ilu-late" style="--i:2">Informação trocada pela integração</p>
@@ -28,6 +45,13 @@ const { title, parceiro } = Astro.props;
 
 <script>
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // pacotes: ida, ida, volta. A sequência roda 3 vezes e para, para não virar movimento eterno na tela
+  function enviar(el: HTMLElement, vez = 0) {
+    el.querySelectorAll<SVGAnimationElement>('.ilu-arc animateMotion, .ilu-arc animate').forEach((a) => a.beginElementAt(Number(a.dataset.delay ?? 0)));
+    if (vez < 2) setTimeout(() => enviar(el, vez + 1), 4200);
+  }
+
   document.querySelectorAll<HTMLElement>('[data-ilu]').forEach((el) => {
     if (reduce) { el.classList.add('is-on'); return; }
     el.classList.add('is-ready');
@@ -35,6 +59,7 @@ const { title, parceiro } = Astro.props;
       if (!e.isIntersecting) return;
       obs.disconnect();
       el.classList.add('is-on');
+      if (el.querySelector('.ilu-arc')) setTimeout(() => enviar(el), 500);
     }, { threshold: 0.35 }).observe(el);
   });
 </script>

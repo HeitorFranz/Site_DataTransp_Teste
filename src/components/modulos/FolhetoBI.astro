@@ -22,8 +22,8 @@ const blocos = [
     </svg>
   </div>
   <ul class="fb__list">
-    {blocos.map((b, i) => (
-      <li style={`--i:${i}`}><h3>{b.titulo}</h3><p>{b.texto}</p></li>
+    {blocos.map((b) => (
+      <li><h3>{b.titulo}</h3><p>{b.texto}</p></li>
     ))}
   </ul>
   <div class="fb__foot">
@@ -52,9 +52,9 @@ const blocos = [
   .fb__cap { padding: 8px 18px 12px; font-size: 11px; color: #55667d; }
 
   @media (prefers-reduced-motion: no-preference) {
-    .fb__net .fb__hubdot { animation: fb-pulse 2.4s ease-in-out infinite; transform-origin: 60px 40px; }
-    .fb__list li { animation: fb-in .5s ease both; animation-delay: calc(var(--i) * 90ms); }
+    .fb__net .fb__hubdot { animation: fb-pulse .5s cubic-bezier(.22,1,.36,1) backwards; transform-origin: 60px 40px; }
+    .fb__list { animation: fb-in .3s cubic-bezier(.22,1,.36,1) both; }
   }
-  @keyframes fb-pulse { 50% { transform: scale(1.15); } }
-  @keyframes fb-in { from { opacity: 0; transform: translateX(-8px); } }
+  @keyframes fb-pulse { from { transform: scale(.5); opacity: 0; } }
+  @keyframes fb-in { from { opacity: 0; transform: translateY(6px); } }
 </style>

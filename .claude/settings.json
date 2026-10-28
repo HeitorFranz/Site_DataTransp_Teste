@@ -20,6 +20,12 @@
             "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/typecheck.mjs\"",
             "timeout": 120,
             "statusMessage": "Type-checking with astro check..."
+          },
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/content-rules.mjs\"",
+            "timeout": 15,
+            "statusMessage": "Conferindo regras de conteúdo..."
           }
         ]
       }

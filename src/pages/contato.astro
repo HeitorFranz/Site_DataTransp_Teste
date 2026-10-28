@@ -152,9 +152,9 @@ import { company } from '../data/empresa';
   .ct-now__dot { width: 10px; height: 10px; border-radius: 50%; background: #9aa8bb; flex: none; }
   .ct-now[data-state='open'] .ct-now__dot { background: #22c55e; }
   @media (prefers-reduced-motion: no-preference) {
-    .ct-now[data-state='open'] .ct-now__dot { animation: ct-beat 2s ease-in-out infinite; }
+    .ct-now[data-state='open'] .ct-now__dot { animation: ct-pop .42s cubic-bezier(.22,1,.36,1) .2s backwards; }
   }
-  @keyframes ct-beat { 50% { box-shadow: 0 0 0 6px rgb(34 197 94 / .25); } }
+  @keyframes ct-pop { 0% { transform: scale(.6); opacity: 0; } 60% { transform: scale(1.15); opacity: 1; } }
 </style>
 
 <script>

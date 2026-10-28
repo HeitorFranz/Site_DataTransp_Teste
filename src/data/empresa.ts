@@ -10,7 +10,7 @@ export const company = {
   whatsapp: '(49) 98904-5534',
   email: 'comercial@datatransp.com.br',
   facebook: 'https://facebook.com/DataTransp-Sistemas-347419281960623',
-  instagram: '',
+  instagram: 'https://www.instagram.com/datatransp_sistemas/',
   mission:
     'Prover sistemas de informação para transportadoras e frotistas com inovação e excelência.',
   vision: 'Ser a primeira referência em soluções do nosso segmento.',

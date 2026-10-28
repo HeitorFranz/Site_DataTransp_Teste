@@ -5,6 +5,7 @@ import WhatsAppIcon from '../../components/home/WhatsAppIcon.astro';
 import { company, modules, integrations } from '../../data/empresa';
 import ModuloIlustracao from '../../components/modulos/ModuloIlustracao.astro';
 import FolhetoBI from '../../components/modulos/FolhetoBI.astro';
+import PageFoto from '../../components/PageFoto.astro';
 import { explicacoes } from '../../data/modulos-detalhes';
 import { integracoesDetalhes } from '../../data/integracoes-detalhes';
 import '../../styles/modulo.css';
@@ -25,6 +26,35 @@ const textos = explicacoes[module.slug] ?? [];
 // integrações do mesmo assunto deste módulo (cada uma tem página própria com explicação)
 const doAssunto = integrations.filter((i) => integracoesDetalhes[i.slug]?.modulo === module.slug);
 const whatsAppUrl = `https://wa.me/55${company.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(`Olá, quero conhecer o módulo ${module.title} do DataTransp.`)}`;
+
+// foto de banco gratuito (Pexels) só nos módulos em que a imagem mostra o assunto de verdade
+const fotos: Record<string, { foto: string; alt: string; autor: string; link: string; titulo: string; texto: string; revelar: 'cortina' | 'circulo' | 'subir' }> = {
+  fiscal: {
+    foto: 'bau-rodovia', alt: 'Traseira de um caminhão baú em rodovia movimentada', autor: 'Juliana Polizel',
+    link: 'https://www.pexels.com/pt-br/foto/caminhao-branco-na-estrada-5668906/', revelar: 'cortina',
+    titulo: 'Toda viagem começa num documento',
+    texto: 'Antes do caminhão sair, vêm o CT-e e o MDF-e. No DataTransp eles são emitidos no mesmo sistema que cuida do financeiro e da frota.',
+  },
+  manutencao: {
+    foto: 'oficina', alt: 'Mecânico trabalhando em um motor numa oficina organizada', autor: 'Artem Podrez',
+    link: 'https://www.pexels.com/pt-br/foto/homem-pessoa-carro-veiculo-8985703/', revelar: 'subir',
+    titulo: 'A oficina com o histórico na mão',
+    texto: 'Cada revisão fica registrada no veículo certo, sem caderno nem planilha por fora.',
+  },
+  pneus: {
+    foto: 'caminhao-lona', alt: 'Caminhão branco com carreta coberta por lona em uma rodovia', autor: 'TaylorPhotos',
+    link: 'https://www.pexels.com/pt-br/foto/caminhao-de-carga-branco-na-estrada-com-ceu-azul-37848366/', revelar: 'subir',
+    titulo: 'Cada pneu tem uma história',
+    texto: 'O controle de pneus guarda o histórico de toda a frota no sistema, sem planilhas por fora.',
+  },
+  combustiveis: {
+    foto: 'bomba-combustivel', alt: 'Bico de bomba de combustível encaixado no tanque durante o abastecimento', autor: 'Dar ius',
+    link: 'https://www.pexels.com/pt-br/foto/bomba-de-gasolina-vermelha-reabastecendo-um-carro-no-posto-28688185/', revelar: 'circulo',
+    titulo: 'Cada abastecimento conta',
+    texto: 'Consumo de combustível e Arla acompanhado no sistema. Quem tem bomba própria também controla o estoque.',
+  },
+};
+const foto = fotos[module.slug];
 ---
 
 <Layout title={`${module.title} | Datatransp`} description={module.summary} currentPath={`/funcionalidades/${slug}`} bodyClass="page-modulo">
@@ -69,6 +99,12 @@ const whatsAppUrl = `https://wa.me/55${company.whatsapp.replace(/\D/g, '')}?text
       </aside>
     </div>
   </section>
+
+  {foto && (
+    <PageFoto foto={foto.foto} alt={foto.alt} autor={foto.autor} link={foto.link} titulo={foto.titulo} revelar={foto.revelar} invertido>
+      <p>{foto.texto}</p>
+    </PageFoto>
+  )}
 
   <section class="md-section">
     <div class="container">

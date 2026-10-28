@@ -16,7 +16,7 @@ const hoje = Number(company.foundation) + company.experienceYears;
     </div>
   </section>
 
-  <PageFoto foto="rodovia" alt="Caminhão trafegando em rodovia brasileira em dia de céu aberto" autor="Messala Ciulla" link="https://www.pexels.com/pt-br/foto/caminhao-na-estrada-no-brasil-34365732/" titulo="Feito para quem vive a estrada">
+  <PageFoto revelar="subir" foto="rodovia" alt="Caminhão trafegando em rodovia brasileira em dia de céu aberto" autor="Messala Ciulla" link="https://www.pexels.com/pt-br/foto/caminhao-na-estrada-no-brasil-34365732/" titulo="Feito para quem vive a estrada">
     <p>A DataTransp começou em Xaxim, no oeste de Santa Catarina, no meio de transportadoras. O sistema nasceu dessa rotina: nota fiscal, frete, frota e conta para pagar no fim do mês.</p>
     <p>Hoje a sede fica em Chapecó, e o atendimento chega a transportadoras e frotistas de todo o Brasil, pelo WhatsApp e pelo telefone.</p>
   </PageFoto>
@@ -75,10 +75,14 @@ const hoje = Number(company.foundation) + company.experienceYears;
 </Layout>
 
 <script>
-  // a linha da trajetória se preenche quando aparece na tela
+  // a linha da trajetória cresce junto com a rolagem (CSS, onde o navegador suporta);
+  // nos outros, ela se preenche de uma vez quando aparece na tela
   const trail = document.querySelector<HTMLElement>('[data-trail]');
   if (trail && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    trail.classList.add('is-ready');
-    new IntersectionObserver(([e], obs) => { if (e.isIntersecting) { obs.disconnect(); trail.classList.add('is-on'); } }, { threshold: 0.4 }).observe(trail);
+    if (CSS.supports('animation-timeline: view()')) trail.classList.add('md-trail--scroll');
+    else trail.classList.add('is-ready');
+    if (trail.classList.contains('is-ready')) {
+      new IntersectionObserver(([e], obs) => { if (e.isIntersecting) { obs.disconnect(); trail.classList.add('is-on'); } }, { threshold: 0.4 }).observe(trail);
+    }
   }
 </script>

@@ -1,7 +1,7 @@
 ---
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
-import ChatWidget from '../components/ChatWidget.astro';
+import DataBot from '../components/DataBot.astro';
 import { company } from '../data/empresa';
 import '../styles/global.css';
 
@@ -62,7 +62,10 @@ const structuredData = {
     <meta property="og:image:alt" content="Logotipo da Datatransp" />
     <meta name="twitter:card" content="summary_large_image" />
     <title>{title}</title>
+    <link rel="icon" href="/brand/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/brand/favicon-16.png" type="image/png" sizes="16x16" />
     <link rel="icon" href="/brand/favicon-48.png" type="image/png" sizes="48x48" />
+    <link rel="icon" href="/brand/icon-192.png" type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -74,7 +77,7 @@ const structuredData = {
     <Header currentPath={currentPath} />
     <main>
       <slot />
-      <ChatWidget />
+      <DataBot />
     </main>
     <Footer />
     <script>

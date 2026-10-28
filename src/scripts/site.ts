@@ -65,7 +65,7 @@ document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form)
     });
     payload.consent = data.get('consent') === 'on';
     status.textContent = 'Enviando sua solicitação…';
-    status.classList.remove('is-error');
+    status.classList.remove('is-error', 'is-ok');
     submit.disabled = true;
 
     try {
@@ -79,6 +79,7 @@ document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form)
         throw new Error(result.error || 'Não foi possível enviar o pedido.');
       }
       status.textContent = result.message || 'Pedido enviado.';
+      status.classList.add('is-ok');
       form.reset();
     } catch (error) {
       status.textContent = error instanceof Error
@@ -91,48 +92,3 @@ document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form)
   });
 });
 
-const chatLauncher = document.querySelector<HTMLButtonElement>('.chat-launcher');
-const chatPanel = document.querySelector<HTMLElement>('#chatPanel');
-const chatClose = document.querySelector<HTMLButtonElement>('.chat-close');
-const chatMessages = document.querySelector<HTMLElement>('.chat-messages');
-if (chatLauncher && chatPanel && chatClose && chatMessages) {
-  const setChatOpen = (open: boolean) => {
-    chatPanel.hidden = !open;
-    chatLauncher.setAttribute('aria-expanded', String(open));
-    if (open) chatClose.focus();
-    else chatLauncher.focus();
-  };
-  chatLauncher.addEventListener('click', () => setChatOpen(chatPanel.hidden !== false));
-  chatClose.addEventListener('click', () => setChatOpen(false));
-  chatPanel.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') setChatOpen(false);
-  });
-  document.querySelectorAll<HTMLButtonElement>('[data-chat-topic]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const topic = button.dataset.chatTopic;
-      const answer = document.createElement('p');
-      answer.className = 'chat-message chat-message-bot';
-
-      if (topic === 'modules') {
-        answer.textContent = 'Veja os módulos confirmados na página de funcionalidades. Para informações específicas da sua operação, nossa equipe pode ajudar.';
-        const link = document.createElement('a');
-        link.href = '/funcionalidades';
-        link.textContent = 'Ver funcionalidades';
-        chatMessages.append(answer, link);
-      } else if (topic === 'demo') {
-        answer.textContent = 'Preencha o pedido de demonstração ou fale diretamente com a equipe.';
-        const link = document.createElement('a');
-        link.href = '/contato#agendar-demonstracao';
-        link.textContent = 'Solicitar demonstração';
-        chatMessages.append(answer, link);
-      } else {
-        answer.textContent = 'Você pode falar conosco por telefone, WhatsApp ou e-mail.';
-        const link = document.createElement('a');
-        link.href = '/contato#canais-diretos';
-        link.textContent = 'Ver canais de contato';
-        chatMessages.append(answer, link);
-      }
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    });
-  });
-}

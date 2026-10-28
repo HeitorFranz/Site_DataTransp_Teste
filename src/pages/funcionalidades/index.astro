@@ -12,11 +12,12 @@ const confirmedModules = modules.filter((module) => module.confirmed);
 ---
 
 <Layout title="Funcionalidades | Datatransp" description="Conheça os módulos do DataTransp: fiscal, financeiro, manutenção, pneus, combustíveis e Arla, alertas e BI." currentPath="/funcionalidades" bodyClass="page-modulo">
-  <nav class="md-switch" aria-label="Módulos do DataTransp">
+  <nav class="md-switch md-switch--spy" aria-label="Módulos do DataTransp">
     <div class="container md-switch__inner">
       {confirmedModules.map((m) => (
         <a href={`#${m.slug}`}><Icon name={m.slug as IconName} size={17} />{m.title}</a>
       ))}
+      <span class="md-switch__ink" aria-hidden="true"></span>
     </div>
   </nav>
 
@@ -77,3 +78,35 @@ const confirmedModules = modules.filter((module) => module.confirmed);
     </div>
   </section>
 </Layout>
+
+<script>
+  // a barra de módulos fica logo abaixo do menu e marca o módulo que está na tela
+  const header = document.querySelector<HTMLElement>('#header');
+  const bar = document.querySelector<HTMLElement>('.md-switch--spy');
+  const ink = bar?.querySelector<HTMLElement>('.md-switch__ink');
+  const links = [...(bar?.querySelectorAll<HTMLAnchorElement>('a[href^="#"]') ?? [])];
+  if (header && bar && ink && links.length) {
+    const medir = () => document.documentElement.style.setProperty('--header-h', `${header.offsetHeight}px`);
+    medir();
+    addEventListener('resize', medir);
+
+    const marcar = (link: HTMLAnchorElement) => {
+      links.forEach((l) => l.classList.toggle('is-here', l === link));
+      ink.style.opacity = '1';
+      ink.style.transform = `translateX(${link.offsetLeft + 14}px) scaleX(${link.offsetWidth - 28})`;
+      // no celular a barra rola de lado: mantém o módulo da vez à vista
+      const inner = link.parentElement!;
+      if (link.offsetLeft < inner.scrollLeft || link.offsetLeft + link.offsetWidth > inner.scrollLeft + inner.clientWidth) {
+        inner.scrollTo({ left: link.offsetLeft - 16, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      }
+    };
+
+    const porId = new Map(links.map((l) => [l.hash.slice(1), l]));
+    const io = new IntersectionObserver((entries) => {
+      const visivel = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+      const link = visivel && porId.get(visivel.target.id);
+      if (link) marcar(link);
+    }, { rootMargin: '-35% 0px -55% 0px' });
+    porId.forEach((_, id) => { const sec = document.getElementById(id); if (sec) io.observe(sec); });
+  }
+</script>

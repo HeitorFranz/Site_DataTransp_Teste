@@ -17,6 +17,14 @@
 .md-switch a:hover { color: var(--heading); background: var(--md-soft); }
 .md-switch a[aria-current="page"] { color: var(--heading); background: var(--md-soft); box-shadow: inset 0 -2px 0 var(--brand-red); }
 .md-switch a:focus-visible { outline: 3px solid #ffb4b3; outline-offset: -3px; }
+/* índice de funcionalidades: a barra acompanha a rolagem e um fio vermelho desliza até o módulo que está na tela */
+.md-switch--spy { position: sticky; top: var(--header-h, 72px); z-index: 50; }
+.md-switch--spy .md-switch__inner { position: relative; }
+.md-switch__ink { position: absolute; left: 0; bottom: 8px; height: 2px; width: 1px; background: var(--brand-red); transform-origin: left; opacity: 0; pointer-events: none; }
+.md-switch--spy a.is-here { color: var(--heading); background: var(--md-soft); }
+@media (prefers-reduced-motion: no-preference) {
+  .md-switch__ink { transition: transform .32s var(--ease-out-quint), opacity .2s; }
+}
 
 /* topo */
 .md-hero { padding: clamp(40px, 6vw, 72px) 0; background: var(--paper); }
@@ -120,6 +128,20 @@
 .md-trail.is-on li { animation: ilu-in .6s cubic-bezier(.2, .8, .2, 1) both; }
 .md-trail.is-on li:nth-child(2) { animation-delay: .6s; }
 .md-trail.is-on li:nth-child(3) { animation-delay: 1.2s; }
+/* versão presa à rolagem: a linha vermelha avança conforme a pessoa desce e cada marco acende ao ser alcançado */
+.md-trail--scroll { view-timeline: --trilha block; }
+.md-trail--scroll::after { animation: md-trilha-x linear both; animation-range: entry 60% cover 60%; }
+.md-trail--scroll li { animation: md-marco linear both; }
+/* animation-timeline em regra separada: o minificador junta tudo num "animation:" que o navegador descarta */
+.md-trail.md-trail--scroll::after, .md-trail.md-trail--scroll li { animation-timeline: --trilha; }
+.md-trail--scroll li:nth-child(1) { animation-range: entry 60% entry 90%; }
+.md-trail--scroll li:nth-child(2) { animation-range: entry 90% cover 45%; }
+.md-trail--scroll li:nth-child(3) { animation-range: cover 40% cover 60%; }
+.md-trail--scroll li::before { animation: md-ponto linear both; animation-timeline: inherit; animation-range: inherit; }
+@keyframes md-trilha-x { from { transform: scaleX(0); } }
+@keyframes md-trilha-y { from { transform: scaleY(0); } }
+@keyframes md-marco { from { opacity: .25; transform: translateY(10px); } }
+@keyframes md-ponto { from { transform: scale(.4); background: var(--line); } }
 @keyframes ilu-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes md-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 @keyframes ilu-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
@@ -139,6 +161,7 @@
   .md-trail li { padding: 0 0 0 40px; }
   .md-trail.is-ready::after { transform: scaleY(0); }
   .md-trail.is-on::after { animation-name: md-y; }
+  .md-trail--scroll::after { animation-name: md-trilha-y; }
   .md-others { grid-template-columns: minmax(0, 1fr); }
   .md-help { grid-template-columns: minmax(0, 1fr); }
   .md-help__actions { grid-auto-flow: row; justify-items: stretch; }
@@ -153,3 +176,5 @@
 @media (prefers-reduced-motion: reduce) {
   .md-switch a, .md-others a, .md-others__icon { transition: none; }
 }
+/* ao clicar num módulo da barra, o título não fica escondido atrás do menu e da barra fixos */
+.md-section[id] { scroll-margin-top: calc(var(--header-h, 72px) + 64px); }

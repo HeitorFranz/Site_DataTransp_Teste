@@ -32,8 +32,8 @@ const grupos: { titulo: string; icone: IconName; itens: string[] }[] = [
   </div>
 
   <ul class="fg__list">
-    {grupos.map((g, i) => (
-      <li style={`--i:${i}`}>
+    {grupos.map((g) => (
+      <li>
         <h3><span class="fg__ic"><Icon name={g.icone} size={16} /></span>{g.titulo}</h3>
         <ul>{g.itens.map((t) => <li>{t}</li>)}</ul>
       </li>
@@ -82,7 +82,7 @@ const grupos: { titulo: string; icone: IconName; itens: string[] }[] = [
 
   @media (prefers-reduced-motion: no-preference) {
     .fg__lines line { animation: fg-flow 2.4s linear infinite; }
-    .fg__list > li { animation: fg-in .5s ease both; animation-delay: calc(.15s + var(--i) * 90ms); }
+    .fg__list { animation: fg-in .3s cubic-bezier(.22,1,.36,1) .1s both; }
   }
   @keyframes fg-flow { to { stroke-dashoffset: -14; } }
   @keyframes fg-in { from { opacity: 0; transform: translateY(8px); } }

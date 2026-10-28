@@ -1,6 +1,7 @@
 ---
 // Foto de banco gratuito (Pexels) com texto ao lado e crédito do fotógrafo.
-// A foto entra com uma "cortina" quando aparece na tela; sem JS ou com movimento reduzido, já aparece pronta.
+// Cada página revela a foto de um jeito (prop `revelar`), para não repetir o mesmo efeito no site todo.
+// Sem JS ou com movimento reduzido, a foto já aparece pronta.
 interface Props {
   foto: string; // nome base em /images/fotos, sem tamanho nem extensão
   alt: string;
@@ -8,11 +9,13 @@ interface Props {
   link: string;
   titulo: string;
   invertido?: boolean;
+  /** cortina: faixa lateral · circulo: abre a partir de um canto · subir: de baixo para cima · nenhuma: sem efeito */
+  revelar?: 'cortina' | 'circulo' | 'subir' | 'nenhuma';
 }
-const { foto, alt, autor, link, titulo, invertido = false } = Astro.props;
+const { foto, alt, autor, link, titulo, invertido = false, revelar = 'cortina' } = Astro.props;
 ---
 
-<section class:list={['pf', { 'pf--inv': invertido }]}>
+<section class:list={['pf', `pf--${revelar}`, { 'pf--inv': invertido }]}>
   <div class="container pf__grid">
     <figure class="pf__fig">
       <div class="pf__media"><img
@@ -48,15 +51,30 @@ const { foto, alt, autor, link, titulo, invertido = false } = Astro.props;
     .pf__grid { grid-template-columns: 1fr; }
     .pf--inv .pf__fig { order: 0; }
   }
-  /* a cortina é uma faixa por cima da foto: a imagem fica sempre "visível" para o lazy-load do navegador */
+  /* o efeito é uma camada por cima da foto: a imagem fica sempre "visível" para o lazy-load do navegador */
   .pf__media { position: relative; overflow: hidden; border-radius: 14px; }
+  @property --pf-r { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
   @media (prefers-reduced-motion: no-preference) {
-    :global(.pf-js) .pf__media::after {
-      content: ''; position: absolute; inset: 0; background: var(--brand-navy);
-      transform-origin: right; transition: transform .9s cubic-bezier(.2, .7, .2, 1);
+    :global(.pf-js) .pf:not(.pf--nenhuma) .pf__media::after {
+      content: ''; position: absolute; inset: 0; background: var(--brand-navy); pointer-events: none;
     }
-    :global(.pf-js) .pf--inv .pf__media::after { transform-origin: left; }
-    :global(.pf-js) .pf.is-on .pf__media::after { transform: scaleX(0); }
+    /* cortina (Funcionalidades): faixa sai para o lado */
+    :global(.pf-js) .pf--cortina .pf__media::after { transform-origin: right; transition: transform .9s cubic-bezier(.2, .7, .2, 1); }
+    :global(.pf-js) .pf--cortina.pf--inv .pf__media::after { transform-origin: left; }
+    :global(.pf-js) .pf--cortina.is-on .pf__media::after { transform: scaleX(0); }
+    /* círculo (Integrações): a foto abre a partir do canto, como um ponto de conexão;
+       a opacidade também cai, então navegador sem @property não fica com a foto coberta */
+    :global(.pf-js) .pf--circulo .pf__media::after {
+      -webkit-mask: radial-gradient(circle at 18% 82%, transparent var(--pf-r), #000 calc(var(--pf-r) + 1%));
+      mask: radial-gradient(circle at 18% 82%, transparent var(--pf-r), #000 calc(var(--pf-r) + 1%));
+      transition: --pf-r 1s cubic-bezier(.65, 0, .35, 1), opacity .2s linear .9s;
+    }
+    :global(.pf-js) .pf--circulo.is-on .pf__media::after { --pf-r: 150%; opacity: 0; }
+    /* subir (Empresa): a foto aparece de baixo para cima, como a linha do tempo que cresce */
+    :global(.pf-js) .pf--subir .pf__media::after { transform-origin: top; transition: transform .8s cubic-bezier(.22, 1, .36, 1); }
+    :global(.pf-js) .pf--subir.is-on .pf__media::after { transform: scaleY(0); }
+    :global(.pf-js) .pf--subir .pf__media img { transform: translateY(6%) scale(1.06); transition: transform 1.1s cubic-bezier(.22, 1, .36, 1); }
+    :global(.pf-js) .pf--subir.is-on .pf__media img { transform: none; }
   }
 </style>
 

@@ -8,14 +8,16 @@ import Lenis from 'lenis';
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export function initHomeMotion() {
-  const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((t) => lenis.raf(t * 1000));
-  gsap.ticker.lagSmoothing(0);
-
   const mm = gsap.matchMedia();
   mm.add('(prefers-reduced-motion: no-preference)', () => {
     document.documentElement.classList.add('has-motion');
+
+    // rolagem suave só para quem não pediu "reduzir movimento"; senão fica a rolagem nativa
+    const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    const tick = (t: number) => lenis.raf(t * 1000);
+    gsap.ticker.add(tick);
+    gsap.ticker.lagSmoothing(0);
 
     // títulos que entram linha a linha; autoSplit refaz as linhas se a largura mudar
     const revealLines = (sel: string, stagger = 0.08) =>
@@ -35,9 +37,9 @@ export function initHomeMotion() {
       const s1 = SplitText.create(lead, { type: 'words', mask: 'words', wordsClass: 'dt-word', aria: 'none' });
       const s2 = SplitText.create(claim, { type: 'words', mask: 'words', wordsClass: 'dt-word', aria: 'none' });
       const counter = { v: 0 };
+      // o menu não entra: navegação fica pronta desde o primeiro quadro
       gsap.timeline({ defaults: { ease: 'expo.out' } })
-        .from('.header', { y: -40, autoAlpha: 0, duration: 0.9 })
-        .from('[data-hero-tag]', { autoAlpha: 0, y: 12, duration: 0.6 }, '-=.5')
+        .from('[data-hero-tag]', { autoAlpha: 0, y: 12, duration: 0.6 })
         .from(s2.words, { yPercent: 110, stagger: 0.06, duration: 0.9 }, '<')
         .from(big, { autoAlpha: 0, x: -24, duration: 0.9 }, '-=.5')
         .to(counter, { v: Number(num.textContent) || 29, duration: 1.6, ease: 'power3.out', onUpdate: () => { num.textContent = String(Math.round(counter.v)); } }, '<')
@@ -58,11 +60,16 @@ export function initHomeMotion() {
       .from('.dt-person__arc', { rotate: -160, autoAlpha: 0, ease: 'none' }, 0)
       .from('.dt-person img', { yPercent: 35, ease: 'none' }, 0);
     revealLines('.dt-join h2');
-    ScrollTrigger.batch('.dt-join__points li', { start: 'top 88%', once: true, onEnter: (b) => gsap.from(b, { autoAlpha: 0, x: 40, stagger: 0.12, duration: 0.9, ease: 'expo.out' }) });
+    // os três pontos entram juntos: a cascata da página fica só no topo
+    gsap.from('.dt-join__points', { autoAlpha: 0, y: 16, duration: 0.5, ease: 'expo.out', scrollTrigger: { trigger: '.dt-join__points', start: 'top 88%', once: true } });
 
     /* 3 a 5 (clientes, treinamento, soluções): sem animação de entrada, o conteúdo já está no lugar */
 
-    return () => document.documentElement.classList.remove('has-motion');
+    return () => {
+      gsap.ticker.remove(tick);
+      lenis.destroy();
+      document.documentElement.classList.remove('has-motion');
+    };
   });
 
   // recalcula as posições quando fontes e imagens terminam de carregar
